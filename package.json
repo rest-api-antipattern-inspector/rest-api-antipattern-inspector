@@ -1,0 +1,27 @@
+{
+  "name": "rest-api-antipattern-inspector",
+  "version": "1.0.0",
+  "description": "Program for detecting REST api antipatterns",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "tsc && node dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rest-api-antipattern-inspector/rest-api-antipattern-inspector.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rest-api-antipattern-inspector/rest-api-antipattern-inspector/issues"
+  },
+  "homepage": "https://github.com/rest-api-antipattern-inspector/rest-api-antipattern-inspector#readme",
+  "devDependencies": {
+    "@types/request": "^2.48.4",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}

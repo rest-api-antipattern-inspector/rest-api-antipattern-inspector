@@ -1,6 +1,5 @@
 import request from 'request'
 import * as fs from 'fs'
-import * as path from 'path'
 
 export const jokeRequest = () => {
   request(

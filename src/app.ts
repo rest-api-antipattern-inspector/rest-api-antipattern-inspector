@@ -1,1 +1,3 @@
-console.log('Hello World')
+import { jokeRequest } from './requests/jokes'
+
+jokeRequest()

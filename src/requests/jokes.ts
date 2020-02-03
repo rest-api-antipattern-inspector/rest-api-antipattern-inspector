@@ -1,17 +1,21 @@
-import request from 'request'
+import fetch from 'node-fetch'
 import * as fs from 'fs'
 
-export const jokeRequest = () => {
-  request(
-    'https://sv443.net/jokeapi/category/programming',
-    (error, response, body) => {
-      if (error) {
-        console.error(error)
-      }
-
-      const info = `Body:\n${body}\nStatus code:\n${response.statusCode}\nRaw headers:\n${response.rawHeaders}`
-      console.log(info)
-      fs.writeFileSync('info.txt', info, 'utf8')
-    }
+export const jokeRequest = async () => {
+  const res = await fetch(
+    'https://sv443.net/jokeapi/category/programming'
   )
+
+  const body = await res.text()
+  console.log(body)
+
+  const info = {
+    status: res.status,
+    contentType: res.headers.get('content-type'),
+    setCookie: res.headers.raw()['set-cookie'],
+  }
+  const json = JSON.stringify(info)
+
+  fs.writeFileSync('info.json', json)
+  console.log('meta data written to json file')
 }

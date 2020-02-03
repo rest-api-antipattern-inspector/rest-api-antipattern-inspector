@@ -8,14 +8,7 @@ export const jokeRequest = () => {
         console.error(error)
       }
 
-      const info = `
-Body:
-${body}
-Status code:
-${response.statusCode}
-Raw headers:
-${response.rawHeaders}
-`
+      const info = `Body:\n${body}\nStatus code:\n${response.statusCode}\nRaw headers:\n${response.rawHeaders}`
       console.log(info)
     }
   )

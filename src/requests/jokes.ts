@@ -1,4 +1,6 @@
 import request from 'request'
+import * as fs from 'fs'
+import * as path from 'path'
 
 export const jokeRequest = () => {
   request(
@@ -10,6 +12,7 @@ export const jokeRequest = () => {
 
       const info = `Body:\n${body}\nStatus code:\n${response.statusCode}\nRaw headers:\n${response.rawHeaders}`
       console.log(info)
+      fs.writeFileSync('info.txt', info, 'utf8')
     }
   )
 }

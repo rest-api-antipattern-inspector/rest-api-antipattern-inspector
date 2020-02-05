@@ -1,6 +1,6 @@
 require('dotenv').config()
-const endpoints = require('./endpoints')
-const Twit = require('twit')
+import Twit from 'twit'
+import endpoints from './endpoints'
 
 const twitterClient = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_API_KEY,

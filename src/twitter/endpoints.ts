@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   {
     url: 'statuses/user_timeline',
     params: { screen_name: 'Carl_Gustav_XVI', count: 1 },

@@ -22,6 +22,7 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "@types/twit": "^2.2.23",
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.0",
     "twit": "^2.2.11"

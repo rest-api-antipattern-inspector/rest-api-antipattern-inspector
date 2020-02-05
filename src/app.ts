@@ -1,3 +1,5 @@
-import { jokeRequest } from './requests/jokes'
+import { doStackExchangeRequests } from './requests/stackExchange'
 
-jokeRequest()
+doStackExchangeRequests()
+
+// TODO have DAL folder, read info and write info separately

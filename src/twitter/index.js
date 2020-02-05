@@ -21,11 +21,5 @@ endpoints.forEach((endpoint) => {
     )
   } catch (e) {
     console.log(e)
-    const result = {
-      fetched: false,
-      data: [],
-      error: e,
-    }
-    sendToClient(res, result)
   }
 })

@@ -1,21 +1,23 @@
-import fetch from 'node-fetch'
+import fetch, { Response } from 'node-fetch'
 
 export const doStackExchangeRequests = (): void => {
   stackOverflowInfo()
   relatedQuestionsSO()
 }
 
+function logInfo(uri: string, res: Response): void {
+  console.log('\n')
+  console.log(uri)
+  console.log(res.status)
+  console.log(res.headers)
+}
+
 async function stackOverflowInfo(): Promise<void> {
   const uri =
     'https://api.stackexchange.com/2.2/info?site=stackoverflow'
 
-  const res = await fetch(uri)
-
-  const body = await res.text()
-  console.log(body)
+  logInfo(uri, await fetch(uri))
 }
-
-// TODO have just one funciton for get requests
 
 /**
  * Related questions to these 3 questions:
@@ -27,8 +29,5 @@ async function relatedQuestionsSO(): Promise<void> {
   const uri =
     'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
 
-  const res = await fetch(uri)
-
-  const body = await res.text()
-  console.log(body)
+  logInfo(uri, await fetch(uri))
 }

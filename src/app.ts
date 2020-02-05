@@ -1,3 +1,3 @@
-import { jokeRequest } from './requests/jokes'
+import { doStackExchangeRequests } from './requests/stackExchange'
 
-jokeRequest()
+doStackExchangeRequests()

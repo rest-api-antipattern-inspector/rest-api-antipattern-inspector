@@ -1,15 +1,9 @@
-import fetch, { Response } from 'node-fetch'
+import fetch from 'node-fetch'
+import { logInfo } from '../utils/meta'
 
 export const doStackExchangeRequests = (): void => {
   stackOverflowInfo()
   relatedQuestionsSO()
-}
-
-function logInfo(uri: string, res: Response): void {
-  console.log('\n')
-  console.log(uri)
-  console.log(res.status)
-  console.log(res.headers)
 }
 
 async function stackOverflowInfo(): Promise<void> {

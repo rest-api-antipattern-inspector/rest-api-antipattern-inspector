@@ -2,19 +2,27 @@ require('dotenv').config()
 import Twit from 'twit'
 import endpoints from './endpoints'
 
+interface Endpoint {
+  readonly method: string
+  readonly url: string
+  readonly params: object
+}
+
 const twitterClient = new Twit({
-  consumer_key: process.env.TWITTER_CONSUMER_API_KEY,
-  consumer_secret: process.env.TWITTER_CONSUMER_API_SECRET,
+  consumer_key: process.env.TWITTER_CONSUMER_API_KEY || '',
+  consumer_secret:
+    process.env.TWITTER_CONSUMER_API_SECRET || '',
   access_token: process.env.TWITTER_ACCESS_TOKEN,
   access_token_secret:
     process.env.TWITTER_ACCESS_TOKEN_SECRET,
 })
-endpoints.forEach((endpoint) => {
+
+endpoints.forEach((endpoint: Endpoint) => {
   try {
-    twitterClient[endpoint.method](
+    twitterClient.get(
       endpoint.url,
       endpoint.params,
-      function(err, data, response) {
+      function(err: any, data: any, response: any) {
         console.log(data)
         //console.log(response)
       }

@@ -8,7 +8,7 @@ export const dbConnect = () => {
   )
 
   db.once('open', () => {
-    console.log('Connected to database')
+    console.log('Connected to database\n')
   })
 
   process.on('SIGINT', () => {

@@ -9,12 +9,12 @@ export const dbConnect = () => {
   )
 
   db.once('open', () => {
-    console.log('Connected to DB')
+    console.log('Connected to database')
   })
 
   process.on('SIGINT', () => {
     db.close(() => {
-      console.log('\nDB connection closed')
+      console.log('\nDatabase connection closed')
       process.exit(0)
     })
   })

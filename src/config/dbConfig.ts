@@ -26,5 +26,6 @@ export const dbConnect = () => {
 
   mongoose.connect(connectionString, {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
 }

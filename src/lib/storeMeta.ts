@@ -7,11 +7,14 @@ export const storeResponseMeta = (
 ) => {
   // TODO: store more types of info
   const responseMeta = new ResponseMeta({
+    sessionID: process.env.SESSION_ID,
     uri,
     status: res.status,
   })
 
   responseMeta.save(() => {
-    console.log(`Response meta info stored for: ${uri}`)
+    console.log(
+      `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
+    )
   })
 }

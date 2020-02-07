@@ -1,4 +1,3 @@
-import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 
 export const dbConnect = () => {
@@ -18,8 +17,6 @@ export const dbConnect = () => {
       process.exit(0)
     })
   })
-
-  dotenv.config()
 
   const connectionString =
     process.env.DB_CONNECTION_STRING || ''

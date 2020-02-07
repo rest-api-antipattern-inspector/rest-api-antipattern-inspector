@@ -1,3 +1,7 @@
 import { doStackExchangeRequests } from './requests/stackExchange'
+import { dbConnect } from './config/dbConfig'
 
-doStackExchangeRequests()
+console.log('Running program\nUse Control-C to exit')
+
+dbConnect()
+// doStackExchangeRequests()

@@ -18,12 +18,14 @@
   },
   "homepage": "https://github.com/rest-api-antipattern-inspector/rest-api-antipattern-inspector#readme",
   "devDependencies": {
+    "@types/mongoose": "^5.7.0",
     "@types/node-fetch": "^2.5.4",
     "typescript": "^3.7.5"
   },
   "dependencies": {
     "@types/twit": "^2.2.23",
     "dotenv": "^8.2.0",
+    "mongoose": "^5.8.11",
     "node-fetch": "^2.6.0",
     "twit": "^2.2.11"
   }

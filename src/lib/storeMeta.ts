@@ -12,7 +12,7 @@ export const storeResponseMeta = (
     status: res.status,
   })
 
-  console.log(res.headers.has('content-length'))
+  console.log(res.headers.has('Etag'))
 
   /*
   responseMeta.save(() => {

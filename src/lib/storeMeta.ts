@@ -12,7 +12,11 @@ export const storeResponseMeta = (
     status: res.status,
   })
 
-  console.log(res.headers.has('Etag'))
+  const cacheInfo = isIgnoringCaching(res)
+    ? 'Ignoring Caching'
+    : 'NOT Ignoring Caching'
+
+  console.log(cacheInfo)
 
   /*
   responseMeta.save(() => {
@@ -21,4 +25,18 @@ export const storeResponseMeta = (
     )
   })
   */
+}
+
+// TODO unit test this
+
+function isIgnoringCaching(res: Response) {
+  const cacheControlElements = res.headers
+    .get('Cache-Control')
+    ?.split(', ')
+
+  return (
+    !res.headers.has('Etag') ||
+    cacheControlElements?.includes('no-cache') ||
+    cacheControlElements?.includes('no-store')
+  )
 }

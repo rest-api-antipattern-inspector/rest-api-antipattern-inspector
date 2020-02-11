@@ -12,9 +12,13 @@ export const storeResponseMeta = (
     status: res.status,
   })
 
+  console.log(res.headers.has('content-length'))
+
+  /*
   responseMeta.save(() => {
     console.log(
       `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
     )
   })
+  */
 }

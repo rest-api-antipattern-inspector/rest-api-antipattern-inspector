@@ -64,9 +64,6 @@ function isBreakingSelfDescriptiveness(
     encouragedHeaders.push('Location')
   }
 
-  // TODO should we also return true here if
-  // uses discourages(?) custom x- header?
-
   for (const header of encouragedHeaders) {
     if (!res.headers.has(header)) return true
   }

@@ -36,6 +36,7 @@ function isIgnoringCaching(res: Response) {
 
   return (
     !res.headers.has('Etag') ||
+    !res.headers.has('Cache-Control') ||
     cacheControlElements?.includes('no-cache') ||
     cacheControlElements?.includes('no-store')
   )

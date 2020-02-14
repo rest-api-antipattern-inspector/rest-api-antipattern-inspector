@@ -15,7 +15,7 @@ export const storeResponseMeta = (
     status: res.status,
   })
 
-  console.log(bodyText)
+  console.log(getHeaderValues(res))
 
   const cacheInfo = isIgnoringCaching(res, httpMethod)
     ? 'Ignoring Caching'
@@ -39,6 +39,16 @@ export const storeResponseMeta = (
     )
   })
   */
+}
+
+function getHeaderValues(res: Response) {
+  const headerValues: string[] = []
+
+  res.headers.forEach((value) => {
+    headerValues.push(...value.split(', '))
+  })
+
+  return headerValues
 }
 
 // TODO unit test this

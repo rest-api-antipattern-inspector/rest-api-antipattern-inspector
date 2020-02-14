@@ -15,7 +15,14 @@ export const storeResponseMeta = (
     status: res.status,
   })
 
-  console.log(getHeaderValues(res))
+  const responseValues: string[] = []
+
+  responseValues.push(
+    ...getHeaderValues(res),
+    ...bodyText.split('"')
+  )
+
+  console.log(responseValues)
 
   const cacheInfo = isIgnoringCaching(res, httpMethod)
     ? 'Ignoring Caching'

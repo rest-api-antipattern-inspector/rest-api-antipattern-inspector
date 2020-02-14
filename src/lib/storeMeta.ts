@@ -4,6 +4,7 @@ import ResponseMeta from '../models/ResponseMeta'
 export const storeResponseMeta = (
   uri: string,
   res: Response,
+  bodyText: string,
   httpMethod: String,
   usesExpectedHTTPMethod: boolean
 ) => {
@@ -13,6 +14,8 @@ export const storeResponseMeta = (
     uri,
     status: res.status,
   })
+
+  console.log(bodyText)
 
   const cacheInfo = isIgnoringCaching(res, httpMethod)
     ? 'Ignoring Caching'

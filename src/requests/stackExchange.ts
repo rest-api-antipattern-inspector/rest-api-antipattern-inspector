@@ -10,7 +10,9 @@ async function stackOverflowInfo(): Promise<void> {
   const uri =
     'https://api.stackexchange.com/2.2/info?site=stackoverflow'
 
-  storeResponseMeta(uri, await fetch(uri), 'GET', true)
+  const res = await fetch(uri)
+
+  storeResponseMeta(uri, res, await res.text(), 'GET', true)
 }
 
 /**
@@ -23,5 +25,7 @@ async function relatedQuestionsSO(): Promise<void> {
   const uri =
     'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
 
-  storeResponseMeta(uri, await fetch(uri), 'GET', true)
+  const res = await fetch(uri)
+
+  storeResponseMeta(uri, res, await res.text(), 'GET', true)
 }

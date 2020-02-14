@@ -1,11 +1,13 @@
 require('dotenv').config()
 import Twit from 'twit'
 import endpoints from './endpoints'
+import MIMETypes from '../lib/MIMETypes'
 
 interface Endpoint {
   readonly method: string
   readonly url: string
   readonly params: object
+  readonly statusCode: number
 }
 
 const twitterClient = new Twit({
@@ -23,8 +25,17 @@ endpoints.forEach((endpoint: Endpoint) => {
       endpoint.url,
       endpoint.params,
       function(err: any, data: any, response: any) {
-        console.log(data)
-        //console.log(response)
+        const hasMIMEType = MIMETypes.some((type) =>
+          response.headers['content-type'].includes(type)
+        )
+        const correctStatusCode =
+          endpoint.statusCode === response.statusCode
+        const noCookie =
+          response.headers['set-cookie'] == null &&
+          response.headers['cookie'] == null
+        console.log(hasMIMEType)
+        console.log(correctStatusCode)
+        console.log(noCookie)
       }
     )
   } catch (e) {

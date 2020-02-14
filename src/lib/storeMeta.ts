@@ -5,7 +5,7 @@ export const storeResponseMeta = (
   uri: string,
   res: Response,
   bodyText: string,
-  httpMethod: String,
+  httpMethod: string,
   usesExpectedHTTPMethod: boolean
 ) => {
   // TODO: store more types of info
@@ -15,20 +15,21 @@ export const storeResponseMeta = (
     status: res.status,
   })
 
-  const responseValues: string[] = []
-
-  responseValues.push(
-    ...getHeaderValues(res),
-    ...bodyText.split('"')
-  )
-
-  console.log(responseValues)
-
   const cacheInfo = isIgnoringCaching(res, httpMethod)
     ? 'Ignoring Caching'
     : 'NOT Ignoring Caching'
 
   console.log(cacheInfo)
+
+  const hyperMediaInfo = isForgettingHypermedia(
+    res,
+    bodyText,
+    httpMethod
+  )
+    ? 'Forgetting Hypermedia'
+    : 'NOT Forgetting Hypermedia'
+
+  console.log(hyperMediaInfo)
 
   const selfDescriptivenessInfo = isBreakingSelfDescriptiveness(
     res,
@@ -48,17 +49,7 @@ export const storeResponseMeta = (
   */
 }
 
-function getHeaderValues(res: Response) {
-  const headerValues: string[] = []
-
-  res.headers.forEach((value) => {
-    headerValues.push(...value.split(', '))
-  })
-
-  return headerValues
-}
-
-// TODO unit test this
+// TODO unit test all of this
 
 function isBreakingSelfDescriptiveness(
   res: Response,
@@ -91,17 +82,65 @@ function isBreakingSelfDescriptiveness(
   return false
 }
 
+function isForgettingHypermedia(
+  res: Response,
+  bodyText: string,
+  httpMethod: string
+) {
+  if (httpMethod.toUpperCase() === 'POST') {
+    return !res.headers.has('Location')
+  }
+
+  const responseValues: string[] = []
+
+  responseValues.push(
+    ...getHeaderValues(res),
+    ...bodyText.split('"')
+  )
+
+  for (const value of responseValues) {
+    if (isValidURL(value)) return false
+  }
+
+  return true
+}
+
+function getHeaderValues(res: Response) {
+  const headerValues: string[] = []
+
+  res.headers.forEach((value) => {
+    headerValues.push(...value.split(', '))
+  })
+
+  return headerValues
+}
+
+/**
+ * Inspired by: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+ */
+function isValidURL(str: string) {
+  const pattern = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$', // fragment locator
+    'i'
+  )
+
+  return !!pattern.test(str)
+}
+
 function isIgnoringCaching(
   res: Response,
-  httpMethod: String
+  httpMethod: string
 ) {
   // TODO only if get
 
   const cacheControlElements = res.headers
     .get('Cache-Control')
     ?.split(', ')
-
-  // TODO also get request headers, or maybe not...
 
   return (
     httpMethod.toUpperCase() !== 'GET' || // Only checks for ignoring caching antipattern in GET requests

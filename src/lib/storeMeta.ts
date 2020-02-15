@@ -4,7 +4,6 @@ import ResponseMeta from '../models/ResponseMeta'
 export const storeResponseMeta = (
   uri: string,
   res: Response,
-  bodyText: string,
   httpMethod: string,
   usesExpectedHTTPMethod: boolean
 ) => {
@@ -20,16 +19,6 @@ export const storeResponseMeta = (
     : 'NOT Ignoring Caching'
 
   console.log(cacheInfo)
-
-  const hyperMediaInfo = isForgettingHypermedia(
-    res,
-    bodyText,
-    httpMethod
-  )
-    ? 'Forgetting Hypermedia'
-    : 'NOT Forgetting Hypermedia'
-
-  console.log(hyperMediaInfo)
 
   const selfDescriptivenessInfo = isBreakingSelfDescriptiveness(
     res,
@@ -80,56 +69,6 @@ function isBreakingSelfDescriptiveness(
   }
 
   return false
-}
-
-function isForgettingHypermedia(
-  res: Response,
-  bodyText: string,
-  httpMethod: string
-) {
-  if (httpMethod.toUpperCase() === 'POST') {
-    return !res.headers.has('Location')
-  }
-
-  const responseValues: string[] = []
-
-  responseValues.push(
-    ...getHeaderValues(res),
-    ...bodyText.split('"')
-  )
-
-  for (const value of responseValues) {
-    if (isValidURL(value)) return false
-  }
-
-  return true
-}
-
-function getHeaderValues(res: Response) {
-  const headerValues: string[] = []
-
-  res.headers.forEach((value) => {
-    headerValues.push(...value.split(', '))
-  })
-
-  return headerValues
-}
-
-/**
- * Inspired by: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
- */
-function isValidURL(str: string) {
-  const pattern = new RegExp(
-    '^(https?:\\/\\/)?' + // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$', // fragment locator
-    'i'
-  )
-
-  return !!pattern.test(str)
 }
 
 function isIgnoringCaching(

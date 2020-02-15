@@ -12,7 +12,7 @@ async function stackOverflowInfo(): Promise<void> {
 
   const res = await fetch(uri)
 
-  storeResponseMeta(uri, res, await res.text(), 'GET', true)
+  storeResponseMeta(uri, res, 'GET', true)
 }
 
 /**
@@ -27,5 +27,5 @@ async function relatedQuestionsSO(): Promise<void> {
 
   const res = await fetch(uri)
 
-  storeResponseMeta(uri, res, await res.text(), 'GET', true)
+  storeResponseMeta(uri, res, 'GET', true)
 }

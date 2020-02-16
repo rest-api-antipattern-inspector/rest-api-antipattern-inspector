@@ -5,7 +5,9 @@ export const storeResponseMeta = (
   uri: string,
   res: Response,
   httpMethod: string,
-  usesExpectedHTTPMethod: boolean
+  // TODO: check this:
+  usesExpectedHTTPMethod: boolean,
+  expectedStatusCode: number
 ) => {
   // TODO: store more types of info
   const responseMeta = new ResponseMeta({
@@ -14,28 +16,27 @@ export const storeResponseMeta = (
     status: res.status,
   })
 
-  const cacheInfo = isIgnoringCaching(res, httpMethod)
-    ? 'Ignoring Caching'
-    : 'NOT Ignoring Caching'
-
-  console.log(cacheInfo)
-
-  const selfDescriptivenessInfo = isBreakingSelfDescriptiveness(
-    res,
-    httpMethod
-  )
-    ? 'Breaks Self Descriptiveness'
-    : 'Does not break Self Descriptiveness'
-
-  console.log(selfDescriptivenessInfo)
+  console.log(responseMeta)
 
   /*
+  console.log(
+    `\nUri: ${uri}\nSession ID: ${process.env.SESSION_ID}`
+  )
+
+  if (isIgnoringCaching(res, httpMethod)) {
+    console.log('Ignoring caching detected')
+  }
+
+  if (isBreakingSelfDescriptiveness(res, httpMethod)) {
+    console.log('Breaking Self Descriptiveness detected')
+  }
+  */
+
   responseMeta.save(() => {
     console.log(
       `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
     )
   })
-  */
 }
 
 // TODO unit test all of this

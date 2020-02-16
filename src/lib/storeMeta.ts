@@ -1,5 +1,6 @@
 import { Response } from 'node-fetch'
 import ResponseMeta from '../models/ResponseMeta'
+import MIMETypes from './MIMETypes'
 
 export const storeResponseMeta = (
   uri: string,
@@ -76,8 +77,6 @@ function isIgnoringCaching(
   res: Response,
   httpMethod: string
 ) {
-  // TODO only if get
-
   const cacheControlElements = res.headers
     .get('Cache-Control')
     ?.split(', ')
@@ -88,5 +87,11 @@ function isIgnoringCaching(
     !res.headers.has('Cache-Control') ||
     cacheControlElements?.includes('no-cache') ||
     cacheControlElements?.includes('no-store')
+  )
+}
+
+function isIgnoringMIMEType(res: Response) {
+  return !MIMETypes.some((type) =>
+    res.headers.get('content-type')?.includes(type)
   )
 }

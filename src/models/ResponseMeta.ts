@@ -15,7 +15,6 @@ const requiredNumberConfig = {
   type: Number,
 }
 
-// TODO: store more types of info
 const responseMetaSchema = new Schema({
   date: { required: true, type: Date, default: Date.now },
   sessionID: requiredStringConfig,

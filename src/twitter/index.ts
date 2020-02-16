@@ -3,6 +3,9 @@ import Twit from 'twit'
 import endpoints from './endpoints'
 import MIMETypes from '../lib/MIMETypes'
 
+// TODO make this call storeMeta and call from app.ts,
+// make it easy to comment out in app
+
 interface Endpoint {
   readonly method: string
   readonly url: string
@@ -24,6 +27,8 @@ endpoints.forEach((endpoint: Endpoint) => {
     twitterClient.get(
       endpoint.url,
       endpoint.params,
+
+      // TODO just call response meta from here and rm check here
       function(err: any, data: any, response: any) {
         const hasMIMEType = MIMETypes.some((type) =>
           response.headers['content-type'].includes(type)

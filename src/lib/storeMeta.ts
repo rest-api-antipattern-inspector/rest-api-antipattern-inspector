@@ -4,7 +4,6 @@ import fs from 'fs'
 import MIMETypes from './MIMETypes'
 
 interface ResponseMeta {
-  sessionID: string | undefined
   uri: string
   httpMethod: string
 
@@ -30,7 +29,6 @@ export const storeResponseMeta = async (
   const body = await res.text()
 
   const responseMeta: ResponseMeta = {
-    sessionID: process.env.SESSION_ID,
     uri,
     httpMethod: httpMethod,
 
@@ -108,7 +106,7 @@ function hasLinkKeys(body: string) {}
 function isIgnoringCaching(
   res: Response,
   httpMethod: string
-) {
+): boolean {
   const cacheControlElements = res.headers
     .get('Cache-Control')
     ?.split(', ')
@@ -117,8 +115,10 @@ function isIgnoringCaching(
     httpMethod.toUpperCase() !== 'GET' || // Only checks for ignoring caching antipattern in GET requests
     !res.headers.has('Etag') ||
     !res.headers.has('Cache-Control') ||
-    cacheControlElements?.includes('no-cache') ||
-    cacheControlElements?.includes('no-store')
+    (cacheControlElements !== undefined &&
+      cacheControlElements?.includes('no-cache')) ||
+    (cacheControlElements !== undefined &&
+      cacheControlElements?.includes('no-store'))
   )
 }
 

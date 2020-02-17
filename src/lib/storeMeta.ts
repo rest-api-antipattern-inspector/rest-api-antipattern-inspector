@@ -74,6 +74,12 @@ function isBreakingSelfDescriptiveness(
   return false
 }
 
+function isForgettingHypermedia(
+  res: Response,
+  bodyText: string,
+  httpMethod: string
+) {}
+
 function isIgnoringCaching(
   res: Response,
   httpMethod: string

@@ -10,18 +10,16 @@ const requiredBoolConfig = {
   type: Boolean,
 }
 
-const requiredNumberConfig = {
-  required: true,
-  type: Number,
-}
-
 const responseMetaSchema = new Schema({
   date: { required: true, type: Date, default: Date.now },
   sessionID: requiredStringConfig,
+
   uri: requiredStringConfig,
   httpMethod: requiredStringConfig,
 
   isBreakingSelfDescriptiveness: requiredBoolConfig,
+
+  isForgettingHypermedia: requiredBoolConfig,
 
   isIgnoringCaching: requiredBoolConfig,
 

@@ -19,6 +19,7 @@ const responseMetaSchema = new Schema({
   date: { required: true, type: Date, default: Date.now },
   sessionID: requiredStringConfig,
   uri: requiredStringConfig,
+  httpMethod: requiredStringConfig,
 
   isBreakingSelfDescriptiveness: requiredBoolConfig,
 
@@ -29,9 +30,6 @@ const responseMetaSchema = new Schema({
   isIgnoringStatusCode: requiredBoolConfig,
 
   isMisusingCookies: requiredBoolConfig,
-
-  httpMethod: requiredStringConfig,
-  isUsingWrongHTTPMethod: requiredBoolConfig,
 })
 
 const ResponseMeta = mongoose.model(

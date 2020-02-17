@@ -4,16 +4,18 @@ import fs from 'fs'
 import ResponseMeta from '../models/ResponseMeta'
 import MIMETypes from './MIMETypes'
 
-export const storeResponseMeta = (
+export const storeResponseMeta = async (
   uri: string,
-  res: Response,
-  httpMethod: string,
-  usesExpectedHTTPMethod: boolean,
-  is200ExpectedStatusCode: boolean
+  responsePromise: Promise<Response>,
+  httpMethod: string
 ) => {
+  const res = await responsePromise
+  const body = await res.text()
+
   const responseMeta = new ResponseMeta({
     sessionID: process.env.SESSION_ID,
     uri,
+    httpMethod: httpMethod,
 
     isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
       res,
@@ -26,13 +28,10 @@ export const storeResponseMeta = (
 
     isIgnoringStatusCode: isIgnoringStatusCode(
       res,
-      is200ExpectedStatusCode
+      httpMethod
     ),
 
     isMisusingCookies: isMisusingCookies(res),
-
-    httpMethod: httpMethod,
-    isUsingWrongHTTPMethod: !usesExpectedHTTPMethod,
   })
 
   writeToFile(responseMeta)
@@ -100,9 +99,12 @@ function isIgnoringMIMEType(res: Response) {
 
 function isIgnoringStatusCode(
   res: Response,
-  is200ExpectedStatusCode: boolean
+  httpMethod: string
 ) {
-  return !is200ExpectedStatusCode && res.status !== 200
+  // TODO perhaps check this more thoroughly, check for acceptable status code for various http methods
+  return (
+    httpMethod.toUpperCase() !== 'GET' && res.status === 200
+  )
 }
 
 function isMisusingCookies(res: Response) {

@@ -1,8 +1,25 @@
 import { Response } from 'node-fetch'
 import { Document } from 'mongoose'
 import fs from 'fs'
-import ResponseMeta from '../models/ResponseMeta'
 import MIMETypes from './MIMETypes'
+
+interface ResponseMeta {
+  sessionID: string | undefined
+  uri: string
+  httpMethod: string
+
+  isBreakingSelfDescriptiveness: boolean
+
+  isForgettingHypermedia: boolean
+
+  isIgnoringCaching: boolean
+
+  isIgnoringMIMEType: boolean
+
+  isIgnoringStatusCode: boolean
+
+  isMisusingCookies: boolean
+}
 
 export const storeResponseMeta = async (
   uri: string,
@@ -12,13 +29,19 @@ export const storeResponseMeta = async (
   const res = await responsePromise
   const body = await res.text()
 
-  const responseMeta = new ResponseMeta({
+  const responseMeta: ResponseMeta = {
     sessionID: process.env.SESSION_ID,
     uri,
     httpMethod: httpMethod,
 
     isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
       res,
+      httpMethod
+    ),
+
+    isForgettingHypermedia: isForgettingHypermedia(
+      res,
+      body,
       httpMethod
     ),
 
@@ -32,7 +55,7 @@ export const storeResponseMeta = async (
     ),
 
     isMisusingCookies: isMisusingCookies(res),
-  })
+  }
 
   writeToFile(responseMeta)
 
@@ -76,9 +99,11 @@ function isBreakingSelfDescriptiveness(
 
 function isForgettingHypermedia(
   res: Response,
-  bodyText: string,
+  body: string,
   httpMethod: string
 ) {}
+
+function hasLinkKeys(body: string) {}
 
 function isIgnoringCaching(
   res: Response,
@@ -120,7 +145,7 @@ function isMisusingCookies(res: Response) {
   )
 }
 
-function writeToFile(responseMeta: Document) {
+function writeToFile(responseMeta: ResponseMeta) {
   const responses = JSON.parse(
     fs.readFileSync('responses.json', 'utf8')
   )

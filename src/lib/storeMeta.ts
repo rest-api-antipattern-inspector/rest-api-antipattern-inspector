@@ -1,4 +1,5 @@
 import { Response } from 'node-fetch'
+import { Document } from 'mongoose'
 import fs from 'fs'
 import ResponseMeta from '../models/ResponseMeta'
 import MIMETypes from './MIMETypes'
@@ -34,16 +35,7 @@ export const storeResponseMeta = (
     isUsingWrongHTTPMethod: !usesExpectedHTTPMethod,
   })
 
-  const responses = JSON.parse(
-    fs.readFileSync('responses.json', 'utf8')
-  )
-
-  responses.push(responseMeta)
-
-  fs.writeFileSync(
-    'responses.json',
-    JSON.stringify(responses)
-  )
+  writeToFile(responseMeta)
 
   console.log(
     `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
@@ -117,5 +109,18 @@ function isMisusingCookies(res: Response) {
   return (
     res.headers.has('set-cookie') ||
     res.headers.has('cookie')
+  )
+}
+
+function writeToFile(responseMeta: Document) {
+  const responses = JSON.parse(
+    fs.readFileSync('responses.json', 'utf8')
+  )
+
+  responses.push(responseMeta)
+
+  fs.writeFileSync(
+    'responses.json',
+    JSON.stringify(responses)
   )
 }

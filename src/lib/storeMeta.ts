@@ -6,33 +6,36 @@ export const storeResponseMeta = (
   uri: string,
   res: Response,
   httpMethod: string,
-  // TODO: check this:
   usesExpectedHTTPMethod: boolean,
-  expectedStatusCode: number
+  is200ExpectedStatusCode: boolean
 ) => {
-  // TODO: store more types of info
   const responseMeta = new ResponseMeta({
     sessionID: process.env.SESSION_ID,
     uri,
-    status: res.status,
+
+    isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
+      res,
+      httpMethod
+    ),
+
+    isIgnoringCaching: isIgnoringCaching(res, httpMethod),
+
+    isIgnoringMIMEType: isIgnoringMIMEType(res),
+
+    isIgnoringStatusCode: isIgnoringStatusCode(
+      res,
+      is200ExpectedStatusCode
+    ),
+
+    isMisusingCookies: isMisusingCookies(res),
+
+    httpMethod: httpMethod,
+    isUsingWrongHTTPMethod: !usesExpectedHTTPMethod,
   })
 
   console.log(responseMeta)
 
-  /*
-  console.log(
-    `\nUri: ${uri}\nSession ID: ${process.env.SESSION_ID}`
-  )
-
-  if (isIgnoringCaching(res, httpMethod)) {
-    console.log('Ignoring caching detected')
-  }
-
-  if (isBreakingSelfDescriptiveness(res, httpMethod)) {
-    console.log('Breaking Self Descriptiveness detected')
-  }
-  */
-
+  // TODO write to file instead of db
   responseMeta.save(() => {
     console.log(
       `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
@@ -93,5 +96,19 @@ function isIgnoringCaching(
 function isIgnoringMIMEType(res: Response) {
   return !MIMETypes.some((type) =>
     res.headers.get('content-type')?.includes(type)
+  )
+}
+
+function isIgnoringStatusCode(
+  res: Response,
+  is200ExpectedStatusCode: boolean
+) {
+  return !is200ExpectedStatusCode && res.status !== 200
+}
+
+function isMisusingCookies(res: Response) {
+  return (
+    res.headers.has('set-cookie') ||
+    res.headers.has('cookie')
   )
 }

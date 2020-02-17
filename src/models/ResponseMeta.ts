@@ -26,7 +26,6 @@ const responseMetaSchema = new Schema({
 
   isIgnoringMIMEType: requiredBoolConfig,
 
-  expectedStatusCode: requiredNumberConfig,
   isIgnoringStatusCode: requiredBoolConfig,
 
   isMisusingCookies: requiredBoolConfig,

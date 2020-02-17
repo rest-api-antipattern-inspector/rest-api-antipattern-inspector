@@ -1,4 +1,5 @@
 import { Response } from 'node-fetch'
+import fs from 'fs'
 import ResponseMeta from '../models/ResponseMeta'
 import MIMETypes from './MIMETypes'
 
@@ -36,11 +37,10 @@ export const storeResponseMeta = (
   console.log(responseMeta)
 
   // TODO write to file instead of db
-  responseMeta.save(() => {
-    console.log(
-      `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
-    )
-  })
+
+  console.log(
+    `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
+  )
 }
 
 // TODO unit test all of this

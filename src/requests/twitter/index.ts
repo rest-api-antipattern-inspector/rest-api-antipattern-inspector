@@ -24,14 +24,12 @@ export const doTwitterRequests = () => {
   endpoints.forEach((endpoint: Endpoint) => {
     try {
       // TODO use node-fetch here instead, response not compatible
-
+      // TODO call storeResponseMeta with response
       twitterClient.get(
         endpoint.url,
         endpoint.params,
 
-        function(err: any, data: any, response: any) {
-          // TODO call storeResponseMeta from here
-        }
+        function(err: any, data: any, response: any) {}
       )
     } catch (e) {
       console.log(e)

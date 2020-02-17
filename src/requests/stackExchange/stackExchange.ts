@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { storeResponseMeta } from '../lib/storeMeta'
+import { storeResponseMeta } from '../../lib/storeMeta'
 
 export const doStackExchangeRequests = (): void => {
   stackOverflowInfo()

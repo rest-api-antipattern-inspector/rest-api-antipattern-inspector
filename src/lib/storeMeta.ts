@@ -1,5 +1,4 @@
 import { Response } from 'node-fetch'
-import { Document } from 'mongoose'
 import fs from 'fs'
 import MIMETypes from './MIMETypes'
 
@@ -26,40 +25,46 @@ export const storeResponseMeta = async (
   httpMethod: string
 ) => {
   const res = await responsePromise
-  const body = await res.text()
+  const bodyText = await res.text()
 
-  const responseMeta: ResponseMeta = {
-    uri,
-    httpMethod: httpMethod,
-
-    isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
-      res,
-      httpMethod
-    ),
-
-    isForgettingHypermedia: true /*isForgettingHypermedia(
-      res,
-      body,
-      httpMethod
-    ),*/,
-
-    isIgnoringCaching: isIgnoringCaching(res, httpMethod),
-
-    isIgnoringMIMEType: isIgnoringMIMEType(res),
-
-    isIgnoringStatusCode: isIgnoringStatusCode(
-      res,
-      httpMethod
-    ),
-
-    isMisusingCookies: isMisusingCookies(res),
-  }
-
-  writeToFile(responseMeta)
+  const bodyObject: object = JSON.parse(bodyText)
 
   console.log(
-    `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
+    isForgettingHypermedia(res, bodyObject, httpMethod)
   )
+
+  // const responseMeta: ResponseMeta = {
+  //   uri,
+  //   httpMethod: httpMethod,
+
+  //   isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
+  //     res,
+  //     httpMethod
+  //   ),
+
+  //   isForgettingHypermedia: isForgettingHypermedia(
+  //     res,
+  //     body,
+  //     httpMethod
+  //   ),
+
+  //   isIgnoringCaching: isIgnoringCaching(res, httpMethod),
+
+  //   isIgnoringMIMEType: isIgnoringMIMEType(res),
+
+  //   isIgnoringStatusCode: isIgnoringStatusCode(
+  //     res,
+  //     httpMethod
+  //   ),
+
+  //   isMisusingCookies: isMisusingCookies(res),
+  // }
+
+  // writeToFile(responseMeta)
+
+  // console.log(
+  //   `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
+  // )
 }
 
 // TODO unit test all of this
@@ -97,11 +102,33 @@ function isBreakingSelfDescriptiveness(
 
 function isForgettingHypermedia(
   res: Response,
-  body: string,
+  body: object,
   httpMethod: string
-) {}
+) {
+  const result = getAllProperties(body)
+  console.log(result)
+}
 
-function hasLinkKeys(body: string) {}
+/**
+ * Inspired by method described here:
+ * https://stackoverflow.com/a/11922384/9374593
+ * @param obj
+ */
+function getAllProperties(obj: any): any | void {
+  const properties = []
+
+  for (const property in obj) {
+    const value = obj[property]
+
+    typeof value === 'object'
+      ? properties.push(getAllProperties(value))
+      : // TODO here, check if property is correct property
+        // i.e. link/links/href, if so can set flag bool
+        properties.push(property)
+  }
+
+  return properties
+}
 
 function isIgnoringCaching(
   res: Response,

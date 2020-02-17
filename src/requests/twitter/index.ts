@@ -32,9 +32,7 @@ export const doTwitterRequests = () => {
           storeResponseMeta(
             endpoint.url,
             response,
-            endpoint.method,
-            true,
-            endpoint.statusCode === response.status
+            endpoint.method
           )
         }
       )

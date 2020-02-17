@@ -37,11 +37,11 @@ export const storeResponseMeta = async (
       httpMethod
     ),
 
-    isForgettingHypermedia: isForgettingHypermedia(
+    isForgettingHypermedia: true /*isForgettingHypermedia(
       res,
       body,
       httpMethod
-    ),
+    ),*/,
 
     isIgnoringCaching: isIgnoringCaching(res, httpMethod),
 

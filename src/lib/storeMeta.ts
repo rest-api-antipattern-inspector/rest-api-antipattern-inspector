@@ -34,9 +34,16 @@ export const storeResponseMeta = (
     isUsingWrongHTTPMethod: !usesExpectedHTTPMethod,
   })
 
-  console.log(responseMeta)
+  const responses = JSON.parse(
+    fs.readFileSync('responses.json', 'utf8')
+  )
 
-  // TODO write to file instead of db
+  responses.push(responseMeta)
+
+  fs.writeFileSync(
+    'responses.json',
+    JSON.stringify(responses)
+  )
 
   console.log(
     `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`

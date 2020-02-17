@@ -16,5 +16,4 @@ console.log('Use Control-C to exit')
 fs.writeFileSync('responses.json', '[]')
 
 doStackExchangeRequests()
-// TODO uncomment
-// doTwitterRequests()
+doTwitterRequests()

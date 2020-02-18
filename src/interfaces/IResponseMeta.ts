@@ -4,7 +4,7 @@ export default interface ResponseMeta {
 
   isBreakingSelfDescriptiveness: boolean
 
-  // TODO uncomment
+  // TODO uncomment:
   // isForgettingHypermedia: boolean
 
   isIgnoringCaching: boolean

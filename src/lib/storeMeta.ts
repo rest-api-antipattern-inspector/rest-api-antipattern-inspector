@@ -1,23 +1,7 @@
 import { Response } from 'node-fetch'
 import fs from 'fs'
 import MIMETypes from './MIMETypes'
-
-interface ResponseMeta {
-  uri: string
-  httpMethod: string
-
-  isBreakingSelfDescriptiveness: boolean
-
-  isForgettingHypermedia: boolean
-
-  isIgnoringCaching: boolean
-
-  isIgnoringMIMEType: boolean
-
-  isIgnoringStatusCode: boolean
-
-  isMisusingCookies: boolean
-}
+import IResponseMeta from '../interfaces/IResponseMeta'
 
 export const storeResponseMeta = async (
   uri: string,
@@ -33,7 +17,7 @@ export const storeResponseMeta = async (
     isForgettingHypermedia(res, bodyObject, httpMethod)
   )
 
-  // const responseMeta: ResponseMeta = {
+  // const responseMeta: IResponseMeta = {
   //   uri,
   //   httpMethod: httpMethod,
 
@@ -66,6 +50,8 @@ export const storeResponseMeta = async (
   //   `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
   // )
 }
+
+// TODO put checks in separate file
 
 // TODO unit test all of this
 

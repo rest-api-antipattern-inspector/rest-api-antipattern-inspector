@@ -1,4 +1,3 @@
-import { Response } from 'node-fetch'
 import fs from 'fs'
 import MIMETypes from './MIMETypes'
 import IResponse from '../interfaces/IResponse'
@@ -25,6 +24,8 @@ export const storeResponseMeta = async (
       res,
       httpMethod
     ),
+
+    // TODO add hypermedia check
 
     //   isForgettingHypermedia: isForgettingHypermedia(
     //     res,

@@ -54,7 +54,7 @@ export const storeResponseMeta = async (
 
   writeToFile(responseMeta)
 
-  console.log(`Stored info for ${uri}`)
+  console.log(`Stored info for ${httpMethod} ${uri}`)
 }
 
 function writeToFile(responseMeta: IResponseMeta) {

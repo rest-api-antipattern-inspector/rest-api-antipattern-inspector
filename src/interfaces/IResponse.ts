@@ -1,5 +1,3 @@
-// TODO perhaps create res interface with status, methods for get & has
-
 export default interface IResponse {
   status: number
 

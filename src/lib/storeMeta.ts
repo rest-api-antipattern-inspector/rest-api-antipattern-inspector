@@ -6,11 +6,9 @@ import IResponseMeta from '../interfaces/IResponseMeta'
 
 export const storeResponseMeta = async (
   uri: string,
-  responsePromise: Promise<IResponse>,
+  res: IResponse,
   httpMethod: string
 ) => {
-  const res = await responsePromise
-  // const res: IResponse = response
   const bodyText = await res.text()
 
   const bodyObject: object = JSON.parse(bodyText)
@@ -48,9 +46,7 @@ export const storeResponseMeta = async (
 
   writeToFile(responseMeta)
 
-  console.log(
-    `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
-  )
+  console.log(`Stored info for ${uri}`)
 }
 
 // TODO put checks in separate file

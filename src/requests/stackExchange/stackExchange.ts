@@ -7,11 +7,11 @@ export const doStackExchangeRequests = (): void => {
   relatedQuestionsSO()
 }
 
-function stackOverflowInfo() {
+async function stackOverflowInfo() {
   const uri =
     'https://api.stackexchange.com/2.2/info?site=stackoverflow'
 
-  const res = fetch(uri)
+  const res = await fetch(uri)
 
   storeResponseMeta(uri, res, 'GET')
 }
@@ -22,11 +22,11 @@ function stackOverflowInfo() {
  * https://stackoverflow.com/questions/60075237/best-way-to-handle-an-account-linking-verification-system
  * https://stackoverflow.com/questions/57496313/execution-failed-for-task-appmergedebugresources-com-android-builder-interna
  */
-function relatedQuestionsSO() {
+async function relatedQuestionsSO() {
   const uri =
     'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
 
-  const res = fetch(uri)
+  const res = await fetch(uri)
 
   storeResponseMeta(uri, res, 'GET')
 }

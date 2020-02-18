@@ -1,7 +1,7 @@
 import Twit from 'twit'
 import endpoints from './endpoints'
-import fetch, { Response } from 'node-fetch'
 import { storeResponseMeta } from '../../lib/storeMeta'
+import IResponse from '../../interfaces/IResponse'
 
 interface Endpoint {
   readonly method: string
@@ -28,8 +28,11 @@ export const doTwitterRequests = () => {
         endpoint.params,
 
         function(err: any, data: any, response: any) {
-          // TODO use node-fetch here instead, response is not compatible
-          // or perhaps it can be solved with an interface
+          // TODO
+          // response variable is not compatible
+          // could be solved by fetching with node-fetch or
+          // by using the IResponse interface from '../../interfaces/IResponse
+          // to make response compatible
           storeResponseMeta(
             endpoint.url,
             response,

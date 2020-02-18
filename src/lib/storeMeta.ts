@@ -1,20 +1,71 @@
-import { Response } from 'node-fetch'
-import ResponseMeta from '../models/ResponseMeta'
+import fs from 'fs'
+import IResponse from '../interfaces/IResponse'
+import IResponseMeta from '../interfaces/IResponseMeta'
+import {
+  isBreakingSelfDescriptiveness,
+  isForgettingHypermedia,
+  isIgnoringCaching,
+  isIgnoringMIMEType,
+  isIgnoringStatusCode,
+  isMisusingCookies,
+} from './designAntipatternsDetectors'
 
-export const storeResponseMeta = (
+export const storeResponseMeta = async (
   uri: string,
-  res: Response
+  res: IResponse,
+  httpMethod: string
 ) => {
-  // TODO: store more types of info
-  const responseMeta = new ResponseMeta({
-    sessionID: process.env.SESSION_ID,
-    uri,
-    status: res.status,
-  })
+  const bodyText = await res.text()
 
-  responseMeta.save(() => {
-    console.log(
-      `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
-    )
-  })
+  const bodyObject: object = JSON.parse(bodyText)
+
+  console.log(
+    isForgettingHypermedia(res, bodyObject, httpMethod)
+  )
+
+  const responseMeta: IResponseMeta = {
+    uri,
+    httpMethod: httpMethod,
+
+    isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
+      res,
+      httpMethod
+    ),
+
+    // TODO add hypermedia check
+
+    //   isForgettingHypermedia: isForgettingHypermedia(
+    //     res,
+    //     bodyObject,
+    //     httpMethod
+    //   ),
+
+    isIgnoringCaching: isIgnoringCaching(res, httpMethod),
+
+    isIgnoringMIMEType: isIgnoringMIMEType(res),
+
+    isIgnoringStatusCode: isIgnoringStatusCode(
+      res,
+      httpMethod
+    ),
+
+    isMisusingCookies: isMisusingCookies(res),
+  }
+
+  writeToFile(responseMeta)
+
+  console.log(`Stored info for ${httpMethod} ${uri}`)
+}
+
+function writeToFile(responseMeta: IResponseMeta) {
+  const responses = JSON.parse(
+    fs.readFileSync('responses.json', 'utf8')
+  )
+
+  responses.push(responseMeta)
+
+  fs.writeFileSync(
+    'responses.json',
+    JSON.stringify(responses)
+  )
 }

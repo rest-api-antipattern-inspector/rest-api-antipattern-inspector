@@ -10,13 +10,14 @@ export const storeResponseMeta = async (
   httpMethod: string
 ) => {
   const res = await responsePromise
+  // const res: IResponse = response
   const bodyText = await res.text()
 
   const bodyObject: object = JSON.parse(bodyText)
 
-  console.log(
-    isForgettingHypermedia(res, bodyObject, httpMethod)
-  )
+  // console.log(
+  //   isForgettingHypermedia(res, bodyObject, httpMethod)
+  // )
 
   const responseMeta: IResponseMeta = {
     uri,
@@ -27,11 +28,11 @@ export const storeResponseMeta = async (
       httpMethod
     ),
 
-    isForgettingHypermedia: isForgettingHypermedia(
-      res,
-      body,
-      httpMethod
-    ),
+    //   isForgettingHypermedia: isForgettingHypermedia(
+    //     res,
+    //     bodyObject,
+    //     httpMethod
+    //   ),
 
     isIgnoringCaching: isIgnoringCaching(res, httpMethod),
 
@@ -88,7 +89,7 @@ function isBreakingSelfDescriptiveness(
 }
 
 function isForgettingHypermedia(
-  res: Response,
+  res: IResponse,
   body: object,
   httpMethod: string
 ) {
@@ -118,7 +119,7 @@ function getAllProperties(obj: any): any | void {
 }
 
 function isIgnoringCaching(
-  res: Response,
+  res: IResponse,
   httpMethod: string
 ): boolean {
   const cacheControlElements = res.headers
@@ -136,14 +137,14 @@ function isIgnoringCaching(
   )
 }
 
-function isIgnoringMIMEType(res: Response) {
+function isIgnoringMIMEType(res: IResponse) {
   return !MIMETypes.some((type) =>
     res.headers.get('content-type')?.includes(type)
   )
 }
 
 function isIgnoringStatusCode(
-  res: Response,
+  res: IResponse,
   httpMethod: string
 ) {
   // TODO perhaps check this more thoroughly, check for acceptable status code for various http methods
@@ -152,7 +153,7 @@ function isIgnoringStatusCode(
   )
 }
 
-function isMisusingCookies(res: Response) {
+function isMisusingCookies(res: IResponse) {
   return (
     res.headers.has('set-cookie') ||
     res.headers.has('cookie')

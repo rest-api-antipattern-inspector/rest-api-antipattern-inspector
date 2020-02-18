@@ -10,6 +10,6 @@ export default interface IResponse {
 
   headers: {
     has(name: string): boolean
-    get(name: string): string
+    get(name: string): string | null
   }
 }

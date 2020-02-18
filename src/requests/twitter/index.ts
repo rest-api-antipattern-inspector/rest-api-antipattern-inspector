@@ -29,6 +29,7 @@ export const doTwitterRequests = () => {
 
         function(err: any, data: any, response: any) {
           // TODO use node-fetch here instead, response is not compatible
+          // or perhaps it can be solved with an interface
           storeResponseMeta(
             endpoint.url,
             response,

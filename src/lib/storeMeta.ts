@@ -1,11 +1,12 @@
 import { Response } from 'node-fetch'
 import fs from 'fs'
 import MIMETypes from './MIMETypes'
+import IResponse from '../interfaces/IResponse'
 import IResponseMeta from '../interfaces/IResponseMeta'
 
 export const storeResponseMeta = async (
   uri: string,
-  responsePromise: Promise<Response>,
+  responsePromise: Promise<IResponse>,
   httpMethod: string
 ) => {
   const res = await responsePromise
@@ -17,38 +18,38 @@ export const storeResponseMeta = async (
     isForgettingHypermedia(res, bodyObject, httpMethod)
   )
 
-  // const responseMeta: IResponseMeta = {
-  //   uri,
-  //   httpMethod: httpMethod,
+  const responseMeta: IResponseMeta = {
+    uri,
+    httpMethod: httpMethod,
 
-  //   isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
-  //     res,
-  //     httpMethod
-  //   ),
+    isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
+      res,
+      httpMethod
+    ),
 
-  //   isForgettingHypermedia: isForgettingHypermedia(
-  //     res,
-  //     body,
-  //     httpMethod
-  //   ),
+    isForgettingHypermedia: isForgettingHypermedia(
+      res,
+      body,
+      httpMethod
+    ),
 
-  //   isIgnoringCaching: isIgnoringCaching(res, httpMethod),
+    isIgnoringCaching: isIgnoringCaching(res, httpMethod),
 
-  //   isIgnoringMIMEType: isIgnoringMIMEType(res),
+    isIgnoringMIMEType: isIgnoringMIMEType(res),
 
-  //   isIgnoringStatusCode: isIgnoringStatusCode(
-  //     res,
-  //     httpMethod
-  //   ),
+    isIgnoringStatusCode: isIgnoringStatusCode(
+      res,
+      httpMethod
+    ),
 
-  //   isMisusingCookies: isMisusingCookies(res),
-  // }
+    isMisusingCookies: isMisusingCookies(res),
+  }
 
-  // writeToFile(responseMeta)
+  writeToFile(responseMeta)
 
-  // console.log(
-  //   `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
-  // )
+  console.log(
+    `Stored info for ${uri} with session ID ${process.env.SESSION_ID}`
+  )
 }
 
 // TODO put checks in separate file
@@ -56,7 +57,7 @@ export const storeResponseMeta = async (
 // TODO unit test all of this
 
 function isBreakingSelfDescriptiveness(
-  res: Response,
+  res: IResponse,
   httpMethod: String
 ) {
   // TODO: ignore Etag here, covered in ignoring caching check
@@ -158,7 +159,7 @@ function isMisusingCookies(res: Response) {
   )
 }
 
-function writeToFile(responseMeta: ResponseMeta) {
+function writeToFile(responseMeta: IResponseMeta) {
   const responses = JSON.parse(
     fs.readFileSync('responses.json', 'utf8')
   )

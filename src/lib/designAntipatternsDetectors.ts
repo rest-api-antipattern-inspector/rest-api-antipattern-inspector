@@ -34,7 +34,6 @@ export const isBreakingSelfDescriptiveness = (
   return false
 }
 
-// TODO this doesn't work yet
 export const isForgettingHypermedia = (
   res: IResponse,
   body: string,

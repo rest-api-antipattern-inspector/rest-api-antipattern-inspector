@@ -17,38 +17,36 @@ export const storeResponseMeta = async (
 ) => {
   const body = await res.text()
 
-  console.log(isForgettingHypermedia(res, body, httpMethod))
+  const responseMeta: IResponseMeta = {
+    uri,
+    httpMethod: httpMethod,
 
-  // const responseMeta: IResponseMeta = {
-  //   uri,
-  //   httpMethod: httpMethod,
+    isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
+      res,
+      httpMethod
+    ),
 
-  //   isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
-  //     res,
-  //     httpMethod
-  //   ),
+    isForgettingHypermedia: isForgettingHypermedia(
+      res,
+      body,
+      httpMethod
+    ),
 
-  //   isForgettingHypermedia: isForgettingHypermedia(
-  //     res,
-  //     body,
-  //     httpMethod
-  //   ),
+    isIgnoringCaching: isIgnoringCaching(res, httpMethod),
 
-  //   isIgnoringCaching: isIgnoringCaching(res, httpMethod),
+    isIgnoringMIMEType: isIgnoringMIMEType(res),
 
-  //   isIgnoringMIMEType: isIgnoringMIMEType(res),
+    isIgnoringStatusCode: isIgnoringStatusCode(
+      res,
+      httpMethod
+    ),
 
-  //   isIgnoringStatusCode: isIgnoringStatusCode(
-  //     res,
-  //     httpMethod
-  //   ),
+    isMisusingCookies: isMisusingCookies(res),
+  }
 
-  //   isMisusingCookies: isMisusingCookies(res),
-  // }
+  writeToFile(responseMeta)
 
-  // writeToFile(responseMeta)
-
-  // console.log(`Stored info for ${httpMethod} ${uri}`)
+  console.log(`Stored info for ${httpMethod} ${uri}`)
 }
 
 function writeToFile(responseMeta: IResponseMeta) {

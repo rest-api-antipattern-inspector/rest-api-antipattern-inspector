@@ -19,8 +19,6 @@ export default () =>
         headers: {
           Authorization:
             'Bearer ' + process.env.TWITTER_TOKEN,
-          'User-Agent': 'My Twitter App v1.0.23',
-          'Accept-Encoding': 'gzip',
         },
       }
     )

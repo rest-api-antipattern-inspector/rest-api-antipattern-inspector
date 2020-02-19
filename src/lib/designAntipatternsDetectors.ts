@@ -37,55 +37,29 @@ export const isBreakingSelfDescriptiveness = (
 // TODO this doesn't work yet
 export const isForgettingHypermedia = (
   res: IResponse,
-  body: object,
+  body: string,
   httpMethod: string
-): boolean => {
+) => {
   // TODO also check location if post
 
-  let hasLinkKeyFlag = false
-  searchKeys(body, hasLinkKeyFlag)
-  return hasLinkKeyFlag
+  const parts = body.split('"')
+
+  return hasLinkTerm(parts)
 }
 
-/**
- * Inspired by method described here:
- * https://stackoverflow.com/a/11922384/9374593
- * @param obj
- */
-function searchKeys(
-  obj: any,
-  hasLinkKeyFlag: boolean
-): void {
-  const keys = []
-
-  for (const key in obj) {
-    const value = obj[key]
-
-    typeof value === 'object'
-      ? keys.push(searchKeys(value, hasLinkKeyFlag))
-      : setLinkKeyFlag(key, hasLinkKeyFlag)
+function hasLinkTerm(parts: string[]) {
+  for (const part of parts) {
+    if (isLinkTerm(part)) return true
   }
+
+  return false
 }
 
-function setLinkKeyFlag(
-  key: string,
-  hasLinkKeyFlag: boolean
-) {
-  if (isLinkKey(key)) {
-    hasLinkKeyFlag === true
-  }
-  // console.log(key + ' ' + hasLinkKeyFlag)
-}
-
-function isLinkKey(key: string) {
-  console.log(key)
-  console.log(
-    key === 'link' || key === 'links' || key === 'href'
+function isLinkTerm(part: string): boolean {
+  return (
+    part === 'link' || part === 'links' || part === 'href'
   )
-  return key === 'link' || key === 'links' || key === 'href'
 }
-
-// TODO function that finds citation, all letters until next citation
 
 export const isIgnoringCaching = (
   res: IResponse,

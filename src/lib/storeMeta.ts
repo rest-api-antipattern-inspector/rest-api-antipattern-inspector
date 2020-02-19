@@ -15,13 +15,9 @@ export const storeResponseMeta = async (
   res: IResponse,
   httpMethod: string
 ) => {
-  const bodyText = await res.text()
+  const body = await res.text()
 
-  const bodyObject: object = JSON.parse(bodyText)
-
-  console.log(
-    isForgettingHypermedia(res, bodyObject, httpMethod)
-  )
+  console.log(isForgettingHypermedia(res, body, httpMethod))
 
   // const responseMeta: IResponseMeta = {
   //   uri,
@@ -34,7 +30,7 @@ export const storeResponseMeta = async (
 
   //   isForgettingHypermedia: isForgettingHypermedia(
   //     res,
-  //     bodyObject,
+  //     body,
   //     httpMethod
   //   ),
 

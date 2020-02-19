@@ -39,9 +39,12 @@ export const isForgettingHypermedia = (
   res: IResponse,
   body: object,
   httpMethod: string
-) => {
-  const result = getAllProperties(body)
-  console.log(result)
+): boolean => {
+  // TODO also check location if post
+
+  let hasLinkKeyFlag = false
+  searchKeys(body, hasLinkKeyFlag)
+  return hasLinkKeyFlag
 }
 
 /**
@@ -49,21 +52,40 @@ export const isForgettingHypermedia = (
  * https://stackoverflow.com/a/11922384/9374593
  * @param obj
  */
-function getAllProperties(obj: any): any | void {
-  const properties = []
+function searchKeys(
+  obj: any,
+  hasLinkKeyFlag: boolean
+): void {
+  const keys = []
 
-  for (const property in obj) {
-    const value = obj[property]
+  for (const key in obj) {
+    const value = obj[key]
 
     typeof value === 'object'
-      ? properties.push(getAllProperties(value))
-      : // TODO here, check if property is correct property
-        // i.e. link/links/href, if so can set flag bool
-        properties.push(property)
+      ? keys.push(searchKeys(value, hasLinkKeyFlag))
+      : setLinkKeyFlag(key, hasLinkKeyFlag)
   }
-
-  return properties
 }
+
+function setLinkKeyFlag(
+  key: string,
+  hasLinkKeyFlag: boolean
+) {
+  if (isLinkKey(key)) {
+    hasLinkKeyFlag === true
+  }
+  // console.log(key + ' ' + hasLinkKeyFlag)
+}
+
+function isLinkKey(key: string) {
+  console.log(key)
+  console.log(
+    key === 'link' || key === 'links' || key === 'href'
+  )
+  return key === 'link' || key === 'links' || key === 'href'
+}
+
+// TODO function that finds citation, all letters until next citation
 
 export const isIgnoringCaching = (
   res: IResponse,

@@ -40,7 +40,12 @@ export const isForgettingHypermedia = (
   body: string,
   httpMethod: string
 ) => {
-  // TODO also check location if post
+  if (
+    httpMethod.toUpperCase() === 'POST' &&
+    res.headers.has('Location')
+  ) {
+    return false
+  }
 
   const parts = body.split('"')
 

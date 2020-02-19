@@ -10,7 +10,7 @@ interface Endpoint {
   readonly statusCode: number
 }
 
-export default async () => {
+export default () =>
   endpoints.forEach(async (endpoint: Endpoint) => {
     const response = await fetch(
       `${BASE_URL}${endpoint.url}`,
@@ -30,4 +30,3 @@ export default async () => {
       endpoint.method
     )
   })
-}

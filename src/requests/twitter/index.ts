@@ -10,7 +10,7 @@ interface Endpoint {
   readonly statusCode: number
 }
 
-export const doTwitterRequests = async () => {
+export default async () => {
   endpoints.forEach(async (endpoint: Endpoint) => {
     const response = await fetch(
       `${BASE_URL}${endpoint.url}`,

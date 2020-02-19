@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import fs from 'fs'
 import { doStackExchangeRequests } from './requests/stackExchange/stackExchange'
-import { doTwitterRequests } from './requests/twitter/index'
+import doTwitterRequests from './requests/twitter'
 
 dotenv.config()
 

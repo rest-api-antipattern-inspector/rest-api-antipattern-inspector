@@ -34,35 +34,35 @@ export const isBreakingSelfDescriptiveness = (
   return false
 }
 
-// TODO this doesn't work yet
 export const isForgettingHypermedia = (
   res: IResponse,
-  body: object,
+  body: string,
   httpMethod: string
 ) => {
-  const result = getAllProperties(body)
-  console.log(result)
-}
-
-/**
- * Inspired by method described here:
- * https://stackoverflow.com/a/11922384/9374593
- * @param obj
- */
-function getAllProperties(obj: any): any | void {
-  const properties = []
-
-  for (const property in obj) {
-    const value = obj[property]
-
-    typeof value === 'object'
-      ? properties.push(getAllProperties(value))
-      : // TODO here, check if property is correct property
-        // i.e. link/links/href, if so can set flag bool
-        properties.push(property)
+  if (
+    httpMethod.toUpperCase() === 'POST' &&
+    res.headers.has('Location')
+  ) {
+    return false
   }
 
-  return properties
+  const parts = body.split('"')
+
+  return !hasLinkTerm(parts)
+}
+
+function hasLinkTerm(parts: string[]) {
+  for (const part of parts) {
+    if (isLinkTerm(part)) return true
+  }
+
+  return false
+}
+
+function isLinkTerm(part: string): boolean {
+  return (
+    part === 'link' || part === 'links' || part === 'href'
+  )
 }
 
 export const isIgnoringCaching = (

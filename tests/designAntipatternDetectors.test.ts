@@ -19,6 +19,15 @@ test('Ignoring Status Code: true, HTTP Post with status code 200', () => {
   ).toBeTruthy()
 })
 
+test('Ignoring Status Code: false, HTTP Post with status code 201', () => {
+  const responseStub = new FakeResponse(201, '', [])
+    .responseStub
+
+  expect(
+    isIgnoringStatusCode(responseStub, 'pOst')
+  ).toBeFalsy()
+})
+
 test('Ignoring Status Code: false, HTTP GET with status code 200', () => {
   const responseStub = new FakeResponse(200, '', [])
     .responseStub
@@ -26,4 +35,13 @@ test('Ignoring Status Code: false, HTTP GET with status code 200', () => {
   expect(
     isIgnoringStatusCode(responseStub, 'gEt')
   ).toBeFalsy()
+})
+
+test('Ignoring Status Code: true, HTTP GET with status code 201', () => {
+  const responseStub = new FakeResponse(201, '', [])
+    .responseStub
+
+  expect(
+    isIgnoringStatusCode(responseStub, 'gEt')
+  ).toBeTruthy()
 })

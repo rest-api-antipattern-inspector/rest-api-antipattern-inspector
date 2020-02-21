@@ -1,3 +1,4 @@
+import FakeResponse from './FakeResponse'
 import {
   isBreakingSelfDescriptiveness,
   isForgettingHypermedia,
@@ -6,10 +7,11 @@ import {
   isIgnoringStatusCode,
   isMisusingCookies,
 } from '../lib/designAntipatternsDetectors'
-import FakeResponse from './FakeResponse'
 
 describe('Tests of Design Antipattern Detections', () => {
   describe('Tests of Ignoring Status Code Detection', () => {
+    // TODO add more elaborate tests here
+
     it('HTTP Post with status code 200 should detect antipattern', () => {
       const responseStub = new FakeResponse(200, '', [])
         .responseStub

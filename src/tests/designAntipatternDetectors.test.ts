@@ -8,37 +8,44 @@ import {
 } from '../lib/designAntipatternsDetectors'
 import IResponse from '../interfaces/IResponse'
 
-// Try just running, tsc + run
-
-// export default interface IResponse {
-//   status: number
-
-//   /**
-//    * The response body
-//    */
-//   text(): Promise<string>
-
-//   headers: {
-//     has(name: string): boolean
-//     get(name: string): string | null
-//   }
-// }
-
 class FakeResponse {
   status: number
+  textContent: string
+  headers: string[]
+  responseStub: IResponse
 
-  constructor(status: number) {
+  constructor(
+    status: number,
+    textContent: string,
+    headers: string[]
+  ) {
     this.status = status
+    this.textContent = textContent
+    this.headers = headers
 
-    const responseStub: IResponse = {
+    this.responseStub = {
       status: this.status,
-      text: textReturner,
+      text: this.textReturner,
+      headers: {
+        has: this.hasHeader,
+        get: this.getHeader,
+      },
     }
   }
-}
 
-function textReturner(): Promise<string> {
-  return new Promise((resolve) => {
-    resolve('')
-  })
+  textReturner(): Promise<string> {
+    return new Promise((resolve) => {
+      resolve(this.textContent)
+    })
+  }
+
+  hasHeader(name: string): boolean {
+    return this.headers.includes(name)
+  }
+
+  getHeader(name: string): string | null {
+    return (
+      this.headers.find((item) => item === name) || null
+    )
+  }
 }

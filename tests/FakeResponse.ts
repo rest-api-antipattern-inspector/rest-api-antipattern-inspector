@@ -1,5 +1,10 @@
 import IResponse from '../src/interfaces/IResponse'
 
+/**
+ * @param status - Status Code
+ * @param textContent - Response body in JSON format
+ * @param headers
+ */
 export default class FakeResponse {
   status: number
   textContent: string

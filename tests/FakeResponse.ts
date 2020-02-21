@@ -1,4 +1,4 @@
-import IResponse from '../interfaces/IResponse'
+import IResponse from '../src/interfaces/IResponse'
 
 export default class FakeResponse {
   status: number

@@ -1,12 +1,5 @@
 import FakeResponse from './FakeResponse'
-import {
-  isBreakingSelfDescriptiveness,
-  isForgettingHypermedia,
-  isIgnoringCaching,
-  isIgnoringMIMEType,
-  isIgnoringStatusCode,
-  isMisusingCookies,
-} from '../src/lib/designAntipatternsDetectors'
+import { isIgnoringStatusCode } from '../src/lib/designAntipatternsDetectors'
 
 // TODO add more elaborate tests for status code
 

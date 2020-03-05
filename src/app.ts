@@ -3,6 +3,11 @@ import fs from 'fs'
 import { doStackExchangeRequests } from './requests/stackExchange/stackExchange'
 import doTwitterRequests from './requests/twitter'
 
+const APIs: any = {
+  stackexchange: doStackExchangeRequests,
+  twitter: doTwitterRequests,
+}
+
 dotenv.config()
 
 console.log('Running rest-api-antipattern-inspector')
@@ -10,5 +15,13 @@ console.log('Use Control-C to exit')
 
 fs.writeFileSync('responses.json', '[]')
 
-doStackExchangeRequests()
-doTwitterRequests()
+const appArguments = process.argv.slice(2)
+
+if (
+  appArguments[0] === 'all' ||
+  appArguments.length === 0
+) {
+  Object.keys(APIs).forEach((api: string) => APIs[api]())
+} else {
+  appArguments.forEach((api: string) => APIs[api]())
+}

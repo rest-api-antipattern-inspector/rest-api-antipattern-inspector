@@ -1,5 +1,5 @@
 import FakeResponse from './FakeResponse'
-import { isIgnoringStatusCode } from '../src/lib/designAntipatternsDetectors'
+import { isIgnoringStatusCode } from '../lib/designAntipatternsDetectors'
 
 // TODO add more elaborate tests for status code
 

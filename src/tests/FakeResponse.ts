@@ -1,4 +1,4 @@
-import IResponse from '../src/interfaces/IResponse'
+import IResponse from '../interfaces/IResponse'
 
 /**
  * @param status - Status Code

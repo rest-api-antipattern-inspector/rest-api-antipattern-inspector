@@ -21,15 +21,14 @@ export default class FakeResponse {
     this.headers = headers
 
     this.responseStub = {
-      // hmm, this
       status: this.status,
       text: () =>
         new Promise((resolve) => {
           resolve(this.textContent)
         }),
       headers: {
-        has: () => this.headers.includes(name),
-        get: () =>
+        has: (name) => this.headers.includes(name),
+        get: (name) =>
           this.headers.find((item) => item === name) ||
           null,
       },

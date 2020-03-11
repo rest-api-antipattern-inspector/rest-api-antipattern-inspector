@@ -85,6 +85,7 @@ export const isIgnoringCaching = (
 }
 
 export const isIgnoringMIMEType = (res: IResponse) => {
+  // console.log(res.headers.get('content-type'))
   return !MIMETypes.some((type) =>
     res.headers.get('content-type')?.includes(type)
   )

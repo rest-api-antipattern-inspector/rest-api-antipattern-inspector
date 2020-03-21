@@ -45,7 +45,7 @@ export const isForgettingHypermedia = (
   ) {
     return false
   }
-  console.log(body)
+  // console.log(body)
   const parts = body.split('"')
 
   return !hasLinkTerm(parts)

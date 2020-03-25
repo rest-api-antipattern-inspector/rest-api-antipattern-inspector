@@ -73,9 +73,10 @@ function isLinkTerm(part: string): boolean {
 }
 
 export const isIgnoringCaching = (
-  res: IResponse,
-  httpMethod: string
+  httpMethod: string,
+  headers: object
 ): boolean => {
+  const cacheControl = headers?.['Cache-Control']
   const cacheControlElements = res.headers
     .get('Cache-Control')
     ?.split(', ')

@@ -6,7 +6,7 @@ test('Forgetting Hypermedia: true, POST but no Location header', () => {
     .responseStub
 
   expect(
-    isForgettingHypermedia(responseStub, '', 'pOsT')
+    isForgettingHypermedia(responseStub, '', 'POST')
   ).toBeTruthy()
 })
 
@@ -16,7 +16,7 @@ test('Forgetting Hypermedia: false, POST with Location header', () => {
   ]).responseStub
 
   expect(
-    isForgettingHypermedia(responseStub, '', 'pOsT')
+    isForgettingHypermedia(responseStub, '', 'POST')
   ).toBeFalsy()
 })
 
@@ -28,7 +28,7 @@ test('Forgetting Hypermedia: true, GET without link terms', () => {
     isForgettingHypermedia(
       responseStub,
       '{"data": "Howdy"}',
-      'gEt'
+      'GET'
     )
   ).toBeTruthy()
 })
@@ -45,15 +45,15 @@ test('Forgetting Hypermedia: false, GET with link property in body', () => {
         "data": 'B',
         "prev": {
           "data": 'A',
-          "link": 'example.com/post?id=1',
+          "link": 'example.com/POST?id=1',
         },
         "next": {
           "data": 'C',
-          "link": 'example.com/post?id=3',
+          "link": 'example.com/POST?id=3',
         },
       }
       `,
-      'gEt'
+      'GET'
     )
   ).toBeFalsy()
 })
@@ -71,13 +71,13 @@ test('Forgetting Hypermedia: false, GET with links property in body', () => {
             "related": {
                 "appropriate": true,
                 "links": [
-                    "example.com/post/A",
-                    "example.com/post/C"
+                    "example.com/POST/A",
+                    "example.com/POST/C"
                 ]
             }
         }
     `,
-      'gEt'
+      'GET'
     )
   ).toBeFalsy()
 })
@@ -94,15 +94,15 @@ test('Forgetting Hypermedia: false, GET with href property in body', () => {
           "data": 'B',
           "prev": {
             "data": 'A',
-            "href": 'example.com/post?id=1',
+            "href": 'example.com/POST?id=1',
           },
           "next": {
             "data": 'C',
-            "href": 'example.com/post?id=3',
+            "href": 'example.com/POST?id=3',
           },
         }
         `,
-      'gEt'
+      'GET'
     )
   ).toBeFalsy()
 })

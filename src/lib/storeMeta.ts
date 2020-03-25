@@ -12,18 +12,12 @@ import {
 
 export const storeResponseMeta = async (
   uri: string,
-  // TODO
-  // remove response object
-  res: IResponse,
-  // add args:
-  // statusCode,
-  // headers (object with strings),
-  // body as string
+  statusCode: number,
+  headers: object,
+  body: string,
   httpMethod: string
 ) => {
-  const body = await res.text()
-
-  // console.log(res.headers)
+  httpMethod = httpMethod.toUpperCase()
 
   const responseMeta: IResponseMeta = {
     uri,

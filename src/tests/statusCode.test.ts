@@ -8,7 +8,7 @@ test('Ignoring Status Code: true, HTTP Post with status code 200', () => {
     .responseStub
 
   expect(
-    isIgnoringStatusCode(responseStub, 'pOst')
+    isIgnoringStatusCode(responseStub, 'POST')
   ).toBeTruthy()
 })
 
@@ -17,7 +17,7 @@ test('Ignoring Status Code: false, HTTP Post with status code 201', () => {
     .responseStub
 
   expect(
-    isIgnoringStatusCode(responseStub, 'pOst')
+    isIgnoringStatusCode(responseStub, 'POST')
   ).toBeFalsy()
 })
 
@@ -26,7 +26,7 @@ test('Ignoring Status Code: false, HTTP GET with status code 200', () => {
     .responseStub
 
   expect(
-    isIgnoringStatusCode(responseStub, 'gEt')
+    isIgnoringStatusCode(responseStub, 'GET')
   ).toBeFalsy()
 })
 
@@ -35,6 +35,6 @@ test('Ignoring Status Code: true, HTTP GET with status code 201', () => {
     .responseStub
 
   expect(
-    isIgnoringStatusCode(responseStub, 'gEt')
+    isIgnoringStatusCode(responseStub, 'GET')
   ).toBeTruthy()
 })

@@ -15,14 +15,14 @@ export const isBreakingSelfDescriptiveness = (
     'Content-Length',
   ]
 
-  if (httpMethod.toUpperCase() === 'GET') {
+  if (httpMethod === 'GET') {
     encouragedHeaders.push('Last-Modified')
   }
 
   if (
-    httpMethod.toUpperCase() === 'POST' ||
-    httpMethod.toUpperCase() === 'PUT' ||
-    httpMethod.toUpperCase() === 'PATCH'
+    httpMethod === 'POST' ||
+    httpMethod === 'PUT' ||
+    httpMethod === 'PATCH'
   ) {
     encouragedHeaders.push('Location')
   }
@@ -47,7 +47,7 @@ export const isForgettingHypermedia = (
   // TODO
   // if post but no location automatically antipattern
   if (
-    httpMethod.toUpperCase() === 'POST' &&
+    httpMethod === 'POST' &&
     res.headers.has('Location')
   ) {
     return false
@@ -81,7 +81,7 @@ export const isIgnoringCaching = (
     ?.split(', ')
 
   return (
-    httpMethod.toUpperCase() !== 'GET' || // Only checks for ignoring caching antipattern in GET requests
+    httpMethod !== 'GET' || // Only checks for ignoring caching antipattern in GET requests
     // TODO: Etag not enough, etag and no no-cache/no-store
     !res.headers.has('Etag') ||
     !res.headers.has('Cache-Control') ||
@@ -104,9 +104,7 @@ export const isIgnoringStatusCode = (
   httpMethod: string
 ) => {
   // TODO perhaps check this more thoroughly, check for acceptable status code for various http methods
-  return (
-    httpMethod.toUpperCase() !== 'GET' && res.status === 200
-  )
+  return httpMethod !== 'GET' && res.status === 200
 }
 
 export const isMisusingCookies = (res: IResponse) => {

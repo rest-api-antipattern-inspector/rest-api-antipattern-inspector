@@ -4,7 +4,7 @@ import IResponse from '../interfaces/IResponse'
 // TODO unit test all of this
 
 export const isBreakingSelfDescriptiveness = (
-  res: IResponse,
+  headers: object,
   httpMethod: String
 ) => {
   // TODO: ignore Etag here, covered in ignoring caching check
@@ -33,14 +33,14 @@ export const isBreakingSelfDescriptiveness = (
   // store metadata
 
   for (const header of encouragedHeaders) {
-    if (!res.headers.has(header)) return true
+    if (!Object.keys(headers).includes(header)) return true
   }
 
   return false
 }
 
 export const isForgettingHypermedia = (
-  res: IResponse,
+  headers: object,
   body: string,
   httpMethod: string
 ) => {
@@ -48,7 +48,7 @@ export const isForgettingHypermedia = (
   // if post but no location automatically antipattern
   if (
     httpMethod === 'POST' &&
-    res.headers.has('Location')
+    Object.keys(headers).includes('Location')
   ) {
     return false
   }

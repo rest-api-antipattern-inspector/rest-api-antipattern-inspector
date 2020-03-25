@@ -17,6 +17,8 @@ export const storeResponseMeta = async (
 ) => {
   const body = await res.text()
 
+  // console.log(res.headers)
+
   const responseMeta: IResponseMeta = {
     uri,
     httpMethod: httpMethod,

@@ -27,6 +27,11 @@ export const isBreakingSelfDescriptiveness = (
     encouragedHeaders.push('Location')
   }
 
+  // if they use any headers except these then it's an antipattern
+  // they don't need to use all headers
+
+  // store metadata
+
   for (const header of encouragedHeaders) {
     if (!res.headers.has(header)) return true
   }
@@ -39,6 +44,8 @@ export const isForgettingHypermedia = (
   body: string,
   httpMethod: string
 ) => {
+  // TODO
+  // if post but no location automatically antipattern
   if (
     httpMethod.toUpperCase() === 'POST' &&
     res.headers.has('Location')
@@ -75,6 +82,7 @@ export const isIgnoringCaching = (
 
   return (
     httpMethod.toUpperCase() !== 'GET' || // Only checks for ignoring caching antipattern in GET requests
+    // TODO: Etag not enough, etag and no no-cache/no-store
     !res.headers.has('Etag') ||
     !res.headers.has('Cache-Control') ||
     (cacheControlElements !== undefined &&

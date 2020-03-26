@@ -1,12 +1,12 @@
 import MIMETypes from './MIMETypes'
 import IHeadersObject from '../interfaces/IHeadersObject'
-import { types } from '@babel/core'
+import { GET, POST, PUT, PATCH, DELETE } from './constants'
 
 // TODO unit test all of this
 
 export const isBreakingSelfDescriptiveness = (
-  headers: IHeadersObject,
-  httpMethod: String
+  httpMethod: String,
+  headers: IHeadersObject
 ) => {
   // TODO: ignore Etag here, covered in ignoring caching check
   // for now based on this: https://www.oreilly.com/library/view/rest-api-design/9781449317904/ch04.html
@@ -16,14 +16,14 @@ export const isBreakingSelfDescriptiveness = (
     'Content-Length',
   ]
 
-  if (httpMethod === 'GET') {
+  if (httpMethod === GET) {
     encouragedHeaders.push('Last-Modified')
   }
 
   if (
-    httpMethod === 'POST' ||
-    httpMethod === 'PUT' ||
-    httpMethod === 'PATCH'
+    httpMethod === POST ||
+    httpMethod === PUT ||
+    httpMethod === PATCH
   ) {
     encouragedHeaders.push('Location')
   }
@@ -41,19 +41,19 @@ export const isBreakingSelfDescriptiveness = (
 }
 
 export const isForgettingHypermedia = (
-  headers: IHeadersObject,
   body: string,
-  httpMethod: string
+  httpMethod: string,
+  headers: IHeadersObject
 ) => {
   // TODO
   // if post but no location automatically antipattern
   if (
-    httpMethod === 'POST' &&
+    httpMethod === POST &&
     Object.keys(headers).includes('Location')
   ) {
     return false
   }
-  // console.log(body)
+
   const parts = body.split('"')
 
   return !hasLinkTerm(parts)
@@ -77,7 +77,7 @@ export const isIgnoringCaching = (
   httpMethod: string,
   headers: IHeadersObject
 ): boolean => {
-  if (httpMethod !== 'GET') return false
+  if (httpMethod !== GET) return false
 
   // antipattern if Etag or Cache-Control headers are missing
   if (!headers['Etag'] || headers['Cache-Control']) {
@@ -109,12 +109,15 @@ export const isIgnoringStatusCode = (
   statusCode: number
 ) => {
   // TODO perhaps check this more thoroughly, check for acceptable status code for various http methods
-  return httpMethod !== 'GET' && statusCode === 200
+  return httpMethod !== GET && statusCode === 200
 }
 
 export const isMisusingCookies = (
   headers: IHeadersObject
 ) => {
   // antipattern if there is a cookie or set-cookie header
-  return headers['cookie'] || headers['set-cookie']
+  return (
+    headers['cookie'] !== undefined ||
+    headers['set-cookie'] !== undefined
+  )
 }

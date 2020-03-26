@@ -24,26 +24,29 @@ export const storeResponseMeta = async (
     httpMethod: httpMethod,
 
     isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
-      res,
-      httpMethod
+      httpMethod,
+      headers
     ),
 
     isForgettingHypermedia: isForgettingHypermedia(
-      res,
       body,
-      httpMethod
+      httpMethod,
+      headers
     ),
 
-    isIgnoringCaching: isIgnoringCaching(res, httpMethod),
+    isIgnoringCaching: isIgnoringCaching(
+      httpMethod,
+      headers
+    ),
 
-    isIgnoringMIMEType: isIgnoringMIMEType(res),
+    isIgnoringMIMEType: isIgnoringMIMEType(headers),
 
     isIgnoringStatusCode: isIgnoringStatusCode(
-      res,
-      httpMethod
+      httpMethod,
+      statusCode
     ),
 
-    isMisusingCookies: isMisusingCookies(res),
+    isMisusingCookies: isMisusingCookies(headers),
   }
 
   writeToFile(responseMeta)

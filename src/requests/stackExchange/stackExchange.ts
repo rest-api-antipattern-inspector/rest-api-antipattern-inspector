@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import { storeResponseMeta } from '../../lib/storeMeta'
-import IResponse from '../../interfaces/IResponse'
+import IHeadersObject from '../../interfaces/IHeadersObject'
 
 export const doStackExchangeRequests = (): void => {
   stackOverflowInfo()
@@ -13,7 +13,9 @@ async function stackOverflowInfo() {
 
   const res = await fetch(uri)
 
-  storeResponseMeta(uri, res, 'GET')
+  console.log(res.headers)
+
+  // storeResponseMeta(uri, res.status, 'GET')
 }
 
 /**
@@ -26,7 +28,7 @@ async function relatedQuestionsSO() {
   const uri =
     'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
 
-  const res = await fetch(uri)
+  // const res = await fetch(uri)
 
-  storeResponseMeta(uri, res, 'GET')
+  // storeResponseMeta(uri, res, 'GET')
 }

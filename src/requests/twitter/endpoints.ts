@@ -6,18 +6,15 @@ import {
   SCREEN_NAME_2,
   QUERY,
   LIST_SLUG,
-  COLLECTION_NAME,
+  LAT,
+  LONG,
+  WOEID,
+  PLACE_ID,
+  GEO_QUERY,
 } from './constants'
 import { GET, POST } from '../../lib/constants'
 
 export const postLevel1 = [
-  // Post, retrieve, and engage with Tweets
-  // 300* per user; 300* per app
-  // {
-  //   url: `statuses/update`,
-  //   method: POST,
-  //   params: { status: COLLECTION_NAME },
-  // },
   // Create and manage lists
   {
     url: `lists/create`,
@@ -46,12 +43,6 @@ export const postLevel1 = [
     method: POST,
     params: { screen_name: SCREEN_NAME_2 },
   },
-  // Curate a collection of Tweets
-  // {
-  //   url: `collections/create`,
-  //   method: POST,
-  //   params: { name: COLLECTION_NAME },
-  // },
 ]
 
 export const postLevel2 = [
@@ -257,6 +248,59 @@ export const getLevel = [
     url: 'mutes/users/list',
     method: GET,
     params: { count: COUNT },
+  },
+  // Standard search API
+  {
+    url: `search/tweets`,
+    method: GET,
+    params: {
+      screen_name: SCREEN_NAME_2,
+      count: COUNT,
+      q: QUERY,
+    },
+  },
+  // Trends
+  {
+    url: `trends/available`,
+    method: GET,
+    params: {
+      count: COUNT,
+    },
+  },
+  {
+    url: `trends/closest`,
+    method: GET,
+    params: {
+      count: COUNT,
+      lat: LAT,
+      long: LONG,
+    },
+  },
+  {
+    url: `trends/place`,
+    method: GET,
+    params: {
+      count: COUNT,
+      id: WOEID,
+    },
+  },
+  // Geo
+  {
+    url: `geo/reverse_geocode`,
+    method: GET,
+    params: {
+      count: COUNT,
+      lat: LAT,
+      long: LONG,
+    },
+  },
+  {
+    url: `geo/search`,
+    method: GET,
+    params: {
+      count: COUNT,
+      query: GEO_QUERY,
+    },
   },
 ]
 

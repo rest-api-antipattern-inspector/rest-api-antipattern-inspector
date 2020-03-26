@@ -49,6 +49,6 @@ export default async () => {
         }
       })
     )
-    console.log(result)
+    console.log(result.length)
   }
 }

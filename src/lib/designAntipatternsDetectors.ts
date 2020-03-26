@@ -1,5 +1,6 @@
 import MIMETypes from './MIMETypes'
 import IHeadersObject from '../interfaces/IHeadersObject'
+import { types } from '@babel/core'
 
 // TODO unit test all of this
 
@@ -93,24 +94,27 @@ export const isIgnoringCaching = (
   )
 }
 
-export const isIgnoringMIMEType = (res: IResponse) => {
-  // console.log(res.headers.get('content-type'))
+export const isIgnoringMIMEType = (
+  headers: IHeadersObject
+) => {
+  // antipattern if content-type doesn't include
+  // a standard mime type
   return !MIMETypes.some((type) =>
-    res.headers.get('content-type')?.includes(type)
+    headers['content-type'].includes(type)
   )
 }
 
 export const isIgnoringStatusCode = (
-  res: IResponse,
-  httpMethod: string
+  httpMethod: string,
+  statusCode: number
 ) => {
   // TODO perhaps check this more thoroughly, check for acceptable status code for various http methods
-  return httpMethod !== 'GET' && res.status === 200
+  return httpMethod !== 'GET' && statusCode === 200
 }
 
-export const isMisusingCookies = (res: IResponse) => {
-  return (
-    res.headers.has('set-cookie') ||
-    res.headers.has('cookie')
-  )
+export const isMisusingCookies = (
+  headers: IHeadersObject
+) => {
+  // antipattern if there is a cookie or set-cookie header
+  return headers['cookie'] || headers['set-cookie']
 }

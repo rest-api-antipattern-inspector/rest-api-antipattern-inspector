@@ -8,5 +8,6 @@ export const ID_2 =
 export const COUNT = 1
 export const QUERY = 'Twitter%20API'
 export const LIST_SLUG = 'mylist'
+export const COLLECTION_NAME = 'myCollection'
 
 //Carl_Gustav_XVI

@@ -6,10 +6,18 @@ import {
   SCREEN_NAME_2,
   QUERY,
   LIST_SLUG,
+  COLLECTION_NAME,
 } from './constants'
 import { GET, POST } from '../../lib/constants'
 
-export const postEndpoint1 = [
+export const postLevel1 = [
+  // Post, retrieve, and engage with Tweets
+  // 300* per user; 300* per app
+  // {
+  //   url: `statuses/update`,
+  //   method: POST,
+  //   params: { status: COLLECTION_NAME },
+  // },
   // Create and manage lists
   {
     url: `lists/create`,
@@ -33,15 +41,20 @@ export const postEndpoint1 = [
     method: POST,
     params: { screen_name: SCREEN_NAME_2 },
   },
-
   {
     url: 'mutes/users/create',
     method: POST,
     params: { screen_name: SCREEN_NAME_2 },
   },
+  // Curate a collection of Tweets
+  // {
+  //   url: `collections/create`,
+  //   method: POST,
+  //   params: { name: COLLECTION_NAME },
+  // },
 ]
 
-export const postEndpoint2 = [
+export const postLevel2 = [
   // Create and manage lists
   {
     url: `lists/members/create`,
@@ -62,7 +75,7 @@ export const postEndpoint2 = [
   },
 ]
 
-export const getEndpoints = [
+export const getLevel = [
   //Create and manage lists
   {
     url: 'lists/list',
@@ -247,7 +260,7 @@ export const getEndpoints = [
   },
 ]
 
-export const deleteEndpoint1 = [
+export const deleteLevel1 = [
   // Create and manage lists
   {
     url: `lists/members/destroy`,
@@ -268,7 +281,7 @@ export const deleteEndpoint1 = [
   },
 ]
 
-export const deleteEndpoint2 = [
+export const deleteLevel2 = [
   // Create and manage lists
   {
     url: `lists/destroy`,

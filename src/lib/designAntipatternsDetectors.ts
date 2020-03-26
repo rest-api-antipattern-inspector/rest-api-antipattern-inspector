@@ -1,10 +1,10 @@
 import MIMETypes from './MIMETypes'
-import IResponse from '../interfaces/IResponse'
+import IHeadersObject from '../interfaces/IHeadersObject'
 
 // TODO unit test all of this
 
 export const isBreakingSelfDescriptiveness = (
-  headers: object,
+  headers: IHeadersObject,
   httpMethod: String
 ) => {
   // TODO: ignore Etag here, covered in ignoring caching check
@@ -40,7 +40,7 @@ export const isBreakingSelfDescriptiveness = (
 }
 
 export const isForgettingHypermedia = (
-  headers: object,
+  headers: IHeadersObject,
   body: string,
   httpMethod: string
 ) => {
@@ -74,22 +74,22 @@ function isLinkTerm(part: string): boolean {
 
 export const isIgnoringCaching = (
   httpMethod: string,
-  headers: object
+  headers: IHeadersObject
 ): boolean => {
-  const cacheControl = headers?.['Cache-Control']
-  const cacheControlElements = res.headers
-    .get('Cache-Control')
-    ?.split(', ')
+  if (httpMethod !== 'GET') return false
+
+  // antipattern if Etag or Cache-Control headers are missing
+  if (!headers['Etag'] || headers['Cache-Control']) {
+    return true
+  }
+
+  const cacheControlElements = headers[
+    'Cache-Control'
+  ].split(', ')
 
   return (
-    httpMethod !== 'GET' || // Only checks for ignoring caching antipattern in GET requests
-    // TODO: Etag not enough, etag and no no-cache/no-store
-    !res.headers.has('Etag') ||
-    !res.headers.has('Cache-Control') ||
-    (cacheControlElements !== undefined &&
-      cacheControlElements?.includes('no-cache')) ||
-    (cacheControlElements !== undefined &&
-      cacheControlElements?.includes('no-store'))
+    cacheControlElements.includes('no-cache') ||
+    cacheControlElements.includes('no-store')
   )
 }
 

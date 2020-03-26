@@ -1,5 +1,4 @@
 import fs from 'fs'
-import IResponse from '../interfaces/IResponse'
 import IResponseMeta from '../interfaces/IResponseMeta'
 import {
   isBreakingSelfDescriptiveness,
@@ -9,11 +8,12 @@ import {
   isIgnoringStatusCode,
   isMisusingCookies,
 } from './designAntipatternsDetectors'
+import IHeadersObject from '../interfaces/IHeadersObject'
 
 export const storeResponseMeta = async (
   uri: string,
   statusCode: number,
-  headers: object,
+  headers: IHeadersObject,
   body: string,
   httpMethod: string
 ) => {

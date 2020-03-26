@@ -1,11 +1,12 @@
 import MIMETypes from './MIMETypes'
-import IResponse from '../interfaces/IResponse'
+import IHeadersObject from '../interfaces/IHeadersObject'
+import { GET, POST, PUT, PATCH, DELETE } from './constants'
 
 // TODO unit test all of this
 
 export const isBreakingSelfDescriptiveness = (
-  res: IResponse,
-  httpMethod: String
+  httpMethod: String,
+  headers: IHeadersObject
 ) => {
   // TODO: ignore Etag here, covered in ignoring caching check
   // for now based on this: https://www.oreilly.com/library/view/rest-api-design/9781449317904/ch04.html
@@ -15,14 +16,14 @@ export const isBreakingSelfDescriptiveness = (
     'Content-Length',
   ]
 
-  if (httpMethod.toUpperCase() === 'GET') {
+  if (httpMethod === GET) {
     encouragedHeaders.push('Last-Modified')
   }
 
   if (
-    httpMethod.toUpperCase() === 'POST' ||
-    httpMethod.toUpperCase() === 'PUT' ||
-    httpMethod.toUpperCase() === 'PATCH'
+    httpMethod === POST ||
+    httpMethod === PUT ||
+    httpMethod === PATCH
   ) {
     encouragedHeaders.push('Location')
   }
@@ -33,26 +34,26 @@ export const isBreakingSelfDescriptiveness = (
   // store metadata
 
   for (const header of encouragedHeaders) {
-    if (!res.headers.has(header)) return true
+    if (!Object.keys(headers).includes(header)) return true
   }
 
   return false
 }
 
 export const isForgettingHypermedia = (
-  res: IResponse,
   body: string,
-  httpMethod: string
+  httpMethod: string,
+  headers: IHeadersObject
 ) => {
   // TODO
   // if post but no location automatically antipattern
   if (
-    httpMethod.toUpperCase() === 'POST' &&
-    res.headers.has('Location')
+    httpMethod === POST &&
+    Object.keys(headers).includes('Location')
   ) {
     return false
   }
-  // console.log(body)
+
   const parts = body.split('"')
 
   return !hasLinkTerm(parts)
@@ -73,45 +74,50 @@ function isLinkTerm(part: string): boolean {
 }
 
 export const isIgnoringCaching = (
-  res: IResponse,
-  httpMethod: string
+  httpMethod: string,
+  headers: IHeadersObject
 ): boolean => {
-  const cacheControlElements = res.headers
-    .get('Cache-Control')
-    ?.split(', ')
+  if (httpMethod !== GET) return false
+
+  // antipattern if Etag or Cache-Control headers are missing
+  if (!headers['Etag'] || headers['Cache-Control']) {
+    return true
+  }
+
+  const cacheControlElements = headers[
+    'Cache-Control'
+  ].split(', ')
 
   return (
-    httpMethod.toUpperCase() !== 'GET' || // Only checks for ignoring caching antipattern in GET requests
-    // TODO: Etag not enough, etag and no no-cache/no-store
-    !res.headers.has('Etag') ||
-    !res.headers.has('Cache-Control') ||
-    (cacheControlElements !== undefined &&
-      cacheControlElements?.includes('no-cache')) ||
-    (cacheControlElements !== undefined &&
-      cacheControlElements?.includes('no-store'))
+    cacheControlElements.includes('no-cache') ||
+    cacheControlElements.includes('no-store')
   )
 }
 
-export const isIgnoringMIMEType = (res: IResponse) => {
-  // console.log(res.headers.get('content-type'))
+export const isIgnoringMIMEType = (
+  headers: IHeadersObject
+) => {
+  // antipattern if content-type doesn't include
+  // a standard mime type
   return !MIMETypes.some((type) =>
-    res.headers.get('content-type')?.includes(type)
+    headers['content-type'].includes(type)
   )
 }
 
 export const isIgnoringStatusCode = (
-  res: IResponse,
-  httpMethod: string
+  httpMethod: string,
+  statusCode: number
 ) => {
   // TODO perhaps check this more thoroughly, check for acceptable status code for various http methods
-  return (
-    httpMethod.toUpperCase() !== 'GET' && res.status === 200
-  )
+  return httpMethod !== GET && statusCode === 200
 }
 
-export const isMisusingCookies = (res: IResponse) => {
+export const isMisusingCookies = (
+  headers: IHeadersObject
+) => {
+  // antipattern if there is a cookie or set-cookie header
   return (
-    res.headers.has('set-cookie') ||
-    res.headers.has('cookie')
+    headers['cookie'] !== undefined ||
+    headers['set-cookie'] !== undefined
   )
 }

@@ -1,5 +1,4 @@
 import fs from 'fs'
-import IResponse from '../interfaces/IResponse'
 import IResponseMeta from '../interfaces/IResponseMeta'
 import {
   isBreakingSelfDescriptiveness,
@@ -9,47 +8,45 @@ import {
   isIgnoringStatusCode,
   isMisusingCookies,
 } from './designAntipatternsDetectors'
+import IHeadersObject from '../interfaces/IHeadersObject'
 
 export const storeResponseMeta = async (
   uri: string,
-  // TODO
-  // remove response object
-  res: IResponse,
-  // add args:
-  // statusCode,
-  // headers (object with strings),
-  // body as string
+  statusCode: number,
+  headers: IHeadersObject,
+  body: string,
   httpMethod: string
 ) => {
-  const body = await res.text()
-
-  // console.log(res.headers)
+  httpMethod = httpMethod.toUpperCase()
 
   const responseMeta: IResponseMeta = {
     uri,
     httpMethod: httpMethod,
 
     isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
-      res,
-      httpMethod
+      httpMethod,
+      headers
     ),
 
     isForgettingHypermedia: isForgettingHypermedia(
-      res,
       body,
-      httpMethod
+      httpMethod,
+      headers
     ),
 
-    isIgnoringCaching: isIgnoringCaching(res, httpMethod),
+    isIgnoringCaching: isIgnoringCaching(
+      httpMethod,
+      headers
+    ),
 
-    isIgnoringMIMEType: isIgnoringMIMEType(res),
+    isIgnoringMIMEType: isIgnoringMIMEType(headers),
 
     isIgnoringStatusCode: isIgnoringStatusCode(
-      res,
-      httpMethod
+      httpMethod,
+      statusCode
     ),
 
-    isMisusingCookies: isMisusingCookies(res),
+    isMisusingCookies: isMisusingCookies(headers),
   }
 
   writeToFile(responseMeta)

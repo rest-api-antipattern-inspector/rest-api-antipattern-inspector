@@ -7,6 +7,7 @@ import {
 } from './endpoints'
 import { storeResponseMeta } from '../../lib/storeMeta'
 import Twit from 'twit'
+import { GET, POST } from '../../lib/constants'
 
 var T = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_API_KEY || '',
@@ -27,7 +28,7 @@ export default async () => {
   const postRequests1 = await Promise.all(
     postEndpoint1.map(async (endpoint: Endpoint) => {
       const response =
-        endpoint.method === 'get'
+        endpoint.method === GET
           ? await T.get(endpoint.url, endpoint.params)
           : await T.post(endpoint.url, endpoint.params)
 
@@ -38,7 +39,7 @@ export default async () => {
   const postRequests2 = await Promise.all(
     postEndpoint2.map(async (endpoint: Endpoint) => {
       const response =
-        endpoint.method === 'get'
+        endpoint.method === GET
           ? await T.get(endpoint.url, endpoint.params)
           : await T.post(endpoint.url, endpoint.params)
 
@@ -50,7 +51,7 @@ export default async () => {
     getEndpoints.map(async (endpoint: Endpoint) => {
       try {
         const response =
-          endpoint.method === 'get'
+          endpoint.method === GET
             ? await T.get(endpoint.url, endpoint.params)
             : await T.post(endpoint.url, endpoint.params)
 
@@ -66,7 +67,7 @@ export default async () => {
     deleteEndpoint1.map(async (endpoint: Endpoint) => {
       try {
         const response =
-          endpoint.method === 'get'
+          endpoint.method === GET
             ? await T.get(endpoint.url, endpoint.params)
             : await T.post(endpoint.url, endpoint.params)
 
@@ -82,7 +83,7 @@ export default async () => {
     deleteEndpoint2.map(async (endpoint: Endpoint) => {
       try {
         const response =
-          endpoint.method === 'get'
+          endpoint.method === GET
             ? await T.get(endpoint.url, endpoint.params)
             : await T.post(endpoint.url, endpoint.params)
 

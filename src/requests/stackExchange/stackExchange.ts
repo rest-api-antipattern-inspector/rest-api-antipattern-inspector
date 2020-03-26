@@ -1,6 +1,13 @@
-import fetch from 'node-fetch'
+import fetch, { Response } from 'node-fetch'
 import { storeResponseMeta } from '../../lib/storeMeta'
 import IHeadersObject from '../../interfaces/IHeadersObject'
+import {
+  GET,
+  POST,
+  PUT,
+  PATCH,
+  DELETE,
+} from '../../lib/constants'
 
 export const doStackExchangeRequests = (): void => {
   stackOverflowInfo()
@@ -12,10 +19,15 @@ async function stackOverflowInfo() {
     'https://api.stackexchange.com/2.2/info?site=stackoverflow'
 
   const res = await fetch(uri)
+  const headers = getHeaders(res)
 
-  console.log(res.headers)
-
-  // storeResponseMeta(uri, res.status, 'GET')
+  storeResponseMeta(
+    uri,
+    res.status,
+    headers,
+    await res.text(),
+    GET
+  )
 }
 
 /**
@@ -28,7 +40,26 @@ async function relatedQuestionsSO() {
   const uri =
     'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
 
-  // const res = await fetch(uri)
+  const res = await fetch(uri)
+  const headers = getHeaders(res)
 
-  // storeResponseMeta(uri, res, 'GET')
+  storeResponseMeta(
+    uri,
+    res.status,
+    headers,
+    await res.text(),
+    GET
+  )
+}
+
+function getHeaders(res: Response): IHeadersObject {
+  const headers: IHeadersObject = {}
+  const headerKeys = Object.keys(res.headers.raw())
+  const headerValues = Object.values(res.headers.raw())
+
+  for (let i = 0; i < headerKeys.length; i++) {
+    headers[headerKeys[i]] = headerValues[i][0]
+  }
+
+  return headers
 }

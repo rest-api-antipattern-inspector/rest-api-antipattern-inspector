@@ -35,7 +35,7 @@ export default async () => {
       return response.resp.statusCode
     })
   )
-  // TODO uncomment console.log(postRequests1)
+  console.log(postRequests1)
   const postRequests2 = await Promise.all(
     postEndpoint2.map(async (endpoint: Endpoint) => {
       const response =
@@ -46,7 +46,7 @@ export default async () => {
       return response.resp.statusCode
     })
   )
-  // TODO uncomment console.log(postRequests2)
+  console.log(postRequests2)
   const getRequests = await Promise.all(
     getEndpoints.map(async (endpoint: Endpoint) => {
       try {
@@ -57,12 +57,12 @@ export default async () => {
 
         return response.resp.statusCode
       } catch (err) {
-        // TODO uncomment console.log(err)
-        // TODO uncomment console.log(endpoint.url)
+        console.log(err)
+        console.log(endpoint.url)
       }
     })
   )
-  // TODO uncomment console.log(getRequests)
+  console.log(getRequests)
   const deleteRequests1 = await Promise.all(
     deleteEndpoint1.map(async (endpoint: Endpoint) => {
       try {
@@ -73,12 +73,12 @@ export default async () => {
 
         return response.resp.statusCode
       } catch (err) {
-        // TODO uncomment console.log(err)
-        // TODO uncomment console.log(endpoint.url)
+        console.log(err)
+        console.log(endpoint.url)
       }
     })
   )
-  // TODO uncomment console.log(deleteRequests1)
+  console.log(deleteRequests1)
   const deleteRequests2 = await Promise.all(
     deleteEndpoint2.map(async (endpoint: Endpoint) => {
       try {
@@ -89,10 +89,10 @@ export default async () => {
 
         return response.resp.statusCode
       } catch (err) {
-        // TODO uncomment console.log(err)
-        // TODO uncomment console.log(endpoint.url)
+        console.log(err)
+        console.log(endpoint.url)
       }
     })
   )
-  // TODO uncomment console.log(deleteRequests2)
+  console.log(deleteRequests2)
 }

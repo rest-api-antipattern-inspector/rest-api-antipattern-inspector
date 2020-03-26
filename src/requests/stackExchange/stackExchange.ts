@@ -54,8 +54,9 @@ async function relatedQuestionsSO() {
 
 function getHeaders(res: Response): IHeadersObject {
   const headers: IHeadersObject = {}
-  const headerKeys = Object.keys(res.headers.raw())
-  const headerValues = Object.values(res.headers.raw())
+  const rawHeaders = res.headers.raw()
+  const headerKeys = Object.keys(rawHeaders)
+  const headerValues = Object.values(rawHeaders)
 
   for (let i = 0; i < headerKeys.length; i++) {
     headers[headerKeys[i]] = headerValues[i][0]

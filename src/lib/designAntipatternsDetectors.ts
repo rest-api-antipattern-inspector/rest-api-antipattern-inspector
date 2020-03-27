@@ -10,19 +10,19 @@ import HttpHeaders from './StandardHTTPHeaders'
 
 /**
  * @param headers response headers
+ * @param nonStandardHeaders empty string[] to store any none standard headers in
  * @returns true if detects Breaking Self-Descriptiveness antipattern
  */
-export const isBreakingSelfDescriptiveness = (headers: IHeadersObject): boolean => {
+export const isBreakingSelfDescriptiveness = (headers: IHeadersObject, nonStandardHeaders: string[]): boolean => {
   const responseHeaderKeys: string[] = Object.keys(headers)
 
   for (const headerKey of responseHeaderKeys) {
     if (!isStandardHeader(headerKey)) {
-      console.log('Non standard header:', headerKey)
-      return true
+      nonStandardHeaders.push(headerKey)
     }
   }
 
-  return false
+  return nonStandardHeaders.length !== 0
 }
 
 function isStandardHeader(headerKey: string): boolean {

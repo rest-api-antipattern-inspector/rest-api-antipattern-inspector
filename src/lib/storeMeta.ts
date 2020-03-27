@@ -1,49 +1,28 @@
 import fs from 'fs'
 import IResponseMeta from '../interfaces/IResponseMeta'
-import {
-  isBreakingSelfDescriptiveness,
-  isForgettingHypermedia,
-  isIgnoringCaching,
-  isIgnoringMIMEType,
-  isIgnoringStatusCode,
-  isMisusingCookies,
-} from './designAntipatternsDetectors'
+import { isBreakingSelfDescriptiveness, isForgettingHypermedia, isIgnoringCaching, isIgnoringMIMEType, isIgnoringStatusCode, isMisusingCookies } from './designAntipatternsDetectors'
 import IHeadersObject from '../interfaces/IHeadersObject'
 
-export const storeResponseMeta = async (
-  uri: string,
-  statusCode: number,
-  headers: IHeadersObject,
-  body: string,
-  httpMethod: string
-) => {
+export const storeResponseMeta = async (uri: string, statusCode: number, headers: IHeadersObject, body: string, httpMethod: string) => {
   httpMethod = httpMethod.toUpperCase()
+
+  const nonStandardHeaders: string[] = []
 
   const responseMeta: IResponseMeta = {
     uri,
     httpMethod: httpMethod,
 
-    isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
-      headers
-    ),
+    isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(headers, nonStandardHeaders),
 
-    isForgettingHypermedia: isForgettingHypermedia(
-      body,
-      httpMethod,
-      headers
-    ),
+    nonStandardHeaders: nonStandardHeaders,
 
-    isIgnoringCaching: isIgnoringCaching(
-      httpMethod,
-      headers
-    ),
+    isForgettingHypermedia: isForgettingHypermedia(body, httpMethod, headers),
+
+    isIgnoringCaching: isIgnoringCaching(httpMethod, headers),
 
     isIgnoringMIMEType: isIgnoringMIMEType(headers),
 
-    isIgnoringStatusCode: isIgnoringStatusCode(
-      httpMethod,
-      statusCode
-    ),
+    isIgnoringStatusCode: isIgnoringStatusCode(httpMethod, statusCode),
 
     isMisusingCookies: isMisusingCookies(headers),
   }
@@ -54,14 +33,9 @@ export const storeResponseMeta = async (
 }
 
 function writeToFile(responseMeta: IResponseMeta) {
-  const responses = JSON.parse(
-    fs.readFileSync('responses.json', 'utf8')
-  )
+  const responses = JSON.parse(fs.readFileSync('responses.json', 'utf8'))
 
   responses.push(responseMeta)
 
-  fs.writeFileSync(
-    'responses.json',
-    JSON.stringify(responses)
-  )
+  fs.writeFileSync('responses.json', JSON.stringify(responses))
 }

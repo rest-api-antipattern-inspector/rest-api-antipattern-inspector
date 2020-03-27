@@ -1,13 +1,13 @@
 import {
-  getEndpoints,
-  postEndpoint1,
-  postEndpoint2,
-  deleteEndpoint1,
-  deleteEndpoint2,
+  postLevel1,
+  postLevel2,
+  getLevel,
+  deleteLevel1,
+  deleteLevel2,
 } from './endpoints'
 import { storeResponseMeta } from '../../lib/storeMeta'
 import Twit from 'twit'
-import { GET, POST } from '../../lib/constants'
+import { GET } from '../../lib/constants'
 
 var T = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_API_KEY || '',
@@ -25,74 +25,30 @@ interface Endpoint {
 }
 
 export default async () => {
-  const postRequests1 = await Promise.all(
-    postEndpoint1.map(async (endpoint: Endpoint) => {
-      const response =
-        endpoint.method === GET
-          ? await T.get(endpoint.url, endpoint.params)
-          : await T.post(endpoint.url, endpoint.params)
+  const arr: Array<Array<Endpoint>> = [
+    postLevel1,
+    postLevel2,
+    getLevel,
+    deleteLevel1,
+    deleteLevel2,
+  ]
 
-      return response.resp.statusCode
-    })
-  )
-  console.log(postRequests1)
-  const postRequests2 = await Promise.all(
-    postEndpoint2.map(async (endpoint: Endpoint) => {
-      const response =
-        endpoint.method === GET
-          ? await T.get(endpoint.url, endpoint.params)
-          : await T.post(endpoint.url, endpoint.params)
+  for (const level of arr) {
+    const result = await Promise.all(
+      level.map(async (endpoint: Endpoint) => {
+        try {
+          const response =
+            endpoint.method === GET
+              ? await T.get(endpoint.url, endpoint.params)
+              : await T.post(endpoint.url, endpoint.params)
 
-      return response.resp.statusCode
-    })
-  )
-  console.log(postRequests2)
-  const getRequests = await Promise.all(
-    getEndpoints.map(async (endpoint: Endpoint) => {
-      try {
-        const response =
-          endpoint.method === GET
-            ? await T.get(endpoint.url, endpoint.params)
-            : await T.post(endpoint.url, endpoint.params)
-
-        return response.resp.statusCode
-      } catch (err) {
-        console.log(err)
-        console.log(endpoint.url)
-      }
-    })
-  )
-  console.log(getRequests)
-  const deleteRequests1 = await Promise.all(
-    deleteEndpoint1.map(async (endpoint: Endpoint) => {
-      try {
-        const response =
-          endpoint.method === GET
-            ? await T.get(endpoint.url, endpoint.params)
-            : await T.post(endpoint.url, endpoint.params)
-
-        return response.resp.statusCode
-      } catch (err) {
-        console.log(err)
-        console.log(endpoint.url)
-      }
-    })
-  )
-  console.log(deleteRequests1)
-  const deleteRequests2 = await Promise.all(
-    deleteEndpoint2.map(async (endpoint: Endpoint) => {
-      try {
-        const response =
-          endpoint.method === GET
-            ? await T.get(endpoint.url, endpoint.params)
-            : await T.post(endpoint.url, endpoint.params)
-
-        return response.resp.statusCode
-      } catch (err) {
-        console.log(err)
-        console.log(endpoint.url)
-      }
-    })
-  )
-  console.log(deleteRequests2)
+          return response.resp.statusCode
+        } catch (e) {
+          console.log(endpoint.url)
+          console.log(e)
+        }
+      })
+    )
+    console.log(result.length)
+  }
 }

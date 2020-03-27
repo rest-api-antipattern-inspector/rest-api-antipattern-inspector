@@ -6,10 +6,15 @@ import {
   SCREEN_NAME_2,
   QUERY,
   LIST_SLUG,
+  LAT,
+  LONG,
+  WOEID,
+  PLACE_ID,
+  GEO_QUERY,
 } from './constants'
 import { GET, POST } from '../../lib/constants'
 
-export const postEndpoint1 = [
+export const postLevel1 = [
   // Create and manage lists
   {
     url: `lists/create`,
@@ -33,7 +38,6 @@ export const postEndpoint1 = [
     method: POST,
     params: { screen_name: SCREEN_NAME_2 },
   },
-
   {
     url: 'mutes/users/create',
     method: POST,
@@ -41,7 +45,7 @@ export const postEndpoint1 = [
   },
 ]
 
-export const postEndpoint2 = [
+export const postLevel2 = [
   // Create and manage lists
   {
     url: `lists/members/create`,
@@ -62,7 +66,7 @@ export const postEndpoint2 = [
   },
 ]
 
-export const getEndpoints = [
+export const getLevel = [
   //Create and manage lists
   {
     url: 'lists/list',
@@ -245,9 +249,62 @@ export const getEndpoints = [
     method: GET,
     params: { count: COUNT },
   },
+  // Standard search API
+  {
+    url: `search/tweets`,
+    method: GET,
+    params: {
+      screen_name: SCREEN_NAME_2,
+      count: COUNT,
+      q: QUERY,
+    },
+  },
+  // Trends
+  {
+    url: `trends/available`,
+    method: GET,
+    params: {
+      count: COUNT,
+    },
+  },
+  {
+    url: `trends/closest`,
+    method: GET,
+    params: {
+      count: COUNT,
+      lat: LAT,
+      long: LONG,
+    },
+  },
+  {
+    url: `trends/place`,
+    method: GET,
+    params: {
+      count: COUNT,
+      id: WOEID,
+    },
+  },
+  // Geo
+  {
+    url: `geo/reverse_geocode`,
+    method: GET,
+    params: {
+      count: COUNT,
+      lat: LAT,
+      long: LONG,
+    },
+  },
+  {
+    url: `geo/search`,
+    method: GET,
+    params: {
+      count: COUNT,
+      query: GEO_QUERY,
+    },
+  },
 ]
 
-export const deleteEndpoint1 = [
+export const deleteLevel1 = [
   // Create and manage lists
   {
     url: `lists/members/destroy`,
@@ -268,7 +325,7 @@ export const deleteEndpoint1 = [
   },
 ]
 
-export const deleteEndpoint2 = [
+export const deleteLevel2 = [
   // Create and manage lists
   {
     url: `lists/destroy`,

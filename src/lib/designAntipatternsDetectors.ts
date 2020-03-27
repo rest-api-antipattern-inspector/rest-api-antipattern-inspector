@@ -1,30 +1,39 @@
 import MIMETypes from './MIMETypes'
 import IHeadersObject from '../interfaces/IHeadersObject'
 import { GET, POST, PUT, PATCH, DELETE } from './constants'
-import HttpHeaders from './HttpHeaders'
+import HttpHeaders from './StandardHTTPHeaders'
 
 // TODO unit test all of this
 
+// TODO do put low-level things into functions, extract etc
+// make functions small and readable, only antipattern stuff should remain
+
 /**
- * Function for detecting Breaking Self-Descriptiveness antipattern
  * @param headers response headers
+ * @returns true if detects Breaking Self-Descriptiveness antipattern
  */
 export const isBreakingSelfDescriptiveness = (headers: IHeadersObject): boolean => {
-  const responseHeaderKeys = Object.keys(headers)
+  const responseHeaderKeys: string[] = Object.keys(headers)
 
-  // antipattern if any of the response headers isn't a standard header
   for (const headerKey of responseHeaderKeys) {
-    if (!HttpHeaders.includes(headerKey)) return true
+    if (!isStandardHeader(headerKey)) {
+      console.log('Non standard header:', headerKey)
+      return true
+    }
   }
 
   return false
 }
 
+function isStandardHeader(headerKey: string): boolean {
+  return HttpHeaders.includes(headerKey)
+}
+
 /**
- * Function for detecting Forgetting Hypermedia antipattern
  * @param body response body
  * @param httpMethod request method
  * @param headers response headers
+ * @returns true if detects Forgetting Hypermedia antipattern
  */
 export const isForgettingHypermedia = (body: string, httpMethod: string, headers: IHeadersObject): boolean => {
   // TODO
@@ -35,9 +44,11 @@ export const isForgettingHypermedia = (body: string, httpMethod: string, headers
 
   const parts = body.split('"')
 
+  // antipattern if body does not contains any keys called "link", "links" or "href"
   return !hasLinkTerm(parts)
 }
 
+// TODO perhaps put all of this in just the one function
 function hasLinkTerm(parts: string[]) {
   for (const part of parts) {
     if (isLinkTerm(part)) return true
@@ -62,8 +73,7 @@ export const isIgnoringCaching = (httpMethod: string, headers: IHeadersObject): 
 }
 
 export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
-  // antipattern if content-type doesn't include
-  // a standard mime type
+  // antipattern if content-type doesn't include a standard mime type
   return !MIMETypes.some((type) => headers['content-type'].includes(type))
 }
 

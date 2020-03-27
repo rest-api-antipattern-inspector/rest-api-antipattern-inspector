@@ -9,5 +9,5 @@ module.exports = {
   singleQuote: true,
   bracketSpacing: true,
   arrowParens: 'always',
-  printWidth: 160,
+  printWidth: 80,
 }

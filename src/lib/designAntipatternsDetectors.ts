@@ -9,11 +9,15 @@ import HttpHeaders from './StandardHTTPHeaders'
 // make functions small and readable, only antipattern stuff should remain
 
 /**
+ * @function isBreakingSelfDescriptiveness
  * @param headers response headers
  * @param nonStandardHeaders empty string[] for any none detected standard headers
  * @returns true if detects Breaking Self-Descriptiveness antipattern
  */
-export const isBreakingSelfDescriptiveness = (headers: IHeadersObject, nonStandardHeaders: string[]): boolean => {
+export const isBreakingSelfDescriptiveness = (
+  headers: IHeadersObject,
+  nonStandardHeaders: string[]
+): boolean => {
   const responseHeaderKeys: string[] = Object.keys(headers)
 
   for (const headerKey of responseHeaderKeys) {
@@ -26,26 +30,28 @@ export const isBreakingSelfDescriptiveness = (headers: IHeadersObject, nonStanda
 }
 
 /**
+ * @function isForgettingHypermedia
  * @param body response body
  * @param httpMethod request method
  * @param headers response headers
  * @returns true if detects Forgetting Hypermedia antipattern
  */
-export const isForgettingHypermedia = (body: object, httpMethod: string, headers: IHeadersObject): boolean => {
-  // TODO
-  // if post but no location automatically antipattern
-  if (httpMethod === POST && Object.keys(headers).includes('Location')) {
-    return false
-  }
+export const isForgettingHypermedia = (
+  body: object,
+  httpMethod: string,
+  headers: IHeadersObject
+): boolean => {
+  const bodyKeys = getAllKeys(body)
 
-  const parts = body.split('"')
-
-  // antipattern if body does not contains any keys called "link", "links" or "href"
-  return !hasLinkTerm(parts)
+  return (
+    (httpMethod === GET && !containsLinks(bodyKeys)) ||
+    (httpMethod === POST &&
+      !Object.keys(headers).includes('Location') &&
+      !containsLinks(bodyKeys))
+  )
 }
 
-// TODO perhaps put all of this in just the one function
-function hasLinkTerm(parts: string[]) {
+function containsLinks(parts: string[]): boolean {
   for (const part of parts) {
     if (isLinkTerm(part)) return true
   }
@@ -57,7 +63,10 @@ function isLinkTerm(part: string): boolean {
   return part === 'link' || part === 'links' || part === 'href'
 }
 
-export const isIgnoringCaching = (httpMethod: string, headers: IHeadersObject): boolean => {
+export const isIgnoringCaching = (
+  httpMethod: string,
+  headers: IHeadersObject
+): boolean => {
   if (httpMethod !== GET) return false
 
   // antipattern if Etag or Cache-Control headers are missing
@@ -65,7 +74,10 @@ export const isIgnoringCaching = (httpMethod: string, headers: IHeadersObject): 
 
   const cacheControlElements = headers['Cache-Control'].split(', ')
 
-  return cacheControlElements.includes('no-cache') || cacheControlElements.includes('no-store')
+  return (
+    cacheControlElements.includes('no-cache') ||
+    cacheControlElements.includes('no-store')
+  )
 }
 
 export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
@@ -73,7 +85,10 @@ export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
   return !MIMETypes.some((type) => headers['content-type'].includes(type))
 }
 
-export const isIgnoringStatusCode = (httpMethod: string, statusCode: number): boolean => {
+export const isIgnoringStatusCode = (
+  httpMethod: string,
+  statusCode: number
+): boolean => {
   // TODO perhaps check this more thoroughly, check for acceptable status code for various http methods
   return httpMethod !== GET && statusCode === 200
 }
@@ -83,6 +98,37 @@ export const isMisusingCookies = (headers: IHeadersObject): boolean => {
   return headers['cookie'] !== undefined || headers['set-cookie'] !== undefined
 }
 
+// TODO move these helper functions elsewhere
+
 function isStandardHeader(headerKey: string): boolean {
   return HttpHeaders.includes(headerKey)
+}
+
+function getAllKeys(obj: object): string[] {
+  const keys: string[] = []
+
+  /**
+   * This inner function is inspired by this demo:
+   * https://stackoverflow.com/a/25370536/9374593
+   */
+  function collectKeys(obj: any, properties: string[]): any | void {
+    const result = []
+
+    for (const key in obj) {
+      const value = obj[key]
+
+      properties.push(key)
+
+      if (typeof value === 'object') {
+        result.push(collectKeys(value, properties))
+      } else {
+        result.push(value)
+      }
+    }
+
+    return result
+  }
+
+  collectKeys(obj, keys)
+  return keys
 }

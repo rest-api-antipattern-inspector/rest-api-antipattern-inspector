@@ -3,7 +3,7 @@ import IResponseMeta from '../interfaces/IResponseMeta'
 import { isBreakingSelfDescriptiveness, isForgettingHypermedia, isIgnoringCaching, isIgnoringMIMEType, isIgnoringStatusCode, isMisusingCookies } from './designAntipatternsDetectors'
 import IHeadersObject from '../interfaces/IHeadersObject'
 
-export const storeResponseMeta = async (uri: string, statusCode: number, headers: IHeadersObject, body: string, httpMethod: string) => {
+export const storeResponseMeta = async (uri: string, statusCode: number, headers: IHeadersObject, body: object, httpMethod: string) => {
   httpMethod = httpMethod.toUpperCase()
 
   const nonStandardHeaders: string[] = []

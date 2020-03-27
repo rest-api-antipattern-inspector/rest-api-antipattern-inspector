@@ -10,7 +10,7 @@ import HttpHeaders from './StandardHTTPHeaders'
 
 /**
  * @param headers response headers
- * @param nonStandardHeaders empty string[] to store any none standard headers in
+ * @param nonStandardHeaders empty string[] for any none detected standard headers
  * @returns true if detects Breaking Self-Descriptiveness antipattern
  */
 export const isBreakingSelfDescriptiveness = (headers: IHeadersObject, nonStandardHeaders: string[]): boolean => {
@@ -25,17 +25,13 @@ export const isBreakingSelfDescriptiveness = (headers: IHeadersObject, nonStanda
   return nonStandardHeaders.length !== 0
 }
 
-function isStandardHeader(headerKey: string): boolean {
-  return HttpHeaders.includes(headerKey)
-}
-
 /**
  * @param body response body
  * @param httpMethod request method
  * @param headers response headers
  * @returns true if detects Forgetting Hypermedia antipattern
  */
-export const isForgettingHypermedia = (body: string, httpMethod: string, headers: IHeadersObject): boolean => {
+export const isForgettingHypermedia = (body: object, httpMethod: string, headers: IHeadersObject): boolean => {
   // TODO
   // if post but no location automatically antipattern
   if (httpMethod === POST && Object.keys(headers).includes('Location')) {
@@ -85,4 +81,8 @@ export const isIgnoringStatusCode = (httpMethod: string, statusCode: number): bo
 export const isMisusingCookies = (headers: IHeadersObject): boolean => {
   // antipattern if there is a cookie or set-cookie header
   return headers['cookie'] !== undefined || headers['set-cookie'] !== undefined
+}
+
+function isStandardHeader(headerKey: string): boolean {
+  return HttpHeaders.includes(headerKey)
 }

@@ -1,13 +1,7 @@
 import fetch, { Response } from 'node-fetch'
 import { storeResponseMeta } from '../../lib/storeMeta'
 import IHeadersObject from '../../interfaces/IHeadersObject'
-import {
-  GET,
-  POST,
-  PUT,
-  PATCH,
-  DELETE,
-} from '../../lib/constants'
+import { GET, POST, PUT, PATCH, DELETE } from '../../lib/constants'
 
 export const doStackExchangeRequests = (): void => {
   stackOverflowInfo()
@@ -15,19 +9,13 @@ export const doStackExchangeRequests = (): void => {
 }
 
 async function stackOverflowInfo() {
-  const uri =
-    'https://api.stackexchange.com/2.2/info?site=stackoverflow'
+  const uri = 'https://api.stackexchange.com/2.2/info?site=stackoverflow'
 
   const res = await fetch(uri)
   const headers = getHeaders(res)
+  const body = JSON.parse(await res.text())
 
-  storeResponseMeta(
-    uri,
-    res.status,
-    headers,
-    await res.text(),
-    GET
-  )
+  storeResponseMeta(uri, res.status, headers, body, GET)
 }
 
 /**
@@ -37,19 +25,13 @@ async function stackOverflowInfo() {
  * https://stackoverflow.com/questions/57496313/execution-failed-for-task-appmergedebugresources-com-android-builder-interna
  */
 async function relatedQuestionsSO() {
-  const uri =
-    'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
+  const uri = 'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
 
   const res = await fetch(uri)
   const headers = getHeaders(res)
+  const body = JSON.parse(await res.text())
 
-  storeResponseMeta(
-    uri,
-    res.status,
-    headers,
-    await res.text(),
-    GET
-  )
+  storeResponseMeta(uri, res.status, headers, body, GET)
 }
 
 function getHeaders(res: Response): IHeadersObject {

@@ -24,7 +24,6 @@ export const storeResponseMeta = async (
     httpMethod: httpMethod,
 
     isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
-      httpMethod,
       headers
     ),
 

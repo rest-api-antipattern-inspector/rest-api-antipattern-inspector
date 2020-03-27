@@ -6,22 +6,25 @@ import HttpHeaders from './HttpHeaders'
 // TODO unit test all of this
 
 /**
- *
- * @param httpMethod
- * @param headers
+ * Function for detecting Breaking Self-Descriptiveness antipattern
+ * @param headers response headers
  */
 export const isBreakingSelfDescriptiveness = (headers: IHeadersObject): boolean => {
   const responseHeaderKeys = Object.keys(headers)
 
+  // antipattern if any of the response headers isn't a standard header
   for (const headerKey of responseHeaderKeys) {
+    if (!HttpHeaders.includes(headerKey)) return true
   }
+
+  return false
 }
 
 /**
- *
- * @param body
- * @param httpMethod
- * @param headers
+ * Function for detecting Forgetting Hypermedia antipattern
+ * @param body response body
+ * @param httpMethod request method
+ * @param headers response headers
  */
 export const isForgettingHypermedia = (body: string, httpMethod: string, headers: IHeadersObject): boolean => {
   // TODO
@@ -51,9 +54,7 @@ export const isIgnoringCaching = (httpMethod: string, headers: IHeadersObject): 
   if (httpMethod !== GET) return false
 
   // antipattern if Etag or Cache-Control headers are missing
-  if (!headers['Etag'] || headers['Cache-Control']) {
-    return true
-  }
+  if (!headers['Etag'] || headers['Cache-Control']) return true
 
   const cacheControlElements = headers['Cache-Control'].split(', ')
 
@@ -63,7 +64,7 @@ export const isIgnoringCaching = (httpMethod: string, headers: IHeadersObject): 
 export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
   // antipattern if content-type doesn't include
   // a standard mime type
-  return !MIMETypes.some((type): boolean => headers['content-type'].includes(type))
+  return !MIMETypes.some((type) => headers['content-type'].includes(type))
 }
 
 export const isIgnoringStatusCode = (httpMethod: string, statusCode: number): boolean => {

@@ -4,6 +4,8 @@ import {
   getLevel,
   deleteLevel1,
   deleteLevel2,
+  tweeting,
+  preTweet,
 } from './endpoints'
 import { storeResponseMeta } from '../../lib/storeMeta'
 import Twit from 'twit'
@@ -25,6 +27,34 @@ interface Endpoint {
 }
 
 export default async () => {
+  // Tweeting
+  try {
+    const preRes: any = await T.post(
+      preTweet[0].url,
+      preTweet[0].params
+    )
+    const id_str = preRes.data.id_str
+
+    for (const tweet of tweeting) {
+      try {
+        const res =
+          tweet.method === GET
+            ? await T.get(tweet.url, {
+                ...tweet.params,
+                id: id_str,
+              })
+            : await T.post(tweet.url, {
+                ...tweet.params,
+                id: id_str,
+              })
+        console.log(res.resp.statusCode)
+      } catch (e) {
+        console.log(tweet.url)
+      }
+    }
+  } catch (err) {
+    console.log(err)
+  }
   const arr: Array<Array<Endpoint>> = [
     postLevel1,
     postLevel2,

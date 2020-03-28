@@ -1,5 +1,7 @@
 export const SCREEN_NAME =
   process.env.TWITTER_SCREEN_NAME || 'screen name in .env' // authorized
+export const ID_1 =
+  process.env.TWITTER_ID_1 || 'ID 1 in .env'
 export const SCREEN_NAME_2 =
   process.env.TWITTER_SCREEN_NAME_2 ||
   'screen name 2 in .env'
@@ -12,7 +14,6 @@ export const COLLECTION_NAME = 'myCollection'
 export const LAT = 37.781157
 export const LONG = -122.400612831116
 export const WOEID = 1
-export const PLACE_ID = 'df51dec6f4ee2b2c'
 export const GEO_QUERY = 'toronto'
 
 //Carl_Gustav_XVI

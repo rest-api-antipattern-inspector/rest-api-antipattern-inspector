@@ -9,10 +9,81 @@ import {
   LAT,
   LONG,
   WOEID,
-  PLACE_ID,
   GEO_QUERY,
+  ID_1,
 } from './constants'
 import { GET, POST } from '../../lib/constants'
+
+// Post, retrieve, and engage with Tweets
+export const preTweet = [
+  {
+    url: 'statuses/update',
+    method: POST,
+    params: { status: 'lnutesrttrr' },
+  },
+]
+export const tweeting = [
+  {
+    url: 'statuses/retweet',
+    method: POST,
+    params: {},
+  },
+  {
+    url: 'favorites/create',
+    method: POST,
+    params: {},
+  },
+  {
+    url: 'favorites/list',
+    method: GET,
+    params: { count: COUNT, user_id: ID_1 },
+  },
+  {
+    url: 'statuses/lookup',
+    method: GET,
+    params: { count: COUNT },
+  },
+  {
+    url: 'statuses/oembed',
+    method: GET,
+    params: { count: COUNT },
+  },
+  {
+    url: 'statuses/show',
+    method: GET,
+    params: { count: COUNT },
+  },
+  {
+    url: 'statuses/retweets',
+    method: GET,
+    params: { count: COUNT },
+  },
+  {
+    url: 'statuses/retweeters/ids',
+    method: GET,
+    params: { count: COUNT },
+  },
+  {
+    url: 'statuses/retweets_of_me',
+    method: GET,
+    params: { count: COUNT },
+  },
+  {
+    url: 'favorites/destroy',
+    method: POST,
+    params: {},
+  },
+  {
+    url: 'statuses/unretweet',
+    method: POST,
+    params: {},
+  },
+  {
+    url: 'statuses/destroy',
+    method: POST,
+    params: {},
+  },
+]
 
 export const postLevel1 = [
   // Create and manage lists

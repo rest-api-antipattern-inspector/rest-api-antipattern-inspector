@@ -5,10 +5,12 @@ dotenv.config()
 
 import { doStackExchangeRequests } from './requests/stackExchange/stackExchange'
 import doTwitterRequests from './requests/twitter'
+import bitlyRequests from './requests/bitly'
 
 const APIs: any = {
   stackexchange: doStackExchangeRequests,
   twitter: doTwitterRequests,
+  bitly: bitlyRequests,
 }
 
 console.log('Running rest-api-antipattern-inspector')

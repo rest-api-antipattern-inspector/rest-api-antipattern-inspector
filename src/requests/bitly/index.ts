@@ -27,5 +27,10 @@ export default async () => {
       })
     })
   )
-  console.log(res)
+  console.log(res.length)
+  res.map(async (re) => {
+    const text = await re.text()
+    console.log(re.status)
+    console.log(re.url)
+  })
 }

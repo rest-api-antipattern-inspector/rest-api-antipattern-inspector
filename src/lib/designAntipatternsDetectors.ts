@@ -41,7 +41,7 @@ export const isForgettingHypermedia = (
   httpMethod: string,
   headers: IHeadersObject
 ): boolean => {
-  const bodyKeys = getAllKeys(body)
+  const bodyKeys: string[] = getAllKeys(body)
 
   return (
     (httpMethod === GET && !containsLinks(bodyKeys)) ||
@@ -51,18 +51,12 @@ export const isForgettingHypermedia = (
   )
 }
 
-function containsLinks(parts: string[]): boolean {
-  for (const part of parts) {
-    if (isLinkTerm(part)) return true
-  }
-
-  return false
-}
-
-function isLinkTerm(part: string): boolean {
-  return part === 'link' || part === 'links' || part === 'href'
-}
-
+/**
+ * @function isIgnoringCaching
+ * @param httpMethod request method
+ * @param headers response headers
+ * @returns true if detects Ignoring Caching antipattern
+ */
 export const isIgnoringCaching = (
   httpMethod: string,
   headers: IHeadersObject
@@ -72,12 +66,9 @@ export const isIgnoringCaching = (
   // antipattern if Etag or Cache-Control headers are missing
   if (!headers['Etag'] || headers['Cache-Control']) return true
 
-  const cacheControlElements = headers['Cache-Control'].split(', ')
+  const caching = headers['Cache-Control'].toLowerCase()
 
-  return (
-    cacheControlElements.includes('no-cache') ||
-    cacheControlElements.includes('no-store')
-  )
+  return caching === 'no-cache' || caching === 'no-store'
 }
 
 export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
@@ -131,4 +122,16 @@ function getAllKeys(obj: object): string[] {
 
   collectKeys(obj, keys)
   return keys
+}
+
+function containsLinks(parts: string[]): boolean {
+  for (const part of parts) {
+    if (isLinkTerm(part)) return true
+  }
+
+  return false
+}
+
+function isLinkTerm(part: string): boolean {
+  return part === 'link' || part === 'links' || part === 'href'
 }

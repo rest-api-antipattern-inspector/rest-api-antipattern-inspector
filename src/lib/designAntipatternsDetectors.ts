@@ -71,8 +71,13 @@ export const isIgnoringCaching = (
   return caching === 'no-cache' || caching === 'no-store'
 }
 
+/**
+ * @function isIgnoringMIMEType
+ * @param headers response headers
+ * @returns true if detects Ignoring MIME Type antipattern
+ */
 export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
-  // antipattern if content-type doesn't include a standard mime type
+  // antipattern if content-type header doesn't include a standard mime type
   return !MIMETypes.some((type) => headers['content-type'].includes(type))
 }
 
@@ -84,6 +89,11 @@ export const isIgnoringStatusCode = (
   return httpMethod !== GET && statusCode === 200
 }
 
+/**
+ * @function isMisusingCookies
+ * @param headers response headers
+ * @returns true if detects Misusing Cookies antipattern
+ */
 export const isMisusingCookies = (headers: IHeadersObject): boolean => {
   // antipattern if there is a cookie or set-cookie header
   return headers['cookie'] !== undefined || headers['set-cookie'] !== undefined

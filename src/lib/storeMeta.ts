@@ -14,37 +14,32 @@ export const storeResponseMeta = async (
   uri: string,
   statusCode: number,
   headers: IHeadersObject,
-  body: string,
+  body: object,
   httpMethod: string
 ) => {
   httpMethod = httpMethod.toUpperCase()
 
+  const nonStandardHeaders: string[] = []
+
   const responseMeta: IResponseMeta = {
     uri,
     httpMethod: httpMethod,
+    statusCode: statusCode,
 
     isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
-      httpMethod,
-      headers
+      headers,
+      nonStandardHeaders
     ),
 
-    isForgettingHypermedia: isForgettingHypermedia(
-      body,
-      httpMethod,
-      headers
-    ),
+    nonStandardHeaders: nonStandardHeaders,
 
-    isIgnoringCaching: isIgnoringCaching(
-      httpMethod,
-      headers
-    ),
+    isForgettingHypermedia: isForgettingHypermedia(body, httpMethod, headers),
+
+    isIgnoringCaching: isIgnoringCaching(httpMethod, headers),
 
     isIgnoringMIMEType: isIgnoringMIMEType(headers),
 
-    isIgnoringStatusCode: isIgnoringStatusCode(
-      httpMethod,
-      statusCode
-    ),
+    isIgnoringStatusCode: isIgnoringStatusCode(httpMethod, statusCode),
 
     isMisusingCookies: isMisusingCookies(headers),
   }
@@ -55,14 +50,9 @@ export const storeResponseMeta = async (
 }
 
 function writeToFile(responseMeta: IResponseMeta) {
-  const responses = JSON.parse(
-    fs.readFileSync('responses.json', 'utf8')
-  )
+  const responses = JSON.parse(fs.readFileSync('responses.json', 'utf8'))
 
   responses.push(responseMeta)
 
-  fs.writeFileSync(
-    'responses.json',
-    JSON.stringify(responses)
-  )
+  fs.writeFileSync('responses.json', JSON.stringify(responses))
 }

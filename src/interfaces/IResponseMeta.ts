@@ -1,6 +1,7 @@
 export default interface ResponseMeta {
   uri: string
   httpMethod: string
+  statusCode: number
 
   isBreakingSelfDescriptiveness: boolean
 

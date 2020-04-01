@@ -1,9 +1,22 @@
 import fs from 'fs'
 import IResponseMeta from '../interfaces/IResponseMeta'
-import { isBreakingSelfDescriptiveness, isForgettingHypermedia, isIgnoringCaching, isIgnoringMIMEType, isIgnoringStatusCode, isMisusingCookies } from './designAntipatternsDetectors'
+import {
+  isBreakingSelfDescriptiveness,
+  isForgettingHypermedia,
+  isIgnoringCaching,
+  isIgnoringMIMEType,
+  isIgnoringStatusCode,
+  isMisusingCookies,
+} from './designAntipatternsDetectors'
 import IHeadersObject from '../interfaces/IHeadersObject'
 
-export const storeResponseMeta = async (uri: string, statusCode: number, headers: IHeadersObject, body: object, httpMethod: string) => {
+export const storeResponseMeta = async (
+  uri: string,
+  statusCode: number,
+  headers: IHeadersObject,
+  body: object,
+  httpMethod: string
+) => {
   httpMethod = httpMethod.toUpperCase()
 
   const nonStandardHeaders: string[] = []
@@ -11,8 +24,12 @@ export const storeResponseMeta = async (uri: string, statusCode: number, headers
   const responseMeta: IResponseMeta = {
     uri,
     httpMethod: httpMethod,
+    statusCode: statusCode,
 
-    isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(headers, nonStandardHeaders),
+    isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
+      headers,
+      nonStandardHeaders
+    ),
 
     nonStandardHeaders: nonStandardHeaders,
 

@@ -1,7 +1,6 @@
 import MIMETypes from './MIMETypes'
 import IHeadersObject from '../interfaces/IHeadersObject'
 import { GET, POST, PUT, PATCH, DELETE } from './constants'
-import HttpHeaders from './StandardHTTPHeaders'
 import {
   GETStatuses,
   POSTStatuses,
@@ -9,14 +8,11 @@ import {
   PATCHStatuses,
   DELETEStatuses,
 } from './statusCodes'
+import { isStandardHeader, getAllKeys, containsLinks } from './detectorHelpers'
 
 // TODO unit test all of this
 
-// TODO do put low-level things into functions, extract etc
-// make functions small and readable, only antipattern stuff should remain
-
 /**
- * @function isBreakingSelfDescriptiveness
  * @param headers response headers
  * @param nonStandardHeaders empty string[] for any none detected standard headers
  * @returns true if detects Breaking Self-Descriptiveness antipattern
@@ -37,7 +33,6 @@ export const isBreakingSelfDescriptiveness = (
 }
 
 /**
- * @function isForgettingHypermedia
  * @param body response body
  * @param httpMethod request method
  * @param headers response headers
@@ -59,7 +54,6 @@ export const isForgettingHypermedia = (
 }
 
 /**
- * @function isIgnoringCaching
  * @param httpMethod request method
  * @param headers response headers
  * @returns true if detects Ignoring Caching antipattern
@@ -79,7 +73,6 @@ export const isIgnoringCaching = (
 }
 
 /**
- * @function isIgnoringMIMEType
  * @param headers response headers
  * @returns true if detects Ignoring MIME Type antipattern
  */
@@ -89,7 +82,6 @@ export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
 }
 
 /**
- * @function isIgnoringStatusCode
  * @param httpMethod request method
  * @param statusCode
  * @returns true if detects Ignoring Status Code antipattern
@@ -98,8 +90,6 @@ export const isIgnoringStatusCode = (
   httpMethod: string,
   statusCode: number
 ): boolean => {
-  // TODO store status code
-
   switch (httpMethod) {
     case GET:
       return !GETStatuses().includes(statusCode)
@@ -117,58 +107,10 @@ export const isIgnoringStatusCode = (
 }
 
 /**
- * @function isMisusingCookies
  * @param headers response headers
  * @returns true if detects Misusing Cookies antipattern
  */
 export const isMisusingCookies = (headers: IHeadersObject): boolean => {
   // antipattern if there is a cookie or set-cookie header
   return headers['cookie'] !== undefined || headers['set-cookie'] !== undefined
-}
-
-// TODO move these helper functions elsewhere
-
-function isStandardHeader(headerKey: string): boolean {
-  return HttpHeaders.includes(headerKey)
-}
-
-function getAllKeys(obj: object): string[] {
-  const keys: string[] = []
-
-  /**
-   * This inner function is inspired by this demo:
-   * https://stackoverflow.com/a/25370536/9374593
-   */
-  function collectKeys(obj: any, properties: string[]): any | void {
-    const result = []
-
-    for (const key in obj) {
-      const value = obj[key]
-
-      properties.push(key)
-
-      if (typeof value === 'object') {
-        result.push(collectKeys(value, properties))
-      } else {
-        result.push(value)
-      }
-    }
-
-    return result
-  }
-
-  collectKeys(obj, keys)
-  return keys
-}
-
-function containsLinks(parts: string[]): boolean {
-  for (const part of parts) {
-    if (isLinkTerm(part)) return true
-  }
-
-  return false
-}
-
-function isLinkTerm(part: string): boolean {
-  return part === 'link' || part === 'links' || part === 'href'
 }

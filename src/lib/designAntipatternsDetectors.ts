@@ -85,10 +85,7 @@ export const isIgnoringStatusCode = (
   httpMethod: string,
   statusCode: number
 ): boolean => {
-  // TODO perhaps check this more thoroughly, check for acceptable status code for various http methods
-
-  // TODO if GET, check if our array w. acceptable statuses includes this
-  // etc
+  // TODO also store used statusCode here
 
   return httpMethod !== GET && statusCode === 200
 }

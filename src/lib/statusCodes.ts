@@ -23,6 +23,8 @@ const commonStatuses = [
   302,
   303,
   304,
+  305,
+  306,
   307,
   308,
 
@@ -45,7 +47,10 @@ const commonStatuses = [
   416,
   417,
   418,
+  421,
   422,
+  423,
+  424,
   425,
   426,
   428,
@@ -60,20 +65,18 @@ const commonStatuses = [
   503,
   504,
   505,
+  506,
+  507,
+  508,
+  510,
   511,
-  521,
 ]
 
 export const getGETStatuses = () => {
-  const getStatuses = commonStatuses.slice()
-  getStatuses.push(200)
-  return getStatuses
+  const copyOfStatuses = commonStatuses.slice()
+  copyOfStatuses.push(200)
+  return copyOfStatuses
 }
-
-// TODO Post, same almost but remove
-// 200 and add 201
-
-// for others, just remove 200
 
 // TODO have standard, add 200 for
 // get & 201 for post

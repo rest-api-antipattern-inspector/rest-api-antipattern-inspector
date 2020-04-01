@@ -2,6 +2,13 @@ import MIMETypes from './MIMETypes'
 import IHeadersObject from '../interfaces/IHeadersObject'
 import { GET, POST, PUT, PATCH, DELETE } from './constants'
 import HttpHeaders from './StandardHTTPHeaders'
+import {
+  GETStatuses,
+  POSTStatuses,
+  PUTStatuses,
+  PATCHStatuses,
+  DELETEStatuses,
+} from './statusCodes'
 
 // TODO unit test all of this
 
@@ -81,13 +88,32 @@ export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
   return !MIMETypes.some((type) => headers['content-type'].includes(type))
 }
 
+/**
+ * @function isIgnoringStatusCode
+ * @param httpMethod request method
+ * @param statusCode
+ * @returns true if detects Ignoring Status Code antipattern
+ */
 export const isIgnoringStatusCode = (
   httpMethod: string,
   statusCode: number
 ): boolean => {
-  // TODO also store used statusCode here
+  // TODO store status code
 
-  return httpMethod !== GET && statusCode === 200
+  switch (httpMethod) {
+    case GET:
+      return !GETStatuses().includes(statusCode)
+    case POST:
+      return !POSTStatuses().includes(statusCode)
+    case PUT:
+      return !PUTStatuses().includes(statusCode)
+    case PATCH:
+      return !PATCHStatuses().includes(statusCode)
+    case DELETE:
+      return !DELETEStatuses().includes(statusCode)
+    default:
+      return false
+  }
 }
 
 /**

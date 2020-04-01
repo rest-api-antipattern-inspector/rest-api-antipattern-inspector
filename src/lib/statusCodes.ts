@@ -1,14 +1,11 @@
-/**
- * For now based on this:
- https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
- */
+// Based on this:
+// https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 
 const commonStatuses = [
   100,
   101,
   103,
 
-  200,
   202,
   203,
   204,
@@ -72,11 +69,20 @@ const commonStatuses = [
   511,
 ]
 
-export const getGETStatuses = () => {
+export const GETStatuses = () => {
   const copyOfStatuses = commonStatuses.slice()
   copyOfStatuses.push(200)
   return copyOfStatuses
 }
 
-// TODO have standard, add 200 for
-// get & 201 for post
+export const POSTStatuses = () => {
+  const copyOfStatuses = commonStatuses.slice()
+  copyOfStatuses.push(201)
+  return copyOfStatuses
+}
+
+export const PUTStatuses = () => commonStatuses.slice()
+
+export const PATCHStatuses = () => commonStatuses.slice()
+
+export const DELETEStatuses = () => commonStatuses.slice()

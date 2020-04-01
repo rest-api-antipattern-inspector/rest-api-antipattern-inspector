@@ -11,7 +11,8 @@ import {
 import IHeadersObject from '../interfaces/IHeadersObject'
 
 export const storeResponseMeta = async (
-  uri: string,
+  wholeURI: string,
+  endpoint: string,
   statusCode: number,
   headers: IHeadersObject,
   body: object,
@@ -22,7 +23,8 @@ export const storeResponseMeta = async (
   const nonStandardHeaders: string[] = []
 
   const responseMeta: IResponseMeta = {
-    uri,
+    wholeURI,
+    endpoint,
     httpMethod: httpMethod,
     statusCode: statusCode,
 
@@ -46,7 +48,7 @@ export const storeResponseMeta = async (
 
   writeToFile(responseMeta)
 
-  console.log(`Stored info for ${httpMethod} ${uri}`)
+  console.log(`Stored info for ${httpMethod} ${wholeURI}`)
 }
 
 function writeToFile(responseMeta: IResponseMeta) {

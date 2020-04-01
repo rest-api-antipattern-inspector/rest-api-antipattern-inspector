@@ -15,7 +15,14 @@ async function stackOverflowInfo() {
   const headers = getHeaders(res)
   const body = JSON.parse(await res.text())
 
-  storeResponseMeta(uri, res.status, headers, body, GET)
+  storeResponseMeta(
+    uri,
+    '/info?site=stackoverflow',
+    res.status,
+    headers,
+    body,
+    GET
+  )
 }
 
 /**
@@ -25,13 +32,21 @@ async function stackOverflowInfo() {
  * https://stackoverflow.com/questions/57496313/execution-failed-for-task-appmergedebugresources-com-android-builder-interna
  */
 async function relatedQuestionsSO() {
-  const uri = 'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
+  const uri =
+    'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
 
   const res = await fetch(uri)
   const headers = getHeaders(res)
   const body = JSON.parse(await res.text())
 
-  storeResponseMeta(uri, res.status, headers, body, GET)
+  storeResponseMeta(
+    uri,
+    '/questions/{question_ids}/related?order=desc&sort=activity&site=stackoverflow',
+    res.status,
+    headers,
+    body,
+    GET
+  )
 }
 
 function getHeaders(res: Response): IHeadersObject {

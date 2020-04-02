@@ -11,26 +11,46 @@ interface Endpoint {
 }
 
 export default async () => {
-  const res = await Promise.all(
-    endpoints.map((endpoint: Endpoint) => {
-      return fetch(`${BASE_URL}${endpoint.url}`, {
-        method: endpoint.method,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
-        },
-        body:
-          endpoint.data && endpoint.method !== 'GET'
-            ? JSON.stringify(endpoint.data)
-            : undefined,
-      })
+  const result = await Promise.all(
+    endpoints.map(async (endpoint: Endpoint) => {
+      const res = await fetch(
+        `${BASE_URL}${endpoint.url}`,
+        {
+          method: endpoint.method,
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${ACCESS_TOKEN}`,
+          },
+          body:
+            endpoint.data && endpoint.method !== 'GET'
+              ? JSON.stringify(endpoint.data)
+              : undefined,
+        }
+      )
+      const body = await res.text()
+      const headers: any = {}
+      res.headers.forEach(
+        (value, name) => (headers[name] = value)
+      )
+      return {
+        wholeURI: res.url,
+        endpoint: endpoint.url,
+        statusCode: res.status,
+        headers,
+        body: JSON.parse(body),
+        httpMethod: endpoint.method,
+      }
     })
   )
-  console.log(res.length)
-  res.map(async (re) => {
-    const text = await re.text()
-    console.log(re.status)
-    console.log(re.url)
-  })
+  result.map((res) =>
+    storeResponseMeta(
+      res.wholeURI,
+      res.endpoint,
+      res.statusCode,
+      res.headers,
+      res.body,
+      res.httpMethod
+    )
+  )
 }

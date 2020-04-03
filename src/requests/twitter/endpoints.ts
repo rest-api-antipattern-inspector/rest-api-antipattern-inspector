@@ -19,7 +19,7 @@ export const preTweet = [
   {
     url: 'statuses/update',
     method: POST,
-    params: { status: 'lnutesrttrr' },
+    params: { status: 'this is a tweet' },
   },
 ]
 export const tweeting = [

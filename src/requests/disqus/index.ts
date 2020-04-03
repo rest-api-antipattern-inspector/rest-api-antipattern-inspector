@@ -1,12 +1,14 @@
 import { endpoints } from './endpoints'
 import { storeResponseMeta } from '../../lib/storeMeta'
 import fetch from 'node-fetch'
-const ACCESS_TOKEN = process.env.BITLY_ACCESS_TOKEN
-const BASE_URL = 'https://api-ssl.bitly.com/v4/'
+const DISQUS_SECRET = process.env.DISQUS_SECRET
+const DISQUS_ACCESS_TOKEN = process.env.DISQUS_ACCESS_TOKEN
+const BASE_URL = 'https://disqus.com/api/3.0/'
 
 interface Endpoint {
   readonly method: string
   readonly url: string
+  readonly params?: string
   readonly data?: object
 }
 
@@ -14,25 +16,19 @@ export default async () => {
   const result = await Promise.all(
     endpoints.map(async (endpoint: Endpoint) => {
       const res = await fetch(
-        `${BASE_URL}${endpoint.url}`,
+        `${BASE_URL}${endpoint.url}?api_secret=${DISQUS_SECRET}&access_token=${DISQUS_ACCESS_TOKEN}${endpoint.params}`,
         {
           method: endpoint.method,
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${ACCESS_TOKEN}`,
-          },
           body:
             endpoint.data && endpoint.method !== 'GET'
               ? JSON.stringify(endpoint.data)
               : undefined,
         }
       )
+
       const body = await res.text()
       const headers: any = {}
-      res.headers.forEach(
-        (value, name) => (headers[name] = value)
-      )
+      res.headers.forEach((value, name) => (headers[name] = value))
       return {
         wholeURI: res.url,
         endpoint: endpoint.url,
@@ -43,6 +39,7 @@ export default async () => {
       }
     })
   )
+  console.log(result)
   result.map((res) =>
     storeResponseMeta(
       res.wholeURI,

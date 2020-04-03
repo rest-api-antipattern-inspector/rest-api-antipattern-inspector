@@ -1,4 +1,4 @@
-export const setupRequests: any = [
+export const setupRequests = [
   {
     wholeURI: 'https://disqus.com/api/3.0/forums/create.json',
     endpoint: 'forums/create',

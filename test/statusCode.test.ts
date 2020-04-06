@@ -3,6 +3,12 @@ import { GET, POST, PUT, PATCH, DELETE } from '../src/lib/constants'
 
 // info about status codes: https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
 
+// TODO sometimes 200 can be OK for POST?
+
+// ask if we can skip this because difficult to test
+
+// ask how to do this.
+
 ///
 
 // TRUE

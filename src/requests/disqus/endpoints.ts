@@ -1,13 +1,101 @@
-import { forum } from './constants'
-
+import { forum, username, threadId, categoryId, postId } from './constants'
+import { GET, POST, PATCH } from '../../lib/constants'
+const DISQUS_ACCESS_TOKEN = process.env.DISQUS_ACCESS_TOKEN
 // https://disqus.com/api/docs/
 // start by creating a forum:
 // http://disqus.com&name=lnu+test&short_name=lnutest
-export const endpoints = [
+export const level1 = [
+  // {
+  //   method: POST,
+  //   url: 'threads/create.json',
+  //   params: `&forum=${forum}&title=testing`,
+  // },
+  // {
+  //   method: POST,
+  //   url: 'posts/create.json',
+  //   params: `&thread=${threadId}&message=testing`,
+  // },
+]
+export const level2 = [
   //forum
+  // {
+  //   method: GET,
+  //   url: 'forums/details.json',
+  //   params: `&forum=${forum}`,
+  // },
+  // {
+  //   method: POST,
+  //   url: 'forums/addModerator.json',
+  //   params: `&user=username:${username}&forum=${forum}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'forums/interestingForums.json',
+  // },
+  // {
+  //   method: GET,
+  //   url: 'forums/listCategories.json',
+  //   params: `&forum=${forum}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'forums/listFollowers.json',
+  //   params: `&forum=${forum}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'forums/listModerators.json',
+  //   params: `&forum=${forum}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'forums/listMostActiveUsers.json',
+  //   params: `&forum=${forum}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'forums/listMostLikedUsers.json',
+  //   params: `&forum=${forum}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'forums/listPosts.json',
+  //   params: `&forum=${forum}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'forums/listThreads.json',
+  //   params: `&forum=${forum}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'forums/listUserModerationHistory.json',
+  //   params: `&user=username:${username}&forum=${forum}`,
+  // },
+  //// categories
+  // {
+  //   method: GET,
+  //   url: 'categories/details.json',
+  //   params: `&category=${categoryId}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'categories/list.json',
+  //   params: `&forum=${forum}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'categories/listPosts.json',
+  //   params: `&category=${categoryId}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'categories/listThreads.json',
+  //   params: `&category=${categoryId}`,
+  // },
   {
-    method: 'GET',
-    url: 'forums/details.json',
-    params: `&forum=${forum}`,
+    method: POST,
+    url: 'posts/approve.json',
+    params: `&post=${postId}`,
   },
 ]

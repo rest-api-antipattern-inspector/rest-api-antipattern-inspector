@@ -1,11 +1,6 @@
 import { isBreakingSelfDescriptiveness } from '../src/lib/designAntipatternsDetectors'
 import standardHeaders from '../src/lib/StandardHTTPHeaders'
 
-// TODO loop through all standard headers, make sure they all work
-// also do them to lowercase, should still work
-
-// add some own headers, should break
-
 test('Looping through standard headers: false', () => {
   const headersObject = {}
 

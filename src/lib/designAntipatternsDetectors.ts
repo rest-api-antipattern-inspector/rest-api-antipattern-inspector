@@ -115,6 +115,9 @@ export const isIgnoringStatusCode = (
  * @returns true if detects Misusing Cookies antipattern
  */
 export const isMisusingCookies = (headers: IHeadersObject): boolean => {
-  // antipattern if there is a cookie or set-cookie header
-  return headers['cookie'] !== undefined || headers['set-cookie'] !== undefined
+  for (let cookieHeader of cookieHeaders) {
+    if (headers[cookieHeader] !== undefined) return true
+  }
+
+  return false
 }

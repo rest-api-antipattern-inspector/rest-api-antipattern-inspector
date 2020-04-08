@@ -60,3 +60,7 @@ test('Ignoring Status Code: false, PATCH 200', () => {
 test('Ignoring Status Code: false, DELETE 200', () => {
   expect(isIgnoringStatusCode(DELETE, 200)).toBeFalsy()
 })
+
+test('Ignoring Status Code: false, OPTIONS 200', () => {
+  expect(isIgnoringStatusCode('OPTIONS', 200)).toBeFalsy()
+})

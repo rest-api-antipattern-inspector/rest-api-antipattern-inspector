@@ -16,7 +16,6 @@ export default async () => {
   for (const level of [level1, level2]) {
     const result = await Promise.all(
       level.map(async (endpoint: Endpoint) => {
-        console.log(endpoint)
         const res = await fetch(
           `${BASE_URL}${
             endpoint.url
@@ -32,8 +31,6 @@ export default async () => {
           }
         )
 
-        console.log(res, 'fsvf')
-
         const body = await res.text()
         const headers: any = {}
         res.headers.forEach((value, name) => (headers[name] = value))
@@ -48,7 +45,6 @@ export default async () => {
         }
       })
     )
-    console.log(result, 'fsfgd')
     result.map((res) =>
       storeResponseMeta(
         res.wholeURI,

@@ -17,6 +17,8 @@ const APIs: any = {
 
 // TODO create text file for Java based on responses.json
 
+// TODO add versions to endpoint to store
+
 console.log('Running rest-api-antipattern-inspector')
 console.log('Use Control-C to exit')
 

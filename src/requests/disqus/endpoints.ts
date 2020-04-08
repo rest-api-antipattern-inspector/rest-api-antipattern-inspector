@@ -93,9 +93,49 @@ export const level2 = [
   //   url: 'categories/listThreads.json',
   //   params: `&category=${categoryId}`,
   // },
-  {
-    method: POST,
-    url: 'posts/approve.json',
-    params: `&post=${postId}`,
-  },
+  // {
+  //   method: POST,
+  //   url: 'posts/approve.json',
+  //   params: `&post=${postId}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'posts/details.json',
+  //   params: `&post=${postId}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'posts/getContext.json',
+  //   params: `&post=${postId}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'posts/list.json',
+  //   params: ``,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'posts/listModerationHistory.json',
+  //   params: `&post=${postId}`,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'posts/listPopular.json',
+  //   params: ``,
+  // },
+  // {
+  //   method: GET,
+  //   url: 'posts/listReporters.json',
+  //   params: `&posts=${postId}`,
+  // },
+  // {
+  //   method: POST,
+  //   url: 'posts/update.json',
+  //   params: `&post=${postId}&message=updating`,
+  // },
+  // {
+  //   method: POST,
+  //   url: 'posts/vote.json',
+  //   params: `&post=${postId}&vote=1`,
+  // },
 ]

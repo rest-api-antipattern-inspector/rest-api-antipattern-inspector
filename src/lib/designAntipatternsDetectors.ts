@@ -8,9 +8,12 @@ import {
   PATCHStatuses,
   DELETEStatuses,
 } from './statusCodes'
-import { isStandardHeader, getAllKeys, containsLinks } from './detectorHelpers'
-
-// TODO unit test all of this
+import {
+  isStandardHeader,
+  getAllKeys,
+  containsLinks,
+  cookieHeaders,
+} from './detectorHelpers'
 
 /**
  * @param headers response headers

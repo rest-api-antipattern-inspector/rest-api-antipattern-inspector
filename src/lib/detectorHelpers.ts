@@ -43,3 +43,14 @@ export const containsLinks = (parts: string[]): boolean => {
 function isLinkTerm(part: string): boolean {
   return part === 'link' || part === 'links' || part === 'href'
 }
+
+export const cookieHeaders = [
+  'Cookie',
+  'Cookie2',
+  'Set-Cookie',
+  'Set-Cookie2',
+  'cookie',
+  'cookie2',
+  'set-cookie',
+  'set-cookie2',
+]

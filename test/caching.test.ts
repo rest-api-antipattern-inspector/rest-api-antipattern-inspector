@@ -42,3 +42,18 @@ test('Ignoring Caching: false, lowecase cache-control', () => {
     })
   ).toBeFalsy()
 })
+
+test('Ignoring Caching: false, Capitalized headers', () => {
+  expect(
+    isIgnoringCaching(GET, {
+      Etag: '33a64df551425fcc55e4d42a148795d9f25f89d4',
+      'Cache-Control': 'public',
+    })
+  ).toBeFalsy()
+})
+
+///
+
+// TRUE
+
+///

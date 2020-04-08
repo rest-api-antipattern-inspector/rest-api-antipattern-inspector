@@ -65,6 +65,7 @@ export const isIgnoringCaching = (
   if (httpMethod !== GET) return false
 
   // antipattern if Etag or Cache-Control headers are missing
+  // TODO error here, missed ! before headers...
   if (!headers['Etag'] || headers['Cache-Control']) return true
 
   const caching = headers['Cache-Control'].toLowerCase()

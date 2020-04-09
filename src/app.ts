@@ -19,9 +19,6 @@ const APIs: any = {
 
 // TODO add versions to endpoint to store
 
-console.log('Running rest-api-antipattern-inspector')
-console.log('Use Control-C to exit')
-
 fs.writeFileSync('responses.json', '[]')
 
 const appArguments = process.argv.slice(2)

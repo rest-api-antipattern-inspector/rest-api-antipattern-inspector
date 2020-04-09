@@ -1,5 +1,8 @@
-import { isIgnoringCaching } from '../src/lib/designAntipatternsDetectors'
-import { GET, POST, PUT, PATCH, DELETE } from '../src/lib/constants'
+import { isIgnoringCaching } from '../src/lib/designAntipatternDetectors'
+import { GET, POST, PUT, PATCH, DELETE } from '../src/utils/HTTPMethods'
+
+// TODO mention full coverage of all branches, statements etc of detector functions in report
+// with image
 
 ///
 

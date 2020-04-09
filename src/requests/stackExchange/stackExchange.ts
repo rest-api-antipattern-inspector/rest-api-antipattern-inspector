@@ -1,7 +1,8 @@
 import fetch, { Response } from 'node-fetch'
-import { storeResponseMeta } from '../../lib/storeMeta'
+import { storeResponseMeta } from '../../data-access-layer/storeMeta'
+import { APIs } from '../../enums/APIs'
 import IHeadersObject from '../../interfaces/IHeadersObject'
-import { GET, POST, PUT, PATCH, DELETE } from '../../lib/constants'
+import { GET, POST, PUT, PATCH, DELETE } from '../../utils/HTTPMethods'
 
 export const doStackExchangeRequests = (): void => {
   stackOverflowInfo()
@@ -16,8 +17,9 @@ async function stackOverflowInfo() {
   const body = JSON.parse(await res.text())
 
   storeResponseMeta(
+    APIs.stackExchange,
     uri,
-    '/info?site=stackoverflow',
+    '/2.2/info?site=stackoverflow',
     res.status,
     headers,
     body,
@@ -40,8 +42,9 @@ async function relatedQuestionsSO() {
   const body = JSON.parse(await res.text())
 
   storeResponseMeta(
+    APIs.stackExchange,
     uri,
-    '/questions/{question_ids}/related?order=desc&sort=activity&site=stackoverflow',
+    '/2.2/questions/{question_ids}/related?order=desc&sort=activity&site=stackoverflow',
     res.status,
     headers,
     body,

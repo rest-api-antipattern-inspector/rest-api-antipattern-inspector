@@ -1,5 +1,5 @@
-import { isForgettingHypermedia } from '../src/lib/designAntipatternsDetectors'
-import { GET, POST, PUT, PATCH, DELETE } from '../src/lib/constants'
+import { isForgettingHypermedia } from '../src/lib/designAntipatternDetectors'
+import { GET, POST, PUT, PATCH, DELETE } from '../src/utils/HTTPMethods'
 
 const linkBody = {
   message: {

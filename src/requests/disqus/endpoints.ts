@@ -1,5 +1,5 @@
 import { forum, username, threadId, categoryId, postId } from './constants'
-import { GET, POST, PATCH } from '../../lib/constants'
+import { GET, POST, PATCH } from '../../utils/HTTPMethods'
 const DISQUS_ACCESS_TOKEN = process.env.DISQUS_ACCESS_TOKEN
 // https://disqus.com/api/docs/
 // start by creating a forum:

@@ -7,9 +7,10 @@ import {
   tweeting,
   preTweet,
 } from './endpoints'
-import { storeResponseMeta } from '../../lib/storeMeta'
+import { storeResponseMeta } from '../../data-access-layer/storeMeta'
+import { APIs } from '../../enums/APIs'
 import Twit from 'twit'
-import { GET } from '../../lib/constants'
+import { GET } from '../../utils/HTTPMethods'
 
 var T = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_API_KEY || '',
@@ -31,6 +32,7 @@ export default async () => {
     const id_str = preRes.data.id_str
 
     storeResponseMeta(
+      APIs.twitter,
       preRes.resp.request.href,
       preTweet[0].url,
       preRes.resp.statusCode,

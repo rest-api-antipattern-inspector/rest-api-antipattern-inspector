@@ -1,6 +1,5 @@
-import MIMETypes from './MIMETypes'
 import IHeadersObject from '../interfaces/IHeadersObject'
-import { GET, POST, PUT, PATCH, DELETE } from './constants'
+import { GET, POST, PUT, PATCH, DELETE } from '../utils/HTTPMethods'
 import {
   GETStatuses,
   POSTStatuses,
@@ -8,28 +7,34 @@ import {
   PATCHStatuses,
   DELETEStatuses,
 } from './statusCodes'
-import { isStandardHeader, getAllKeys, containsLinks } from './detectorHelpers'
-
-// TODO unit test all of this
+import {
+  isStandardHeader,
+  getAllKeys,
+  containsLinks,
+  isStandardMIMEType,
+  containsHeaderLowercasedOrCapitalized,
+  getHeaderValue,
+  containsCookieHeader,
+} from './detectorHelpers'
 
 /**
  * @param headers response headers
- * @param nonStandardHeaders empty string[] for any none detected standard headers
+ * @param nonstandardHeaders empty string[] for any detected nonstandard headers
  * @returns true if detects Breaking Self-Descriptiveness antipattern
  */
 export const isBreakingSelfDescriptiveness = (
   headers: IHeadersObject,
-  nonStandardHeaders: string[]
+  nonstandardHeaders: string[]
 ): boolean => {
   const responseHeaderKeys: string[] = Object.keys(headers)
 
   for (const headerKey of responseHeaderKeys) {
     if (!isStandardHeader(headerKey)) {
-      nonStandardHeaders.push(headerKey)
+      nonstandardHeaders.push(headerKey)
     }
   }
 
-  return nonStandardHeaders.length !== 0
+  return nonstandardHeaders.length !== 0
 }
 
 /**
@@ -48,7 +53,7 @@ export const isForgettingHypermedia = (
   return (
     (httpMethod === GET && !containsLinks(bodyKeys)) ||
     (httpMethod === POST &&
-      !Object.keys(headers).includes('Location') &&
+      !containsHeaderLowercasedOrCapitalized(headers, 'Location') &&
       !containsLinks(bodyKeys))
   )
 }
@@ -64,11 +69,14 @@ export const isIgnoringCaching = (
 ): boolean => {
   if (httpMethod !== GET) return false
 
-  // antipattern if Etag or Cache-Control headers are missing
-  // TODO error here, missed ! before headers...
-  if (!headers['Etag'] || headers['Cache-Control']) return true
+  if (
+    !containsHeaderLowercasedOrCapitalized(headers, 'Etag') ||
+    !containsHeaderLowercasedOrCapitalized(headers, 'Cache-Control')
+  ) {
+    return true
+  }
 
-  const caching = headers['Cache-Control'].toLowerCase()
+  const caching = getHeaderValue(headers, 'Cache-Control')
 
   return caching === 'no-cache' || caching === 'no-store'
 }
@@ -78,8 +86,8 @@ export const isIgnoringCaching = (
  * @returns true if detects Ignoring MIME Type antipattern
  */
 export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
-  // antipattern if content-type header doesn't include a standard mime type
-  return !MIMETypes.some((type) => headers['content-type'].includes(type))
+  const contentType = getHeaderValue(headers, 'Content-Type')
+  return !contentType || !isStandardMIMEType(contentType)
 }
 
 /**
@@ -111,7 +119,5 @@ export const isIgnoringStatusCode = (
  * @param headers response headers
  * @returns true if detects Misusing Cookies antipattern
  */
-export const isMisusingCookies = (headers: IHeadersObject): boolean => {
-  // antipattern if there is a cookie or set-cookie header
-  return headers['cookie'] !== undefined || headers['set-cookie'] !== undefined
-}
+export const isMisusingCookies = (headers: IHeadersObject): boolean =>
+  containsCookieHeader(headers)

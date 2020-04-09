@@ -87,8 +87,10 @@ export const isIgnoringCaching = (
  * @returns true if detects Ignoring MIME Type antipattern
  */
 export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
-  // antipattern if content-type header doesn't include a standard mime type
-  return !MIMETypes.some((type) => headers['content-type'].includes(type))
+  const contentType = getHeaderValue(headers, 'Content-Type')
+
+  // antipattern if Content-Type/content-type header is missing or doesn't include a standard mime type
+  return !contentType || !MIMETypes.some((type) => contentType.includes(type))
 }
 
 /**

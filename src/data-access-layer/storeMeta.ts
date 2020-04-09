@@ -24,7 +24,7 @@ export const storeResponseMeta = async (
 ) => {
   const HTTPMethod = httpMethod.toUpperCase()
 
-  if (!(<any>Object).values(HTTPMethods).includes(HTTPMethod)) {
+  if (!isValidHTTPMethod(HTTPMethod)) {
     console.error('Not valid HTTP Method')
     throw new Error()
   }
@@ -78,7 +78,11 @@ function writeToFile(responseMeta: IResponseMeta) {
   fs.writeFileSync('responses.json', JSON.stringify(responses))
 }
 
-function isValidURL(string: string) {
+function isValidHTTPMethod(HTTPMethod: string): boolean {
+  return (<any>Object).values(HTTPMethods).includes(HTTPMethod)
+}
+
+function isValidURL(string: string): boolean {
   const URL = url.URL
 
   try {

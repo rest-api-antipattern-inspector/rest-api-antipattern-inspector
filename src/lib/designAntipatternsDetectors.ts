@@ -13,6 +13,8 @@ import {
   getAllKeys,
   containsLinks,
   cookieHeaders,
+  containsHeaderLowercasedOrCapitalized,
+  getHeaderValue,
 } from './detectorHelpers'
 
 /**
@@ -68,10 +70,14 @@ export const isIgnoringCaching = (
   if (httpMethod !== GET) return false
 
   // antipattern if Etag or Cache-Control headers are missing
-  // TODO error here, missed ! before headers...
-  if (!headers['Etag'] || headers['Cache-Control']) return true
+  if (
+    !containsHeaderLowercasedOrCapitalized(headers, 'Etag') ||
+    !containsHeaderLowercasedOrCapitalized(headers, 'Cache-Control')
+  ) {
+    return true
+  }
 
-  const caching = headers['Cache-Control'].toLowerCase()
+  const caching = getHeaderValue(headers, 'Cache-Control')
 
   return caching === 'no-cache' || caching === 'no-store'
 }

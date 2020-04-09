@@ -1,4 +1,5 @@
 import HttpHeaders from './StandardHTTPHeaders'
+import IHeadersObject from '../interfaces/IHeadersObject'
 
 export const isStandardHeader = (headerKey: string): boolean =>
   HttpHeaders.includes(headerKey)
@@ -54,3 +55,24 @@ export const cookieHeaders = [
   'set-cookie',
   'set-cookie2',
 ]
+
+export const containsHeaderLowercasedOrCapitalized = (
+  headers: IHeadersObject,
+  capitalizedHeaderName: string
+): boolean => {
+  return (
+    headers[capitalizedHeaderName] !== undefined ||
+    headers[capitalizedHeaderName.toLowerCase()] !== undefined
+  )
+}
+
+export const getHeaderValue = (
+  headers: IHeadersObject,
+  capitalizedHeaderName: string
+): string => {
+  const headerValue =
+    headers[capitalizedHeaderName] ||
+    headers[capitalizedHeaderName.toLowerCase()]
+
+  return headerValue.toLowerCase()
+}

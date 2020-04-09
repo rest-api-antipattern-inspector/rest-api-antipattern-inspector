@@ -20,7 +20,7 @@ export const storeResponseMeta = async (
 ) => {
   httpMethod = httpMethod.toUpperCase()
 
-  const nonStandardHeaders: string[] = []
+  const nonstandardHeaders: string[] = []
 
   const responseMeta: IResponseMeta = {
     wholeURI,
@@ -30,10 +30,10 @@ export const storeResponseMeta = async (
 
     isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
       headers,
-      nonStandardHeaders
+      nonstandardHeaders
     ),
 
-    nonStandardHeaders: nonStandardHeaders,
+    nonstandardHeaders: nonstandardHeaders,
 
     isForgettingHypermedia: isForgettingHypermedia(body, httpMethod, headers),
 

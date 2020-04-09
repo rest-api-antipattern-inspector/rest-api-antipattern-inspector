@@ -6,7 +6,7 @@ export default interface ResponseMeta {
 
   isBreakingSelfDescriptiveness: boolean
 
-  nonStandardHeaders: string[]
+  nonstandardHeaders: string[]
 
   isForgettingHypermedia: boolean
 

@@ -19,22 +19,22 @@ import {
 
 /**
  * @param headers response headers
- * @param nonStandardHeaders empty string[] for any none detected standard headers
+ * @param nonstandardHeaders empty string[] for any detected nonstandard headers
  * @returns true if detects Breaking Self-Descriptiveness antipattern
  */
 export const isBreakingSelfDescriptiveness = (
   headers: IHeadersObject,
-  nonStandardHeaders: string[]
+  nonstandardHeaders: string[]
 ): boolean => {
   const responseHeaderKeys: string[] = Object.keys(headers)
 
   for (const headerKey of responseHeaderKeys) {
     if (!isStandardHeader(headerKey)) {
-      nonStandardHeaders.push(headerKey)
+      nonstandardHeaders.push(headerKey)
     }
   }
 
-  return nonStandardHeaders.length !== 0
+  return nonstandardHeaders.length !== 0
 }
 
 /**
@@ -69,7 +69,6 @@ export const isIgnoringCaching = (
 ): boolean => {
   if (httpMethod !== GET) return false
 
-  // antipattern if Etag or Cache-Control headers are missing
   if (
     !containsHeaderLowercasedOrCapitalized(headers, 'Etag') ||
     !containsHeaderLowercasedOrCapitalized(headers, 'Cache-Control')
@@ -89,6 +88,7 @@ export const isIgnoringCaching = (
 export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
   const contentType = getHeaderValue(headers, 'Content-Type')
 
+  // TODO break out & replace comment
   // antipattern if Content-Type/content-type header is missing or doesn't include a standard mime type
   return !contentType || !MIMETypes.some((type) => contentType.includes(type))
 }

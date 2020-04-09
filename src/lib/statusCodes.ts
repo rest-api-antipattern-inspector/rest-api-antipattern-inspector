@@ -1,11 +1,13 @@
 // Based on this:
 // https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 
-const commonStatuses = [
+const statusCodes = [
   100,
   101,
   103,
 
+  200,
+  201,
   202,
   203,
   204,
@@ -69,20 +71,13 @@ const commonStatuses = [
   511,
 ]
 
-export const GETStatuses = () => {
-  const copyOfStatuses = commonStatuses.slice()
-  copyOfStatuses.push(200)
-  return copyOfStatuses
-}
+export const GETStatuses = () => statusCodes.filter((status) => status !== 201)
 
-export const POSTStatuses = () => {
-  const copyOfStatuses = commonStatuses.slice()
-  copyOfStatuses.push(201)
-  return copyOfStatuses
-}
+export const POSTStatuses = () => statusCodes.filter((status) => status !== 200)
 
-export const PUTStatuses = () => commonStatuses.slice()
+export const PUTStatuses = () => statusCodes.slice()
 
-export const PATCHStatuses = () => commonStatuses.slice()
+export const PATCHStatuses = () => statusCodes.slice()
 
-export const DELETEStatuses = () => commonStatuses.slice()
+export const DELETEStatuses = () =>
+  statusCodes.filter((status) => status !== 201)

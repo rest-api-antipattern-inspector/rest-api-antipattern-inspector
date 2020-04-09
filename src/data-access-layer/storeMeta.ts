@@ -1,4 +1,5 @@
 import fs from 'fs'
+import url from 'url'
 import IResponseMeta from '../interfaces/IResponseMeta'
 import {
   isBreakingSelfDescriptiveness,
@@ -14,17 +15,22 @@ import { APIs } from '../enums/APIs'
 
 export const storeResponseMeta = async (
   api: APIs,
-  wholeURI: string, // TODO validate make sure valid, exception otherwise
+  wholeURI: string,
   endpoint: string,
   statusCode: number,
   headers: IHeadersObject,
   body: object,
   httpMethod: string
 ) => {
-  httpMethod = httpMethod.toUpperCase()
+  const HTTPMethod = httpMethod.toUpperCase()
 
-  if (!(<any>Object).values(HTTPMethods).includes(httpMethod)) {
+  if (!(<any>Object).values(HTTPMethods).includes(HTTPMethod)) {
     console.error('Not valid HTTP Method')
+    throw new Error()
+  }
+
+  if (!isValidURL(wholeURI)) {
+    console.error('Not valid URL')
     throw new Error()
   }
 
@@ -36,7 +42,7 @@ export const storeResponseMeta = async (
 
     wholeURI,
 
-    httpMethod: httpMethod,
+    httpMethod: HTTPMethod,
     statusCode: statusCode,
 
     isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
@@ -46,13 +52,13 @@ export const storeResponseMeta = async (
 
     nonstandardHeaders: nonstandardHeaders,
 
-    isForgettingHypermedia: isForgettingHypermedia(body, httpMethod, headers),
+    isForgettingHypermedia: isForgettingHypermedia(body, HTTPMethod, headers),
 
-    isIgnoringCaching: isIgnoringCaching(httpMethod, headers),
+    isIgnoringCaching: isIgnoringCaching(HTTPMethod, headers),
 
     isIgnoringMIMEType: isIgnoringMIMEType(headers),
 
-    isIgnoringStatusCode: isIgnoringStatusCode(httpMethod, statusCode),
+    isIgnoringStatusCode: isIgnoringStatusCode(HTTPMethod, statusCode),
 
     isMisusingCookies: isMisusingCookies(headers),
   }
@@ -60,7 +66,7 @@ export const storeResponseMeta = async (
   writeToFile(responseMeta)
 
   console.log(
-    `Wrote meta info to responses.json for ${httpMethod} ${wholeURI} ${endpoint}`
+    `Wrote meta info to responses.json for ${HTTPMethod} ${wholeURI} ${endpoint}`
   )
 }
 
@@ -70,4 +76,15 @@ function writeToFile(responseMeta: IResponseMeta) {
   responses.push(responseMeta)
 
   fs.writeFileSync('responses.json', JSON.stringify(responses))
+}
+
+function isValidURL(string: string) {
+  const URL = url.URL
+
+  try {
+    new URL(string)
+    return true
+  } catch (err) {
+    return false
+  }
 }

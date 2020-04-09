@@ -53,7 +53,7 @@ export const isForgettingHypermedia = (
   return (
     (httpMethod === GET && !containsLinks(bodyKeys)) ||
     (httpMethod === POST &&
-      !Object.keys(headers).includes('Location') &&
+      !containsHeaderLowercasedOrCapitalized(headers, 'Location') &&
       !containsLinks(bodyKeys))
   )
 }
@@ -123,6 +123,7 @@ export const isIgnoringStatusCode = (
  * @returns true if detects Misusing Cookies antipattern
  */
 export const isMisusingCookies = (headers: IHeadersObject): boolean => {
+  // TODO break out in to descriptive helper function
   for (let cookieHeader of cookieHeaders) {
     if (headers[cookieHeader] !== undefined) return true
   }

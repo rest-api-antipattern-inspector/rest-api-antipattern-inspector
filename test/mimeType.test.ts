@@ -1,4 +1,4 @@
-import { isIgnoringMIMEType } from '../src/lib/designAntipatternsDetectors'
+import { isIgnoringMIMEType } from '../src/lib/designAntipatternDetectors'
 import MIMETypes from '../src/lib/MIMETypes'
 
 test('Ignoring MIME Type: false. Capitalized Content-Type header', () => {

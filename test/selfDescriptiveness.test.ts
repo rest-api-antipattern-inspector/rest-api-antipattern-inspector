@@ -1,4 +1,4 @@
-import { isBreakingSelfDescriptiveness } from '../src/lib/designAntipatternsDetectors'
+import { isBreakingSelfDescriptiveness } from '../src/lib/designAntipatternDetectors'
 import standardHeaders from '../src/lib/StandardHTTPHeaders'
 
 test('Looping through standard headers: false', () => {

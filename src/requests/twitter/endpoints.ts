@@ -12,7 +12,7 @@ import {
   GEO_QUERY,
   ID_1,
 } from './constants'
-import { GET, POST } from '../../lib/constants'
+import { GET, POST } from '../../utils/HTTPMethods'
 
 // Post, retrieve, and engage with Tweets
 export const preTweet = [

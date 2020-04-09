@@ -1,5 +1,6 @@
 import { endpoints } from './endpoints'
 import { storeResponseMeta } from '../../data-access-layer/storeMeta'
+import { APIs } from '../../enums/APIs'
 import fetch from 'node-fetch'
 const ACCESS_TOKEN = process.env.BITLY_ACCESS_TOKEN
 const BASE_URL = 'https://api-ssl.bitly.com/v4/'
@@ -40,7 +41,7 @@ export default async () => {
   )
   result.map((res) =>
     storeResponseMeta(
-      'bitly',
+      APIs.bitly,
       res.wholeURI,
       res.endpoint,
       res.statusCode,

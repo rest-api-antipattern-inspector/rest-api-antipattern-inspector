@@ -1,35 +1,35 @@
 // https://dev.bitly.com/v4_documentation.html
 import { ORG_ID, BITLINK } from './constants'
-import { GET, POST, PATCH } from '../../lib/constants'
+import { HTTPMethods } from '../../enums/HTTPMethods'
 
 export const endpoints = [
   // user
   {
     url: 'user',
-    method: GET,
+    method: HTTPMethods.GET,
   },
   {
     url: 'user',
-    method: PATCH,
+    method: HTTPMethods.PATCH,
     data: { name: 'lnu' },
   },
   // organisations
   {
     url: 'organizations',
-    method: GET,
+    method: HTTPMethods.GET,
   },
   {
     url: `organizations/${ORG_ID}/shorten_counts`,
-    method: GET,
+    method: HTTPMethods.GET,
   },
   {
     url: `organizations/${ORG_ID}`,
-    method: GET,
+    method: HTTPMethods.GET,
   },
   // Bitlinks
   {
     url: 'shorten',
-    method: POST,
+    method: HTTPMethods.POST,
     data: {
       domain: 'bit.ly',
       long_url:
@@ -38,26 +38,26 @@ export const endpoints = [
   },
   {
     url: `bitlinks/${BITLINK}/countries`,
-    method: GET,
+    method: HTTPMethods.GET,
   },
   {
     url: `bitlinks/${BITLINK}/clicks`,
-    method: GET,
+    method: HTTPMethods.GET,
   },
   {
     url: `bitlinks/${BITLINK}/referrers_by_domains`,
-    method: GET,
+    method: HTTPMethods.GET,
   },
   {
     url: 'expand',
-    method: POST,
+    method: HTTPMethods.POST,
     data: {
       bitlink_id: BITLINK,
     },
   },
   {
     url: 'bitlinks',
-    method: POST,
+    method: HTTPMethods.POST,
     data: {
       domain: 'bit.ly',
       title: 'example',
@@ -68,15 +68,15 @@ export const endpoints = [
   },
   {
     url: `bitlinks/${BITLINK}/referrers`,
-    method: GET,
+    method: HTTPMethods.GET,
   },
   {
     url: `bitlinks/${BITLINK}/clicks/summary`,
-    method: GET,
+    method: HTTPMethods.GET,
   },
   {
     url: `bitlinks/${BITLINK}`,
-    method: PATCH,
+    method: HTTPMethods.PATCH,
     data: {
       title: 'example',
       tags: ['string', 'hola', 'ghghgh'],
@@ -84,10 +84,10 @@ export const endpoints = [
   },
   {
     url: `bitlinks/${BITLINK}`,
-    method: GET,
+    method: HTTPMethods.GET,
   },
   {
     url: `bitlinks/${BITLINK}/referring_domains`,
-    method: GET,
+    method: HTTPMethods.GET,
   },
 ]

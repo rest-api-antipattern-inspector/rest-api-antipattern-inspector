@@ -1,5 +1,5 @@
 import IHeadersObject from '../interfaces/IHeadersObject'
-import { GET, POST, PUT, PATCH, DELETE } from './constants'
+import { GET, POST, PUT, PATCH, DELETE } from '../utils/HTTPMethods'
 import {
   GETStatuses,
   POSTStatuses,

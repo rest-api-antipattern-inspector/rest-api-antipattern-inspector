@@ -1,4 +1,4 @@
-import { isMisusingCookies } from '../src/lib/designAntipatternsDetectors'
+import { isMisusingCookies } from '../src/lib/designAntipatternDetectors'
 
 test('Misusing Cookies: true, headers contain set-cookie', () => {
   expect(isMisusingCookies({ 'set-cookie': '🍪' })).toBeTruthy()

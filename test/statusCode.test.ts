@@ -1,5 +1,5 @@
-import { isIgnoringStatusCode } from '../src/lib/designAntipatternsDetectors'
-import { GET, POST, PUT, PATCH, DELETE } from '../src/lib/constants'
+import { isIgnoringStatusCode } from '../src/lib/designAntipatternDetectors'
+import { GET, POST, PUT, PATCH, DELETE } from '../src/utils/HTTPMethods'
 
 ///
 

@@ -9,10 +9,12 @@ import {
   isMisusingCookies,
 } from '../lib/designAntipatternDetectors'
 import IHeadersObject from '../interfaces/IHeadersObject'
+import { HTTPMethods } from '../enums/HTTPMethods'
+import { APIs } from '../enums/APIs'
 
 export const storeResponseMeta = async (
-  api: string,
-  wholeURI: string,
+  api: APIs,
+  wholeURI: string, // TODO validate make sure valid, exception otherwise
   endpoint: string,
   statusCode: number,
   headers: IHeadersObject,
@@ -20,6 +22,11 @@ export const storeResponseMeta = async (
   httpMethod: string
 ) => {
   httpMethod = httpMethod.toUpperCase()
+
+  if (!(<any>Object).values(HTTPMethods).includes(httpMethod)) {
+    console.error('Not valid HTTP Method')
+    throw new Error()
+  }
 
   const nonstandardHeaders: string[] = []
 

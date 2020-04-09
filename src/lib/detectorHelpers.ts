@@ -49,7 +49,7 @@ function isLinkTerm(key: string): boolean {
 }
 
 export const isStandardMIMEType = (contentType: string): boolean =>
-  !MIMETypes.some((type) => contentType.includes(type))
+  MIMETypes.some((type) => contentType.includes(type))
 
 export const containsCookieHeader = (headers: IHeadersObject): boolean => {
   const cookieHeaders = [

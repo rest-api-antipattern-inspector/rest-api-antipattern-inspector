@@ -1,6 +1,9 @@
 export default interface ResponseMeta {
-  wholeURI: string
+  api: string
   endpoint: string
+
+  wholeURI: string
+
   httpMethod: string
   statusCode: number
 

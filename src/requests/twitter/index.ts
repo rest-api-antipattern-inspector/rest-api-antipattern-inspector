@@ -31,6 +31,7 @@ export default async () => {
     const id_str = preRes.data.id_str
 
     storeResponseMeta(
+      'twitter',
       preRes.resp.request.href,
       preTweet[0].url,
       preRes.resp.statusCode,

@@ -40,6 +40,7 @@ export default async () => {
   )
   result.map((res) =>
     storeResponseMeta(
+      'bitly',
       res.wholeURI,
       res.endpoint,
       res.statusCode,

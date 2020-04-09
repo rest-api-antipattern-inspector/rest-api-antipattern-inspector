@@ -47,6 +47,7 @@ export default async () => {
     )
     result.map((res) =>
       storeResponseMeta(
+        'disqus',
         res.wholeURI,
         res.endpoint,
         res.statusCode,

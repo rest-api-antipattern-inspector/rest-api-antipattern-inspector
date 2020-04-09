@@ -1,5 +1,5 @@
 import fetch, { Response } from 'node-fetch'
-import { storeResponseMeta } from '../../lib/storeMeta'
+import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import IHeadersObject from '../../interfaces/IHeadersObject'
 import { GET, POST, PUT, PATCH, DELETE } from '../../lib/constants'
 

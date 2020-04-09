@@ -7,7 +7,7 @@ import {
   tweeting,
   preTweet,
 } from './endpoints'
-import { storeResponseMeta } from '../../lib/storeMeta'
+import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import Twit from 'twit'
 import { GET } from '../../lib/constants'
 

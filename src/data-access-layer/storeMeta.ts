@@ -7,7 +7,7 @@ import {
   isIgnoringMIMEType,
   isIgnoringStatusCode,
   isMisusingCookies,
-} from './designAntipatternsDetectors'
+} from '../lib/designAntipatternsDetectors'
 import IHeadersObject from '../interfaces/IHeadersObject'
 
 export const storeResponseMeta = async (

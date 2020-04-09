@@ -1,5 +1,5 @@
 import { level1, level2 } from './endpoints'
-import { storeResponseMeta } from '../../lib/storeMeta'
+import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import fetch from 'node-fetch'
 const DISQUS_SECRET = process.env.DISQUS_SECRET
 const DISQUS_ACCESS_TOKEN = process.env.DISQUS_ACCESS_TOKEN

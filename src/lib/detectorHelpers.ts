@@ -33,16 +33,18 @@ export const getAllKeys = (obj: object): string[] => {
   return keys
 }
 
-export const containsLinks = (parts: string[]): boolean => {
-  for (const part of parts) {
-    if (isLinkTerm(part)) return true
+export const containsLinks = (keys: string[]): boolean => {
+  for (const key of keys) {
+    if (isLinkTerm(key)) return true
   }
 
   return false
 }
 
-function isLinkTerm(part: string): boolean {
-  return part === 'link' || part === 'links' || part === 'href'
+function isLinkTerm(key: string): boolean {
+  const linkTerms = ['link', 'Link', 'href', 'Href', 'links', 'Links']
+
+  return linkTerms.includes(key)
 }
 
 export const cookieHeaders = [

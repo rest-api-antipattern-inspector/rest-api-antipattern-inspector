@@ -1,5 +1,6 @@
 import HttpHeaders from './StandardHTTPHeaders'
 import IHeadersObject from '../interfaces/IHeadersObject'
+import MIMETypes from './MIMETypes'
 
 export const isStandardHeader = (headerKey: string): boolean =>
   HttpHeaders.includes(headerKey)
@@ -47,16 +48,27 @@ function isLinkTerm(key: string): boolean {
   return linkTerms.includes(key)
 }
 
-export const cookieHeaders = [
-  'Cookie',
-  'Cookie2',
-  'Set-Cookie',
-  'Set-Cookie2',
-  'cookie',
-  'cookie2',
-  'set-cookie',
-  'set-cookie2',
-]
+export const isStandardMIMEType = (contentType: string): boolean =>
+  !MIMETypes.some((type) => contentType.includes(type))
+
+export const containsCookieHeader = (headers: IHeadersObject): boolean => {
+  const cookieHeaders = [
+    'Cookie',
+    'Cookie2',
+    'Set-Cookie',
+    'Set-Cookie2',
+    'cookie',
+    'cookie2',
+    'set-cookie',
+    'set-cookie2',
+  ]
+
+  for (let cookieHeader of cookieHeaders) {
+    if (headers[cookieHeader] !== undefined) return true
+  }
+
+  return false
+}
 
 export const containsHeaderLowercasedOrCapitalized = (
   headers: IHeadersObject,

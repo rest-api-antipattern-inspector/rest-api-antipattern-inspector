@@ -1,4 +1,3 @@
-import MIMETypes from './MIMETypes'
 import IHeadersObject from '../interfaces/IHeadersObject'
 import { GET, POST, PUT, PATCH, DELETE } from './constants'
 import {
@@ -12,9 +11,10 @@ import {
   isStandardHeader,
   getAllKeys,
   containsLinks,
-  cookieHeaders,
+  isStandardMIMEType,
   containsHeaderLowercasedOrCapitalized,
   getHeaderValue,
+  containsCookieHeader,
 } from './detectorHelpers'
 
 /**
@@ -87,10 +87,7 @@ export const isIgnoringCaching = (
  */
 export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
   const contentType = getHeaderValue(headers, 'Content-Type')
-
-  // TODO break out & replace comment
-  // antipattern if Content-Type/content-type header is missing or doesn't include a standard mime type
-  return !contentType || !MIMETypes.some((type) => contentType.includes(type))
+  return !contentType || !isStandardMIMEType(contentType)
 }
 
 /**
@@ -122,11 +119,5 @@ export const isIgnoringStatusCode = (
  * @param headers response headers
  * @returns true if detects Misusing Cookies antipattern
  */
-export const isMisusingCookies = (headers: IHeadersObject): boolean => {
-  // TODO break out in to descriptive helper function
-  for (let cookieHeader of cookieHeaders) {
-    if (headers[cookieHeader] !== undefined) return true
-  }
-
-  return false
-}
+export const isMisusingCookies = (headers: IHeadersObject): boolean =>
+  containsCookieHeader(headers)

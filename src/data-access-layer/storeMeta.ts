@@ -11,8 +11,8 @@ import {
 import IHeadersObject from '../interfaces/IHeadersObject'
 
 export const storeResponseMeta = async (
-  wholeURI: string,
   api: string,
+  wholeURI: string,
   endpoint: string,
   statusCode: number,
   headers: IHeadersObject,

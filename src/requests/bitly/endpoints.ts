@@ -91,3 +91,5 @@ export const endpoints = [
     method: HTTPMethods.GET,
   },
 ]
+
+export default endpoints

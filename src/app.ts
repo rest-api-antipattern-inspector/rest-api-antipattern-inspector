@@ -7,6 +7,7 @@ import { doStackExchangeRequests } from './requests/stackExchange/stackExchange'
 import doTwitterRequests from './requests/twitter'
 import bitlyRequests from './requests/bitly'
 import disqusRequests from './requests/disqus'
+import writeURIToFile from './utils/writeURIToFile'
 
 const APIs: any = {
   stackexchange: doStackExchangeRequests,
@@ -19,14 +20,17 @@ const APIs: any = {
 
 // TODO add versions to endpoint to store
 
-fs.writeFileSync('responses.json', '[]')
-
 const appArguments = process.argv.slice(2)
 
-if (appArguments[0] === 'all') {
-  Object.keys(APIs).forEach((api: string) => APIs[api]())
-} else if (appArguments.length === 0) {
-  console.log('Specify which APIs to run or all as console argument')
+if (appArguments[0] === 'uris') {
+  writeURIToFile()
 } else {
-  appArguments.forEach((api: string) => APIs[api]())
+  fs.writeFileSync('responses.json', '[]')
+  if (appArguments[0] === 'all') {
+    Object.keys(APIs).forEach((api: string) => APIs[api]())
+  } else if (appArguments.length === 0) {
+    console.log('Specify which APIs to run or all as console argument')
+  } else {
+    appArguments.forEach((api: string) => APIs[api]())
+  }
 }

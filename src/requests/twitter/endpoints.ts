@@ -424,3 +424,13 @@ export const deleteLevel2 = [
     params: { screen_name: SCREEN_NAME_2 },
   },
 ]
+
+export default [
+  ...preTweet,
+  ...tweeting,
+  ...postLevel1,
+  ...postLevel2,
+  ...getLevel,
+  ...deleteLevel1,
+  ...deleteLevel2,
+]

@@ -4,6 +4,18 @@ const DISQUS_ACCESS_TOKEN = process.env.DISQUS_ACCESS_TOKEN
 // https://disqus.com/api/docs/
 // start by creating a forum:
 // http://disqus.com&name=lnu+test&short_name=lnutest
+export const staticEnpoints = [
+  {
+    method: POST,
+    url: 'forums/create.json',
+    params: ``,
+  },
+  {
+    method: POST,
+    url: 'categories/create.json',
+    params: ``,
+  },
+]
 export const level1 = [
   {
     method: POST,
@@ -199,3 +211,5 @@ export const level2 = [
     params: `&about=om`,
   },
 ]
+
+export default [...level1, ...level2, ...staticEnpoints]

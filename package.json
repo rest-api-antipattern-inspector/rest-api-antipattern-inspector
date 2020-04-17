@@ -16,6 +16,7 @@
     "program": "node dist/app.js"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.0",
     "twit": "^2.2.11"

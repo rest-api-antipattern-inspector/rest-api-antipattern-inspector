@@ -1,4 +1,5 @@
 import fetch, { Response } from 'node-fetch'
+import axios from 'axios'
 import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import { APIs } from '../../enums/APIs'
 import IHeadersObject from '../../interfaces/IHeadersObject'
@@ -8,6 +9,21 @@ export const doStackExchangeRequests = (): void => {
   stackOverflowInfo()
   relatedQuestionsSO()
 }
+
+// TODO use axios instead here, after changing params for storeResMeta
+
+axios
+  .get('https://api.stackexchange.com/2.2/info?site=stackoverflow')
+  .then((response) => {
+    const rawReqHeaders = response.request._header.split('\r\n')
+    rawReqHeaders.shift()
+    const reqHeaders = rawReqHeaders.filter((item) => item !== '')
+
+    console.log(reqHeaders)
+    console.log(response.data)
+    console.log(response.status)
+    console.log(response.statusText)
+  })
 
 async function stackOverflowInfo() {
   const uri = 'https://api.stackexchange.com/2.2/info?site=stackoverflow'

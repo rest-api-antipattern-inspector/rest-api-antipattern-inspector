@@ -13,11 +13,16 @@ import IHeadersObject from '../interfaces/IHeadersObject'
 import { HTTPMethods } from '../enums/HTTPMethods'
 import { APIs } from '../enums/APIs'
 
+// TODO add param for req headers
+
+// TODO send in request header as string, fix to string[] here
+// to not get it confused with response headers if in wrong order
+
 export const storeResponseMeta = async (
   api: APIs,
   wholeURI: string,
   endpoint: string,
-  statusCode: number,
+  statusCode: number, // TODO this should be object with both status number & status text
   headers: IHeadersObject,
   body: object,
   httpMethod: string

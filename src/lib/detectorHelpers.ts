@@ -83,7 +83,7 @@ export const containsHeaderLowercasedOrCapitalized = (
 export const getHeaderValue = (
   headers: IHeadersObject,
   capitalizedHeaderName: string
-): string | undefined => {
+): any => {
   const headerValue =
     headers[capitalizedHeaderName] ||
     headers[capitalizedHeaderName.toLowerCase()]

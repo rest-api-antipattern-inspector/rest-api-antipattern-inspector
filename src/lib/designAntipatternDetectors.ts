@@ -93,15 +93,22 @@ export const isIgnoringCaching = (
 }
 
 /**
- * @param headers response headers
+ * @param requestHeaders request headers
+ * @param responseHeaders response headers
  * @returns true if detects Ignoring MIME Type antipattern
  */
-export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
-  // TODO check accept array, log it
-  // make sure content type is in the accept array
+export const isIgnoringMIMEType = (
+  requestHeaders: IHeadersObject,
+  responseHeaders: IHeadersObject
+): boolean => {
+  const acceptedMIMETypes: string[] = getHeaderValue(requestHeaders, 'Accept')
+  // TODO remove console.log, just for debugging now
+  console.log(acceptedMIMETypes)
+  const contentType: string = getHeaderValue(responseHeaders, 'Content-Type')
 
-  const contentType = getHeaderValue(headers, 'Content-Type')
-  return !contentType || // !std(accept) && !isStandardMIMEType(contentType)  
+  return (
+    !acceptedMIMETypes.includes(contentType) && !isStandardMIMEType(contentType)
+  )
 }
 
 /**
@@ -113,6 +120,8 @@ export const isIgnoringStatusCode = (
   httpMethod: string,
   statusCode: number
 ): boolean => {
+  // TODO this function needs to be fixed still
+
   switch (httpMethod) {
     case GET:
       return !GETStatuses().includes(statusCode)

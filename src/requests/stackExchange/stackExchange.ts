@@ -1,4 +1,3 @@
-import fetch, { Response } from 'node-fetch'
 import axios from 'axios'
 import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import { APIs } from '../../enums/APIs'
@@ -11,29 +10,28 @@ export const doStackExchangeRequests = (): void => {
   relatedQuestionsSO()
 }
 
-// TODO use axios instead here, after changing params for storeResMeta
-
-axios
-  .get('https://api.stackexchange.com/2.2/info?site=stackoverflow')
-  .then((response) => {
-    const rawReqHeaders = response.request._header.split('\r\n')
-    rawReqHeaders.shift()
-    const reqHeaders = rawReqHeaders.filter((item) => item !== '')
-
-    console.log(reqHeaders)
-    console.log(response.data)
-    console.log(response.status)
-    console.log(response.statusText)
-  })
-
 async function stackOverflowInfo() {
   const uri = 'https://api.stackexchange.com/2.2/info?site=stackoverflow'
 
-  const res = await fetch(uri)
-  const headers = getHeaders(res)
-  const body = JSON.parse(await res.text())
+  axios.get(uri).then((response) => {
+    const reqHeaderString = response.request._header
+    const requestHeaders = extractRequestHeaders(reqHeaderString)
 
-  // TODO log extracted headers
+    console.log('stackexchange')
+    console.log(uri)
+    console.log('/2.2/info?site=stackoverflow')
+
+    console.log('GET')
+    console.log({
+      statusCode: response.status,
+      statusText: response.statusText,
+    })
+
+    console.log(requestHeaders)
+    console.log(response.headers)
+
+    console.log(response.data)
+  })
 
   /*
   storeResponseMeta(
@@ -58,10 +56,29 @@ async function relatedQuestionsSO() {
   const uri =
     'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
 
-  const res = await fetch(uri)
-  const headers = getHeaders(res)
-  const body = JSON.parse(await res.text())
+  // TODO make req & storeMeta
 
+  // axios.get(uri).then((response) => {
+  //   const reqHeaderString = response.request._header
+  //   const requestHeaders = extractRequestHeaders(reqHeaderString)
+
+  //   console.log('stackexchange')
+  //   console.log(uri)
+  //   console.log('/2.2/info?site=stackoverflow')
+
+  //   console.log('GET')
+  //   console.log({
+  //     statusCode: response.status,
+  //     statusText: response.statusText,
+  //   })
+
+  //   console.log(requestHeaders)
+  //   console.log(response.headers)
+
+  //   console.log(response.data)
+  // })
+
+  /*
   storeResponseMeta(
     APIs.stackExchange,
     uri,
@@ -71,8 +88,10 @@ async function relatedQuestionsSO() {
     body,
     GET
   )
+  */
 }
 
+/*
 function getHeaders(res: Response): IHeadersObject {
   const headers: IHeadersObject = {}
   const rawHeaders = res.headers.raw()
@@ -85,3 +104,4 @@ function getHeaders(res: Response): IHeadersObject {
 
   return headers
 }
+*/

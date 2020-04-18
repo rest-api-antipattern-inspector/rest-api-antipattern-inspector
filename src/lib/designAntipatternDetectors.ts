@@ -28,6 +28,10 @@ export const isBreakingSelfDescriptiveness = (
   responseHeaders: IHeadersObject,
   nonstandardHeaders: string[]
 ): boolean => {
+  // TODO this function needs to be fixed still
+  // ask for list of req headers & res headers
+  // should check separately
+
   const headerKeys: string[] = [].concat(
     Object.keys(requestHeaders),
     Object.keys(responseHeaders)
@@ -121,6 +125,8 @@ export const isIgnoringStatusCode = (
   statusCode: number
 ): boolean => {
   // TODO this function needs to be fixed still
+  // ask for list of appropriate combinations of:
+  // httpMethod, statusCode and statusText
 
   switch (httpMethod) {
     case GET:

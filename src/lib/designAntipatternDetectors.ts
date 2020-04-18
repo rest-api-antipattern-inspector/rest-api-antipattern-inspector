@@ -142,5 +142,8 @@ export const isIgnoringStatusCode = (
  * @param headers response headers
  * @returns true if detects Misusing Cookies antipattern
  */
-export const isMisusingCookies = (headers: IHeadersObject): boolean =>
-  containsCookieHeader(headers)
+export const isMisusingCookies = (
+  requestHeaders: IHeadersObject,
+  responseHeaders: IHeadersObject
+): boolean =>
+  containsCookieHeader(requestHeaders) || containsCookieHeader(responseHeaders)

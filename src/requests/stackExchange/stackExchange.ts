@@ -9,7 +9,7 @@ export const doStackExchangeRequests = (): void => {
   relatedQuestionsSO()
 }
 
-async function stackOverflowInfo() {
+function stackOverflowInfo() {
   const uri = 'https://api.stackexchange.com/2.2/info?site=stackoverflow'
 
   axios.get(uri).then((response) => {
@@ -41,7 +41,7 @@ async function stackOverflowInfo() {
  * https://stackoverflow.com/questions/60075237/best-way-to-handle-an-account-linking-verification-system
  * https://stackoverflow.com/questions/57496313/execution-failed-for-task-appmergedebugresources-com-android-builder-interna
  */
-async function relatedQuestionsSO() {
+function relatedQuestionsSO() {
   const uri =
     'https://api.stackexchange.com/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow'
 

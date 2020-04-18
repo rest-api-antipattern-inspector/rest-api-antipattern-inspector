@@ -47,34 +47,38 @@ export const isBreakingSelfDescriptiveness = (
 /**
  * @param body response body
  * @param httpMethod request method
- * @param headers response headers
+ * @param responseHeaders response headers
  * @returns true if detects Forgetting Hypermedia antipattern
  */
 export const isForgettingHypermedia = (
   body: object,
   httpMethod: string,
-  headers: IHeadersObject
+  responseHeaders: IHeadersObject
 ): boolean => {
   const bodyKeys: string[] = getAllKeys(body)
 
   return (
     (httpMethod === GET && !containsLinks(bodyKeys)) ||
     (httpMethod === POST &&
-      !containsHeaderLowercasedOrCapitalized(headers, 'Location') &&
+      !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Location') &&
       !containsLinks(bodyKeys))
   )
 }
 
 /**
  * @param httpMethod request method
- * @param headers response headers
+ * @param requestHeaders request headers
+ * @param responseHeaders response headers
  * @returns true if detects Ignoring Caching antipattern
  */
 export const isIgnoringCaching = (
   httpMethod: string,
-  headers: IHeadersObject
+  requestHeaders: IHeadersObject,
+  responseHeaders: IHeadersObject
 ): boolean => {
   if (httpMethod !== GET) return false
+
+  const headers = [].concat(requestHeaders, responseHeaders)
 
   if (
     !containsHeaderLowercasedOrCapitalized(headers, 'Etag') ||
@@ -93,8 +97,11 @@ export const isIgnoringCaching = (
  * @returns true if detects Ignoring MIME Type antipattern
  */
 export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
+  // TODO check accept array, log it
+  // make sure content type is in the accept array
+
   const contentType = getHeaderValue(headers, 'Content-Type')
-  return !contentType || !isStandardMIMEType(contentType)
+  return !contentType || // !std(accept) && !isStandardMIMEType(contentType)  
 }
 
 /**

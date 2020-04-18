@@ -9,11 +9,23 @@ export default (reqHeaderText: string): IHeadersObject => {
 
   reqHeaderFields.forEach((field) => {
     const colonIndex = field.indexOf(':')
+
     const key = field.slice(0, colonIndex)
-    const value = field.slice(colonIndex + 1).replace(' ', '')
+    const value = field.includes(', ')
+      ? getFieldArray(field, colonIndex)
+      : getFieldString(field, colonIndex)
 
     requestHeadersObj[key] = value
   })
 
   return requestHeadersObj
 }
+
+const getFieldArray = (field: string, colonIndex: number): string[] =>
+  field
+    .slice(colonIndex + 1)
+    .replace(' ', '')
+    .split(', ')
+
+const getFieldString = (field: string, colonIndex: number): string =>
+  field.slice(colonIndex + 1).replace(' ', '')

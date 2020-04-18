@@ -20,17 +20,22 @@ import {
 // TODO change these
 
 /**
- * @param headers response headers
+ * @param requestHeaders request headers
+ * @param responseHeaders response headers
  * @param nonstandardHeaders empty string[] for any detected nonstandard headers
  * @returns true if detects Breaking Self-Descriptiveness antipattern
  */
 export const isBreakingSelfDescriptiveness = (
-  headers: IHeadersObject,
+  requestHeaders: IHeadersObject,
+  responseHeaders: IHeadersObject,
   nonstandardHeaders: string[]
 ): boolean => {
-  const responseHeaderKeys: string[] = Object.keys(headers)
+  const headerKeys: string[] = [].concat(
+    Object.keys(requestHeaders),
+    Object.keys(responseHeaders)
+  )
 
-  for (const headerKey of responseHeaderKeys) {
+  for (const headerKey of headerKeys) {
     if (!isStandardHeader(headerKey)) {
       nonstandardHeaders.push(headerKey)
     }

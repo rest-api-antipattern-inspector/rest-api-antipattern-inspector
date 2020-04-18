@@ -18,8 +18,8 @@ function stackOverflowInfo() {
 
     storeResponseMeta({
       api: APIs.stackExchange,
-      wholeURI: uri,
       endpoint: '/2.2/info?site=stackoverflow',
+      wholeURI: uri,
 
       httpMethod: GET,
       status: {
@@ -51,9 +51,9 @@ function relatedQuestionsSO() {
 
     storeResponseMeta({
       api: APIs.stackExchange,
-      wholeURI: uri,
       endpoint:
         '/2.2/questions/60075228;60075237;57496313/related?order=desc&sort=activity&site=stackoverflow',
+      wholeURI: uri,
 
       httpMethod: GET,
       status: {

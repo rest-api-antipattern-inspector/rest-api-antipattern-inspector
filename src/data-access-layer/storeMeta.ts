@@ -9,32 +9,18 @@ import {
   isIgnoringStatusCode,
   isMisusingCookies,
 } from '../lib/designAntipatternDetectors'
-import IHeadersObject from '../interfaces/IHeadersObject'
 import { HTTPMethods } from '../enums/HTTPMethods'
-import { APIs } from '../enums/APIs'
+import IResonseParams from '../interfaces/IResponseParams'
 
-// TODO add param for req headers
-
-// TODO send in request header as string, fix to string[] here
-// to not get it confused with response headers if in wrong order
-
-export const storeResponseMeta = async (
-  api: APIs,
-  wholeURI: string,
-  endpoint: string,
-  statusCode: number, // TODO this should be object with both status number & status text
-  headers: IHeadersObject,
-  body: object,
-  httpMethod: string
-) => {
-  const HTTPMethod = httpMethod.toUpperCase()
+export const storeResponseMeta = async (resParamsObj: IResonseParams) => {
+  const HTTPMethod = resParamsObj.httpMethod.toUpperCase()
 
   if (!isValidHTTPMethod(HTTPMethod)) {
     console.error('Not valid HTTP Method')
     throw new Error()
   }
 
-  if (!isValidURL(wholeURI)) {
+  if (!isValidURL(resParamsObj.wholeURI)) {
     console.error('Not valid URL')
     throw new Error()
   }
@@ -42,36 +28,46 @@ export const storeResponseMeta = async (
   const nonstandardHeaders: string[] = []
 
   const responseMeta: IResponseMeta = {
-    api,
-    endpoint,
+    api: resParamsObj.api,
+    endpoint: resParamsObj.endpoint,
 
-    wholeURI,
+    wholeURI: resParamsObj.wholeURI,
 
     httpMethod: HTTPMethod,
-    statusCode: statusCode,
+    statusCode: resParamsObj.status.statusCode,
 
     isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
-      headers,
+      resParamsObj.responseHeaders,
       nonstandardHeaders
     ),
 
     nonstandardHeaders: nonstandardHeaders,
 
-    isForgettingHypermedia: isForgettingHypermedia(body, HTTPMethod, headers),
+    isForgettingHypermedia: isForgettingHypermedia(
+      resParamsObj.body,
+      HTTPMethod,
+      resParamsObj.responseHeaders
+    ),
 
-    isIgnoringCaching: isIgnoringCaching(HTTPMethod, headers),
+    isIgnoringCaching: isIgnoringCaching(
+      HTTPMethod,
+      resParamsObj.responseHeaders
+    ),
 
-    isIgnoringMIMEType: isIgnoringMIMEType(headers),
+    isIgnoringMIMEType: isIgnoringMIMEType(resParamsObj.responseHeaders),
 
-    isIgnoringStatusCode: isIgnoringStatusCode(HTTPMethod, statusCode),
+    isIgnoringStatusCode: isIgnoringStatusCode(
+      HTTPMethod,
+      resParamsObj.status.statusCode
+    ),
 
-    isMisusingCookies: isMisusingCookies(headers),
+    isMisusingCookies: isMisusingCookies(resParamsObj.responseHeaders),
   }
 
   writeToFile(responseMeta)
 
   console.log(
-    `Wrote meta info to responses.json for ${HTTPMethod} ${wholeURI} ${endpoint}`
+    `Wrote meta info to responses.json for ${HTTPMethod} ${resParamsObj.wholeURI} ${resParamsObj.endpoint}`
   )
 }
 

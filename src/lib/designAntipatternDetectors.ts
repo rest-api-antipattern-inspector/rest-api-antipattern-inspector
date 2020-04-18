@@ -100,8 +100,6 @@ export const isIgnoringMIMEType = (
   responseHeaders: IHeadersObject
 ): boolean => {
   const acceptedMIMETypes: string[] = getHeaderValue(requestHeaders, 'Accept')
-  // TODO remove console.log, just for debugging now
-  console.log(acceptedMIMETypes)
   const contentType: string = getHeaderValue(responseHeaders, 'Content-Type')
 
   return (

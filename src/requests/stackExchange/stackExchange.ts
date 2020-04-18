@@ -4,6 +4,7 @@ import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import { APIs } from '../../enums/APIs'
 import IHeadersObject from '../../interfaces/IHeadersObject'
 import { GET, POST, PUT, PATCH, DELETE } from '../../utils/HTTPMethods'
+import extractRequestHeaders from '../../utils/extractRequestHeaders'
 
 export const doStackExchangeRequests = (): void => {
   stackOverflowInfo()
@@ -32,6 +33,9 @@ async function stackOverflowInfo() {
   const headers = getHeaders(res)
   const body = JSON.parse(await res.text())
 
+  // TODO log extracted headers
+
+  /*
   storeResponseMeta(
     APIs.stackExchange,
     uri,
@@ -41,6 +45,7 @@ async function stackOverflowInfo() {
     body,
     GET
   )
+  */
 }
 
 /**

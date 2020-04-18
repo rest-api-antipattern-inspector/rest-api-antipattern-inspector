@@ -17,6 +17,8 @@ import {
   containsCookieHeader,
 } from './detectorHelpers'
 
+// TODO change these
+
 /**
  * @param headers response headers
  * @param nonstandardHeaders empty string[] for any detected nonstandard headers

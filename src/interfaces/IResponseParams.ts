@@ -14,5 +14,6 @@ export default interface IResonseParams {
 
   requestHeaders: IHeadersObject
   responseHeaders: IHeadersObject
+
   body: object
 }

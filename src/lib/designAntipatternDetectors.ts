@@ -17,8 +17,6 @@ import {
   containsCookieHeader,
 } from './detectorHelpers'
 
-// TODO change these
-
 /**
  * @param requestHeaders request headers
  * @param responseHeaders response headers

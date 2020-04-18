@@ -90,5 +90,7 @@ export const getHeaderValue = (
 
   if (!headerValue) return undefined
 
-  return headerValue.toLowerCase()
+  return typeof headerValue === 'string'
+    ? headerValue.toLowerCase()
+    : headerValue
 }

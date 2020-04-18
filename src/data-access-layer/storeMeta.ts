@@ -37,6 +37,7 @@ export const storeResponseMeta = async (resParamsObj: IResonseParams) => {
     statusCode: resParamsObj.status.statusCode,
 
     isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
+      resParamsObj.requestHeaders,
       resParamsObj.responseHeaders,
       nonstandardHeaders
     ),
@@ -51,17 +52,24 @@ export const storeResponseMeta = async (resParamsObj: IResonseParams) => {
 
     isIgnoringCaching: isIgnoringCaching(
       HTTPMethod,
+      resParamsObj.requestHeaders,
       resParamsObj.responseHeaders
     ),
 
-    isIgnoringMIMEType: isIgnoringMIMEType(resParamsObj.responseHeaders),
+    isIgnoringMIMEType: isIgnoringMIMEType(
+      resParamsObj.requestHeaders,
+      resParamsObj.responseHeaders
+    ),
 
     isIgnoringStatusCode: isIgnoringStatusCode(
       HTTPMethod,
       resParamsObj.status.statusCode
     ),
 
-    isMisusingCookies: isMisusingCookies(resParamsObj.responseHeaders),
+    isMisusingCookies: isMisusingCookies(
+      resParamsObj.requestHeaders,
+      resParamsObj.responseHeaders
+    ),
   }
 
   writeToFile(responseMeta)

@@ -76,18 +76,22 @@ export const isIgnoringCaching = (
 ): boolean => {
   if (httpMethod !== GET) return false
 
-  const headers = [].concat(requestHeaders, responseHeaders)
-
   if (
-    !containsHeaderLowercasedOrCapitalized(headers, 'Etag') ||
-    !containsHeaderLowercasedOrCapitalized(headers, 'Cache-Control')
+    !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Etag') ||
+    !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Cache-Control')
   ) {
     return true
   }
 
-  const caching = getHeaderValue(headers, 'Cache-Control')
+  const clientCaching = getHeaderValue(requestHeaders, 'Cache-Control')
+  const serverCaching = getHeaderValue(responseHeaders, 'Cache-Control')
 
-  return caching === 'no-cache' || caching === 'no-store'
+  return (
+    clientCaching === 'no-cache' ||
+    clientCaching === 'no-store' ||
+    serverCaching === 'no-cache' ||
+    serverCaching === 'no-store'
+  )
 }
 
 /**

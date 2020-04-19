@@ -46,16 +46,18 @@ export default async () => {
         }
       })
     )
-    result.map((res) =>
-      storeResponseMeta(
-        APIs.disqus,
-        res.wholeURI,
-        res.endpoint,
-        res.statusCode,
-        res.headers,
-        res.body,
-        res.httpMethod
-      )
-    )
+    // TODO argument should now be an object, see: src/interfaces/IResponseParams.ts
+
+    // result.map((res) =>
+    //   storeResponseMeta(
+    //     APIs.disqus,
+    //     res.wholeURI,
+    //     res.endpoint,
+    //     res.statusCode,
+    //     res.headers,
+    //     res.body,
+    //     res.httpMethod
+    //   )
+    // )
   }
 }

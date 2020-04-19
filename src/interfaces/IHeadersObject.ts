@@ -1,3 +1,3 @@
 export default interface IHeadersObject {
-  [key: string]: string
+  [key: string]: any
 }

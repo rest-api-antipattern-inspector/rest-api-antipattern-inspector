@@ -18,17 +18,26 @@ import {
 } from './detectorHelpers'
 
 /**
- * @param headers response headers
+ * @param requestHeaders request headers
+ * @param responseHeaders response headers
  * @param nonstandardHeaders empty string[] for any detected nonstandard headers
  * @returns true if detects Breaking Self-Descriptiveness antipattern
  */
 export const isBreakingSelfDescriptiveness = (
-  headers: IHeadersObject,
+  requestHeaders: IHeadersObject,
+  responseHeaders: IHeadersObject,
   nonstandardHeaders: string[]
 ): boolean => {
-  const responseHeaderKeys: string[] = Object.keys(headers)
+  // TODO this function needs to be fixed still
+  // ask for list of req headers & res headers
+  // should check separately
 
-  for (const headerKey of responseHeaderKeys) {
+  const headerKeys: string[] = [].concat(
+    Object.keys(requestHeaders),
+    Object.keys(responseHeaders)
+  )
+
+  for (const headerKey of headerKeys) {
     if (!isStandardHeader(headerKey)) {
       nonstandardHeaders.push(headerKey)
     }
@@ -40,54 +49,70 @@ export const isBreakingSelfDescriptiveness = (
 /**
  * @param body response body
  * @param httpMethod request method
- * @param headers response headers
+ * @param responseHeaders response headers
  * @returns true if detects Forgetting Hypermedia antipattern
  */
 export const isForgettingHypermedia = (
   body: object,
   httpMethod: string,
-  headers: IHeadersObject
+  responseHeaders: IHeadersObject
 ): boolean => {
   const bodyKeys: string[] = getAllKeys(body)
 
   return (
     (httpMethod === GET && !containsLinks(bodyKeys)) ||
     (httpMethod === POST &&
-      !containsHeaderLowercasedOrCapitalized(headers, 'Location') &&
+      !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Location') &&
       !containsLinks(bodyKeys))
   )
 }
 
 /**
  * @param httpMethod request method
- * @param headers response headers
+ * @param requestHeaders request headers
+ * @param responseHeaders response headers
  * @returns true if detects Ignoring Caching antipattern
  */
 export const isIgnoringCaching = (
   httpMethod: string,
-  headers: IHeadersObject
+  requestHeaders: IHeadersObject,
+  responseHeaders: IHeadersObject
 ): boolean => {
   if (httpMethod !== GET) return false
 
   if (
-    !containsHeaderLowercasedOrCapitalized(headers, 'Etag') ||
-    !containsHeaderLowercasedOrCapitalized(headers, 'Cache-Control')
+    !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Etag') ||
+    !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Cache-Control')
   ) {
     return true
   }
 
-  const caching = getHeaderValue(headers, 'Cache-Control')
+  const clientCaching = getHeaderValue(requestHeaders, 'Cache-Control')
+  const serverCaching = getHeaderValue(responseHeaders, 'Cache-Control')
 
-  return caching === 'no-cache' || caching === 'no-store'
+  return (
+    clientCaching === 'no-cache' ||
+    clientCaching === 'no-store' ||
+    serverCaching === 'no-cache' ||
+    serverCaching === 'no-store'
+  )
 }
 
 /**
- * @param headers response headers
+ * @param requestHeaders request headers
+ * @param responseHeaders response headers
  * @returns true if detects Ignoring MIME Type antipattern
  */
-export const isIgnoringMIMEType = (headers: IHeadersObject): boolean => {
-  const contentType = getHeaderValue(headers, 'Content-Type')
-  return !contentType || !isStandardMIMEType(contentType)
+export const isIgnoringMIMEType = (
+  requestHeaders: IHeadersObject,
+  responseHeaders: IHeadersObject
+): boolean => {
+  const acceptedMIMETypes: string[] = getHeaderValue(requestHeaders, 'Accept')
+  const contentType: string = getHeaderValue(responseHeaders, 'Content-Type')
+
+  return (
+    !acceptedMIMETypes.includes(contentType) && !isStandardMIMEType(contentType)
+  )
 }
 
 /**
@@ -99,6 +124,10 @@ export const isIgnoringStatusCode = (
   httpMethod: string,
   statusCode: number
 ): boolean => {
+  // TODO this function needs to be fixed still
+  // ask for list of appropriate combinations of:
+  // httpMethod, statusCode and statusText
+
   switch (httpMethod) {
     case GET:
       return !GETStatuses().includes(statusCode)
@@ -119,5 +148,8 @@ export const isIgnoringStatusCode = (
  * @param headers response headers
  * @returns true if detects Misusing Cookies antipattern
  */
-export const isMisusingCookies = (headers: IHeadersObject): boolean =>
-  containsCookieHeader(headers)
+export const isMisusingCookies = (
+  requestHeaders: IHeadersObject,
+  responseHeaders: IHeadersObject
+): boolean =>
+  containsCookieHeader(requestHeaders) || containsCookieHeader(responseHeaders)

@@ -31,15 +31,17 @@ export default async () => {
     const preRes: any = await T.post(preTweet[0].url, preTweet[0].params)
     const id_str = preRes.data.id_str
 
-    storeResponseMeta(
-      APIs.twitter,
-      preRes.resp.request.href,
-      preTweet[0].url,
-      preRes.resp.statusCode,
-      preRes.resp.headers,
-      preRes.data,
-      preTweet[0].method
-    )
+    // TODO argument should now be an object, see: src/interfaces/IResponseParams.ts
+
+    // storeResponseMeta(
+    //   APIs.twitter,
+    //   preRes.resp.request.href,
+    //   preTweet[0].url,
+    //   preRes.resp.statusCode,
+    //   preRes.resp.headers,
+    //   preRes.data,
+    //   preTweet[0].method
+    // )
 
     for (const tweet of tweeting) {
       try {

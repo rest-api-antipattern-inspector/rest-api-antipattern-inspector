@@ -4,6 +4,8 @@ import { GET, POST, PUT, PATCH, DELETE } from '../src/utils/HTTPMethods'
 // TODO mention full coverage of all branches, statements etc of detector functions in report
 // with image
 
+// TODO 2, most tests are slightly broken now, many require both req & res headers
+
 ///
 
 // FALSE

@@ -13,6 +13,7 @@ import {
   getStandardResponseHeaders,
 } from './StandardHTTPHeaders'
 import {
+  registerHeader,
   getAllKeys,
   containsLinks,
   isStandardMIMEType,
@@ -32,26 +33,18 @@ export const isBreakingSelfDescriptiveness = (
   responseHeaders: IHeadersObject,
   nonstandardHeaders: INonStandardHeader[]
 ): boolean => {
+  // TODO test that this works properly
+
   const requestHeaderKeys = Object.keys(requestHeaders)
   const responseHeaderKeys = Object.keys(responseHeaders)
 
-  for (const headerKey of requestHeaderKeys) {
-    if (!getStandardRequestHeaders().includes(headerKey)) {
-      nonstandardHeaders.push({
-        headerType: 'Request Header',
-        headerKey: headerKey,
-      })
-    }
-  }
+  for (const headerKey of requestHeaderKeys)
+    if (!getStandardRequestHeaders().includes(headerKey))
+      registerHeader(nonstandardHeaders, 'Request Header', headerKey)
 
-  for (const headerKey of responseHeaderKeys) {
-    if (!getStandardResponseHeaders().includes(headerKey)) {
-      nonstandardHeaders.push({
-        headerType: 'Response Header',
-        headerKey: headerKey,
-      })
-    }
-  }
+  for (const headerKey of responseHeaderKeys)
+    if (!getStandardResponseHeaders().includes(headerKey))
+      registerHeader(nonstandardHeaders, 'Response Header', headerKey)
 
   return nonstandardHeaders.length !== 0
 }
@@ -93,9 +86,8 @@ export const isIgnoringCaching = (
   if (
     !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Etag') ||
     !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Cache-Control')
-  ) {
+  )
     return true
-  }
 
   const clientCaching = getHeaderValue(requestHeaders, 'Cache-Control')
   const serverCaching = getHeaderValue(responseHeaders, 'Cache-Control')

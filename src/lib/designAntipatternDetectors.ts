@@ -1,4 +1,5 @@
 import IHeadersObject from '../interfaces/IHeadersObject'
+import INonStandardHeader from '../interfaces/INonStandardHeader'
 import { GET, POST, PUT, PATCH, DELETE } from '../utils/HTTPMethods'
 import {
   GETStatuses,
@@ -23,26 +24,32 @@ import {
 /**
  * @param requestHeaders request headers
  * @param responseHeaders response headers
- * @param nonstandardHeaders empty string[] for any detected nonstandard headers
+ * @param nonstandardHeaders empty INonStandardHeader[] for any detected nonstandard headers
  * @returns true if detects Breaking Self-Descriptiveness antipattern
  */
 export const isBreakingSelfDescriptiveness = (
   requestHeaders: IHeadersObject,
   responseHeaders: IHeadersObject,
-  nonstandardHeaders: string[]
+  nonstandardHeaders: INonStandardHeader[]
 ): boolean => {
-  // TODO this function needs to be fixed still
-  // ask for list of req headers & res headers
-  // should check separately
+  const requestHeaderKeys = Object.keys(requestHeaders)
+  const responseHeaderKeys = Object.keys(responseHeaders)
 
-  const headerKeys: string[] = [].concat(
-    Object.keys(requestHeaders),
-    Object.keys(responseHeaders)
-  )
+  for (const headerKey of requestHeaderKeys) {
+    if (!getStandardRequestHeaders().includes(headerKey)) {
+      nonstandardHeaders.push({
+        headerType: 'Request Header',
+        headerKey: headerKey,
+      })
+    }
+  }
 
-  for (const headerKey of headerKeys) {
-    if (!isStandardHeader(headerKey)) {
-      nonstandardHeaders.push(headerKey)
+  for (const headerKey of responseHeaderKeys) {
+    if (!getStandardResponseHeaders().includes(headerKey)) {
+      nonstandardHeaders.push({
+        headerType: 'Response Header',
+        headerKey: headerKey,
+      })
     }
   }
 

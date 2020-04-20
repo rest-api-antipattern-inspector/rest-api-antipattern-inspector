@@ -8,7 +8,10 @@ import {
   DELETEStatuses,
 } from './statusCodes'
 import {
-  isStandardHeader,
+  getStandardRequestHeaders,
+  getStandardResponseHeaders,
+} from './StandardHTTPHeaders'
+import {
   getAllKeys,
   containsLinks,
   isStandardMIMEType,

@@ -1,6 +1,7 @@
 import fs from 'fs'
 import url from 'url'
 import IResponseMeta from '../interfaces/IResponseMeta'
+import INonStandardHeader from '../interfaces/INonStandardHeader'
 import {
   isBreakingSelfDescriptiveness,
   isForgettingHypermedia,
@@ -25,7 +26,7 @@ export const storeResponseMeta = async (resParamsObj: IResonseParams) => {
     throw new Error()
   }
 
-  const nonstandardHeaders: string[] = []
+  const nonstandardHeaders: INonStandardHeader[] = []
 
   const responseMeta: IResponseMeta = {
     api: resParamsObj.api,

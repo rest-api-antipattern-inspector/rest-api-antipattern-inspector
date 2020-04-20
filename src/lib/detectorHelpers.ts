@@ -1,9 +1,17 @@
-import HttpHeaders from './StandardHTTPHeaders'
 import IHeadersObject from '../interfaces/IHeadersObject'
+import INonStandardHeader from '../interfaces/INonStandardHeader'
 import MIMETypes from './MIMETypes'
 
-export const isStandardHeader = (headerKey: string): boolean =>
-  HttpHeaders.includes(headerKey)
+export const registerHeader = (
+  nonstandardHeaders: INonStandardHeader[],
+  headerType: string,
+  headerKey: string
+): void => {
+  nonstandardHeaders.push({
+    headerType,
+    headerKey,
+  })
+}
 
 export const getAllKeys = (obj: object): string[] => {
   const keys: string[] = []

@@ -1,6 +1,9 @@
 import { isBreakingSelfDescriptiveness } from '../src/lib/designAntipatternDetectors'
 import standardHeaders from '../src/lib/StandardHTTPHeaders'
 
+// standard req & res headers with example values
+// https://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Standard_request_fields
+
 test('Looping through standard headers: false', () => {
   const headersObject = {}
 

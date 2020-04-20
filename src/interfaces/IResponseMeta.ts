@@ -1,4 +1,6 @@
-export default interface ResponseMeta {
+import INonStandardHeader from './INonStandardHeader'
+
+export default interface IResponseMeta {
   api: string
   endpoint: string
 
@@ -9,7 +11,7 @@ export default interface ResponseMeta {
 
   isBreakingSelfDescriptiveness: boolean
 
-  nonstandardHeaders: string[]
+  nonstandardHeaders: INonStandardHeader[]
 
   isForgettingHypermedia: boolean
 

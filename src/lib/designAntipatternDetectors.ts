@@ -33,8 +33,6 @@ export const isBreakingSelfDescriptiveness = (
   responseHeaders: IHeadersObject,
   nonstandardHeaders: INonStandardHeader[]
 ): boolean => {
-  // TODO test that this works properly
-
   const requestHeaderKeys = Object.keys(requestHeaders)
   const responseHeaderKeys = Object.keys(responseHeaders)
 

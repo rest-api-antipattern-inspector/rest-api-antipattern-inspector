@@ -56,6 +56,13 @@ function isLinkTerm(key: string): boolean {
   return linkTerms.includes(key)
 }
 
+export const isAcceptedMIMEType = (
+  contentType: string,
+  acceptedMIMETypes: string[]
+): boolean =>
+  // '*/*' means data of any kind is accepted
+  acceptedMIMETypes.includes('*/*') || acceptedMIMETypes.includes(contentType)
+
 export const isStandardMIMEType = (contentType: string): boolean =>
   MIMETypes.some((type) => contentType.includes(type))
 

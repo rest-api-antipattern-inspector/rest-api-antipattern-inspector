@@ -16,6 +16,7 @@ import {
   registerHeader,
   getAllKeys,
   containsLinks,
+  isAcceptedMIMEType,
   isStandardMIMEType,
   containsHeaderLowercasedOrCapitalized,
   getHeaderValue,
@@ -110,11 +111,9 @@ export const isIgnoringMIMEType = (
   const acceptedMIMETypes: string[] = getHeaderValue(requestHeaders, 'Accept')
   const contentType: string = getHeaderValue(responseHeaders, 'Content-Type')
 
-  // TODO also change to check, includes here, simple enough
-  // TODO hmm, server won't return */*...
   return (
-    // TODO isAcceptedMIMEType(contentType, acceptedMIMETypes)
-    !acceptedMIMETypes.includes(contentType) && !isStandardMIMEType(contentType)
+    !isAcceptedMIMEType(contentType, acceptedMIMETypes) &&
+    !isStandardMIMEType(contentType)
   )
 }
 

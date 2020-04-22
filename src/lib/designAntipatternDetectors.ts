@@ -16,6 +16,7 @@ import {
   registerHeader,
   getAllKeys,
   containsLinks,
+  isAcceptedMIMEType,
   isStandardMIMEType,
   containsHeaderLowercasedOrCapitalized,
   getHeaderValue,
@@ -111,7 +112,8 @@ export const isIgnoringMIMEType = (
   const contentType: string = getHeaderValue(responseHeaders, 'Content-Type')
 
   return (
-    !acceptedMIMETypes.includes(contentType) && !isStandardMIMEType(contentType)
+    !isAcceptedMIMEType(contentType, acceptedMIMETypes) &&
+    !isStandardMIMEType(contentType)
   )
 }
 

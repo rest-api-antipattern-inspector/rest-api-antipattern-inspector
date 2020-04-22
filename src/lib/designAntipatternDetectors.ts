@@ -111,7 +111,9 @@ export const isIgnoringMIMEType = (
   const contentType: string = getHeaderValue(responseHeaders, 'Content-Type')
 
   // TODO also change to check, includes here, simple enough
+  // TODO hmm, server won't return */*...
   return (
+    // TODO isAcceptedMIMEType(contentType, acceptedMIMETypes)
     !acceptedMIMETypes.includes(contentType) && !isStandardMIMEType(contentType)
   )
 }

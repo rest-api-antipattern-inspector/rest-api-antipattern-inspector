@@ -11,6 +11,10 @@ export default interface IResponseMeta {
 
   nonstandardHeaders: INonStandardHeader[]
 
+  linguisticAntipatterns: {
+    [key: string]: boolean
+  }
+
   designAntipatterns: {
     isBreakingSelfDescriptiveness: boolean
 

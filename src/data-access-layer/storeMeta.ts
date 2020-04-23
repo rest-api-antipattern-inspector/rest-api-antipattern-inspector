@@ -39,6 +39,9 @@ export const storeResponseMeta = async (resParamsObj: IResonseParams) => {
 
     nonstandardHeaders: nonstandardHeaders,
 
+    // empty for now in this program
+    linguisticAntipatterns: {},
+
     designAntipatterns: {
       isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
         resParamsObj.requestHeaders,

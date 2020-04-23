@@ -37,40 +37,45 @@ export const storeResponseMeta = async (resParamsObj: IResonseParams) => {
     httpMethod: HTTPMethod,
     statusCode: resParamsObj.status.statusCode,
 
-    isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
-      resParamsObj.requestHeaders,
-      resParamsObj.responseHeaders,
-      nonstandardHeaders
-    ),
-
     nonstandardHeaders: nonstandardHeaders,
 
-    isForgettingHypermedia: isForgettingHypermedia(
-      resParamsObj.body,
-      HTTPMethod,
-      resParamsObj.responseHeaders
-    ),
+    // empty for now in this program
+    linguisticAntipatterns: {},
 
-    isIgnoringCaching: isIgnoringCaching(
-      HTTPMethod,
-      resParamsObj.requestHeaders,
-      resParamsObj.responseHeaders
-    ),
+    designAntipatterns: {
+      isBreakingSelfDescriptiveness: isBreakingSelfDescriptiveness(
+        resParamsObj.requestHeaders,
+        resParamsObj.responseHeaders,
+        nonstandardHeaders
+      ),
 
-    isIgnoringMIMEType: isIgnoringMIMEType(
-      resParamsObj.requestHeaders,
-      resParamsObj.responseHeaders
-    ),
+      isForgettingHypermedia: isForgettingHypermedia(
+        resParamsObj.body,
+        HTTPMethod,
+        resParamsObj.responseHeaders
+      ),
 
-    isIgnoringStatusCode: isIgnoringStatusCode(
-      HTTPMethod,
-      resParamsObj.status.statusCode
-    ),
+      isIgnoringCaching: isIgnoringCaching(
+        HTTPMethod,
+        resParamsObj.requestHeaders,
+        resParamsObj.responseHeaders
+      ),
 
-    isMisusingCookies: isMisusingCookies(
-      resParamsObj.requestHeaders,
-      resParamsObj.responseHeaders
-    ),
+      isIgnoringMIMEType: isIgnoringMIMEType(
+        resParamsObj.requestHeaders,
+        resParamsObj.responseHeaders
+      ),
+
+      isIgnoringStatusCode: isIgnoringStatusCode(
+        HTTPMethod,
+        resParamsObj.status.statusCode
+      ),
+
+      isMisusingCookies: isMisusingCookies(
+        resParamsObj.requestHeaders,
+        resParamsObj.responseHeaders
+      ),
+    },
   }
 
   writeToFile(responseMeta)

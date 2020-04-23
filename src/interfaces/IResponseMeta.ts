@@ -9,17 +9,23 @@ export default interface IResponseMeta {
   httpMethod: string
   statusCode: number
 
-  isBreakingSelfDescriptiveness: boolean
-
   nonstandardHeaders: INonStandardHeader[]
 
-  isForgettingHypermedia: boolean
+  linguisticAntipatterns: {
+    [key: string]: boolean
+  }
 
-  isIgnoringCaching: boolean
+  designAntipatterns: {
+    isBreakingSelfDescriptiveness: boolean
 
-  isIgnoringMIMEType: boolean
+    isForgettingHypermedia: boolean
 
-  isIgnoringStatusCode: boolean
+    isIgnoringCaching: boolean
 
-  isMisusingCookies: boolean
+    isIgnoringMIMEType: boolean
+
+    isIgnoringStatusCode: boolean
+
+    isMisusingCookies: boolean
+  }
 }

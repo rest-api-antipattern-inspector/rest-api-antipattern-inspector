@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { parseStringPromise } from 'xml2js'
 import url from 'url'
 import IResponseMeta from '../interfaces/IResponseMeta'
 import INonStandardHeader from '../interfaces/INonStandardHeader'
@@ -12,8 +13,18 @@ import {
 } from '../lib/designAntipatternDetectors'
 import { HTTPMethods } from '../enums/HTTPMethods'
 import IResonseParams from '../interfaces/IResponseParams'
+import IStatusCombo from '../interfaces/IStatusCombo'
 
 export const storeResponseMeta = async (resParamsObj: IResonseParams) => {
+  const xmlStatusCombos = fs.readFileSync(
+    './data-files/statuscodes.xml',
+    'utf8'
+  )
+
+  const parsedXml = await parseStringPromise(xmlStatusCombos)
+  const statusCombos: IStatusCombo = parsedXml['statuscodes']['statuscode']
+  console.log(statusCombos)
+
   const HTTPMethod = resParamsObj.httpMethod.toUpperCase()
 
   if (!isValidHTTPMethod(HTTPMethod)) {

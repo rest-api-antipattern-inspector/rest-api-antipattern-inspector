@@ -33,15 +33,23 @@ export default async () => {
 
     // TODO argument should now be an object, see: src/interfaces/IResponseParams.ts
 
-    // storeResponseMeta(
-    //   APIs.twitter,
-    //   preRes.resp.request.href,
-    //   preTweet[0].url,
-    //   preRes.resp.statusCode,
-    //   preRes.resp.headers,
-    //   preRes.data,
-    //   preTweet[0].method
-    // )
+    const pretweetData = await preRes.resp
+    const pretweetReqHeaders = JSON.parse(JSON.stringify(pretweetData)).request
+      .headers
+
+    storeResponseMeta({
+      api: APIs.twitter,
+      wholeURI: `https://api.twitter.com/1.1/${preTweet[0].url}`,
+      endpoint: preTweet[0].url,
+      status: {
+        statusCode: pretweetData.statusCode,
+        statusText: pretweetData.statusMessage,
+      },
+      requestHeaders: pretweetReqHeaders,
+      responseHeaders: pretweetData.headers,
+      body: pretweetData.data,
+      httpMethod: preTweet[0].method,
+    })
 
     for (const tweet of tweeting) {
       try {
@@ -55,15 +63,22 @@ export default async () => {
                 ...tweet.params,
                 id: id_str,
               })
-        console.log(res)
-        // storeResponseMeta(
-        //   res.resp.request.href,
-        //   tweet.url,
-        //   res.resp.statusCode || 0,
-        //   res.resp.headers,
-        //   res.data,
-        //   tweet.method
-        // )
+        const data = await res.resp
+        const reqHeaders = JSON.parse(JSON.stringify(data)).request.headers
+
+        storeResponseMeta({
+          api: APIs.twitter,
+          wholeURI: `https://api.twitter.com/1.1/${tweet.url}`,
+          endpoint: tweet.url,
+          status: {
+            statusCode: data.statusCode,
+            statusText: data.statusMessage,
+          },
+          requestHeaders: reqHeaders,
+          responseHeaders: data.headers,
+          body: res.data,
+          httpMethod: tweet.method,
+        })
       } catch (e) {
         console.log(tweet.url)
       }
@@ -79,22 +94,36 @@ export default async () => {
     deleteLevel2,
   ]
 
-  // for (const level of arr) {
-  //   const result = await Promise.all(
-  //     level.map(async (endpoint: Endpoint) => {
-  //       try {
-  //         const response =
-  //           endpoint.method === GET
-  //             ? await T.get(endpoint.url, endpoint.params)
-  //             : await T.post(endpoint.url, endpoint.params)
+  for (const level of arr) {
+    const result = await Promise.all(
+      level.map(async (endpoint: Endpoint) => {
+        try {
+          const response =
+            endpoint.method === GET
+              ? await T.get(endpoint.url, endpoint.params)
+              : await T.post(endpoint.url, endpoint.params)
+          const data = await response.resp
+          const reqHeaders = JSON.parse(JSON.stringify(data)).request.headers
 
-  //         return response.resp.statusCode
-  //       } catch (e) {
-  //         console.log(endpoint.url)
-  //         console.log(e)
-  //       }
-  //     })
-  //   )
-  //   console.log(result.length)
-  // }
+          storeResponseMeta({
+            api: APIs.twitter,
+            wholeURI: `https://api.twitter.com/1.1/${endpoint.url}`,
+            endpoint: endpoint.url,
+            status: {
+              statusCode: data.statusCode,
+              statusText: data.statusMessage,
+            },
+            requestHeaders: reqHeaders,
+            responseHeaders: data.headers,
+            body: response.data,
+            httpMethod: endpoint.method,
+          })
+          return response
+        } catch (e) {
+          console.log(endpoint.url)
+          console.log(e)
+        }
+      })
+    )
+  }
 }

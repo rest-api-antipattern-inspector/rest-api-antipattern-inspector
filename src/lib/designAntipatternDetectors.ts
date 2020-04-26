@@ -3,13 +3,6 @@ import INonStandardHeader from '../interfaces/INonStandardHeader'
 import { GET, POST, PUT, PATCH, DELETE } from '../utils/HTTPMethods'
 import { HTTPMethods } from '../enums/HTTPMethods'
 import {
-  GETStatuses,
-  POSTStatuses,
-  PUTStatuses,
-  PATCHStatuses,
-  DELETEStatuses,
-} from './statusCodes'
-import {
   getStandardRequestHeaders,
   getStandardResponseHeaders,
 } from './StandardHTTPHeaders'
@@ -126,21 +119,7 @@ export const isIgnoringStatusCode = (
   statusText: string,
   standardStatusCombos: IStatusCombo[]
 ): boolean => {
-  // TODO wrong, doesn't work properly
-
-  // console.log(httpMethod)
-  // console.log(statusCode)
-  // console.log(statusText)
-  // console.log(standardStatusCombos)
-
   // TODO put this in helper func
-  const statusCombo: IStatusCombo | undefined = standardStatusCombos.filter(
-    (combo) => combo.code[0] === statusCode.toString()
-  )[0]
-
-  // console.log(!statusCombo)
-  // console.log(statusText.toUpperCase() !== statusCombo.description[0])
-  // console.log(!statusCombo.method.includes(httpMethod))
 
   // TODO abstract this
   return (

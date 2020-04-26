@@ -113,6 +113,11 @@ export const getHeaderValue = (
 
 export const getStatusCombo = (
   standardStatusCombos: IStatusCombo[],
-  statusCode: string
+  statusCode: number
 ): IStatusCombo | undefined =>
-  standardStatusCombos.filter((combo) => combo.code[0] === statusCode)[0]
+  standardStatusCombos.filter(
+    (combo) => combo.code[0] === statusCode.toString()
+  )[0]
+
+export const getStatusText = (statusCombo: IStatusCombo): string =>
+  statusCombo.description[0]

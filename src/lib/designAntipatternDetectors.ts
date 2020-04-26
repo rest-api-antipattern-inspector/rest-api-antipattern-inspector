@@ -1,6 +1,6 @@
 import IHeadersObject from '../interfaces/IHeadersObject'
 import INonStandardHeader from '../interfaces/INonStandardHeader'
-import { GET, POST, PUT, PATCH, DELETE } from '../utils/HTTPMethods'
+import { GET, POST } from '../utils/HTTPMethods'
 import { HTTPMethods } from '../enums/HTTPMethods'
 import {
   getStandardRequestHeaders,
@@ -15,6 +15,8 @@ import {
   containsHeaderLowercasedOrCapitalized,
   getHeaderValue,
   containsCookieHeader,
+  getStatusCombo,
+  getStatusText,
 } from './detectorHelpers'
 import IStatusCombo from '../interfaces/IStatusCombo'
 
@@ -112,20 +114,24 @@ export const isIgnoringMIMEType = (
   )
 }
 
-// TODO add js docs
+/**
+ *
+ * @param httpMethod request method
+ * @param statusCode
+ * @param statusText
+ * @param standardStatusCombos standard combinations of httpMethod, statusCode & statusText
+ */
 export const isIgnoringStatusCode = (
   httpMethod: HTTPMethods,
   statusCode: number,
   statusText: string,
   standardStatusCombos: IStatusCombo[]
 ): boolean => {
-  // TODO put this in helper func
+  const standardStatusCombo = getStatusCombo(standardStatusCombos, statusCode)
 
-  // TODO abstract this
   return (
-    !statusCombo ||
-    statusText.toUpperCase() !== statusCombo.description[0] ||
-    !statusCombo.method.includes(httpMethod)
+    getStatusText(standardStatusCombo) !== statusText.toUpperCase() ||
+    !standardStatusCombo.method.includes(httpMethod)
   )
 }
 

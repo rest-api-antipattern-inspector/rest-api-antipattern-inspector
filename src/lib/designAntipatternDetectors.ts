@@ -1,6 +1,7 @@
 import IHeadersObject from '../interfaces/IHeadersObject'
 import INonStandardHeader from '../interfaces/INonStandardHeader'
 import { GET, POST, PUT, PATCH, DELETE } from '../utils/HTTPMethods'
+import { HTTPMethods } from '../enums/HTTPMethods'
 import {
   GETStatuses,
   POSTStatuses,
@@ -22,6 +23,7 @@ import {
   getHeaderValue,
   containsCookieHeader,
 } from './detectorHelpers'
+import IStatusCombo from '../interfaces/IStatusCombo'
 
 /**
  * @param requestHeaders request headers
@@ -117,33 +119,35 @@ export const isIgnoringMIMEType = (
   )
 }
 
-/**
- * @param httpMethod request method
- * @param statusCode
- * @returns true if detects Ignoring Status Code antipattern
- */
+// TODO add js docs
 export const isIgnoringStatusCode = (
-  httpMethod: string,
-  statusCode: number
+  httpMethod: HTTPMethods,
+  statusCode: number,
+  statusText: string,
+  standardStatusCombos: IStatusCombo[]
 ): boolean => {
-  // TODO this function needs to be fixed still
-  // ask for list of appropriate combinations of:
-  // httpMethod, statusCode and statusText
+  // TODO wrong, doesn't work properly
 
-  switch (httpMethod) {
-    case GET:
-      return !GETStatuses().includes(statusCode)
-    case POST:
-      return !POSTStatuses().includes(statusCode)
-    case PUT:
-      return !PUTStatuses().includes(statusCode)
-    case PATCH:
-      return !PATCHStatuses().includes(statusCode)
-    case DELETE:
-      return !DELETEStatuses().includes(statusCode)
-    default:
-      return false
-  }
+  // console.log(httpMethod)
+  // console.log(statusCode)
+  // console.log(statusText)
+  // console.log(standardStatusCombos)
+
+  // TODO put this in helper func
+  const statusCombo: IStatusCombo | undefined = standardStatusCombos.filter(
+    (combo) => combo.code[0] === statusCode.toString()
+  )[0]
+
+  // console.log(!statusCombo)
+  // console.log(statusText.toUpperCase() !== statusCombo.description[0])
+  // console.log(!statusCombo.method.includes(httpMethod))
+
+  // TODO abstract this
+  return (
+    !statusCombo ||
+    statusText.toUpperCase() !== statusCombo.description[0] ||
+    !statusCombo.method.includes(httpMethod)
+  )
 }
 
 /**

@@ -22,8 +22,7 @@ export const storeResponseMeta = async (resParamsObj: IResonseParams) => {
   )
 
   const parsedXml = await parseStringPromise(xmlStatusCombos)
-  const statusCombos: IStatusCombo = parsedXml['statuscodes']['statuscode']
-  console.log(statusCombos)
+  const statusCombos: IStatusCombo[] = parsedXml['statuscodes']['statuscode']
 
   const HTTPMethod = resParamsObj.httpMethod.toUpperCase()
 
@@ -78,8 +77,10 @@ export const storeResponseMeta = async (resParamsObj: IResonseParams) => {
       ),
 
       isIgnoringStatusCode: isIgnoringStatusCode(
-        HTTPMethod,
-        resParamsObj.status.statusCode
+        HTTPMethods[HTTPMethod],
+        resParamsObj.status.statusCode,
+        resParamsObj.status.statusText,
+        statusCombos
       ),
 
       isMisusingCookies: isMisusingCookies(

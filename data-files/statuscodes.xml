@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<statuscodes>
+    <statuscode>
+        <code>2</code>
+        <description>SUCCESS</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>4</code>
+        <description>ERROR</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>4</code>
+        <description>ERRORS</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>4</code>
+        <description>FAILURE</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>4</code>
+        <description>FAILED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>5</code>
+        <description>ERROR</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>5</code>
+        <description>ERRORS</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>5</code>
+        <description>FAILURE</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>5</code>
+        <description>FAILED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+
+
+    <statuscode>
+        <code>100</code>
+        <description>CONTINUE</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>101</code>
+        <description>SWITCHING PROTOCOLS</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>102</code>
+        <description>PROCESSING</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>118</code>
+        <description>CONNECTION TIMED OUT</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>200</code>
+        <description>OK</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>201</code>
+        <description>CREATED</description>
+        <method>POST</method>
+    </statuscode>
+    <statuscode>
+        <code>202</code>
+        <description>ACCEPTED</description>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>203</code>
+        <description>NON-AUTHORITATIVE INFORMATION</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>204</code>
+        <description>NO CONTENT</description>
+        <method>GET</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>205</code>
+        <description>RESET CONTENT</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>206</code>
+        <description>PARTIAL CONTENT</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>207</code>
+        <description>MULTI-STATUS</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>210</code>
+        <description>CONTENT DIFFERENT</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>226</code>
+        <description>IM USED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>300</code>
+        <description>MULTIPLE CHOICES</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>301</code>
+        <description>MOVED PERMANENTLY</description>
+        <method>GET</method>
+    </statuscode>
+    <statuscode>
+        <code>302</code>
+        <description>FOUND</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>303</code>
+        <description>SEE OTHER</description>
+        <method>GET</method>
+    </statuscode>
+    <statuscode>
+        <code>304</code>
+        <description>NOT MODIFIED</description>
+        <method>GET</method>
+    </statuscode>
+    <statuscode>
+        <code>305</code>
+        <description>USE PROXY</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>306</code>
+        <description></description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>307</code>
+        <description>TEMPORARY REDIRECT</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>308</code>
+        <description>PERMANENT REDIRECT</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>310</code>
+        <description>TOO MANY REDIRECTS</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>400</code>
+        <description>BAD REQUEST</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>401</code>
+        <description>UNAUTHORIZED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>402</code>
+        <description>PAYMENT REQUIRED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>403</code>
+        <description>FORBIDDEN</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>404</code>
+        <description>NOT FOUND</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>405</code>
+        <description>NOT ALLOWED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>406</code>
+        <description>NOT ACCEPTABLE</description>
+        <method>GET</method>
+    </statuscode>
+    <statuscode>
+        <code>407</code>
+        <description>PROXY AUTHENTICATION REQUIRED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>408</code>
+        <description>REQUEST TIMEOUT</description>
+        <method>GET</method>
+        <method>POST</method>
+    </statuscode>
+    <statuscode>
+        <code>409</code>
+        <description>CONFLICT</description>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>410</code>
+        <description>GONE</description>
+        <method>GET</method>
+        <method>PUT</method>
+    </statuscode>
+    <statuscode>
+        <code>411</code>
+        <description>LENGTH REQUIRED</description>
+        <method>POST</method>
+        <method>PUT</method>
+    </statuscode>
+    <statuscode>
+        <code>412</code>
+        <description>PRECONDITION FAILED</description>
+        <method>GET</method>
+    </statuscode>
+    <statuscode>
+        <code>413</code>
+        <description>REQUEST ENTITY TOO LARGE</description>
+        <method>POST</method>
+        <method>PUT</method>
+    </statuscode>
+    <statuscode>
+        <code>414</code>
+        <description>REQUEST URI TOO LONG</description>
+        <method>POST</method>
+        <method>PUT</method>
+    </statuscode>
+    <statuscode>
+        <code>415</code>
+        <description>UNSUPPORTED TYPE</description>
+        <method>POST</method>
+        <method>PUT</method>
+    </statuscode>
+    <statuscode>
+        <code>416</code>
+        <description>REQUESTED RANGE NOT SATISFIABLE</description>
+        <method>GET</method>
+    </statuscode>
+    <statuscode>
+        <code>417</code>
+        <description>EXPECTATION FAILED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>418</code>
+        <description>I’M A TEAPOT</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>422</code>
+        <description>UNPROCESSABLE ENTITY</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>423</code>
+        <description>LOCKED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>424</code>
+        <description>METHOD FAILURE</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>425</code>
+        <description>UNORDERED COLLECTION</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>426</code>
+        <description>UPGRADE REQUIRED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>428</code>
+        <description>PRECONDITION REQUIRED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>429</code>
+        <description>TOO MANY REQUESTS</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>431</code>
+        <description>REQUEST HEADER FIELDS TOO LARGE</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>449</code>
+        <description>RETRY WITH</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>450</code>
+        <description>BLOCKED BY WINDOWS PARENTAL CONTROLS</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>456</code>
+        <description>UNRECOVERABLE ERROR</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>499</code>
+        <description>CLIENT HAS CLOSED CONNECTION</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>500</code>
+        <description>SERVER ERROR</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+    </statuscode>
+    <statuscode>
+        <code>501</code>
+        <description>NOT IMPLEMENTED</description>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETED</method>
+    </statuscode>
+    <statuscode>
+        <code>502</code>
+        <description>BAD GATEWAY</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>503</code>
+        <description>SERVICE UNAVAILABLE</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>504</code>
+        <description>GATEWAY TIME-OUT</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>505</code>
+        <description>HTTP Version not supported</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>506</code>
+        <description>VARIANT ALSO NEGOCIATE</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>507</code>
+        <description>INSUFFICIENT STORAGE</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>508</code>
+        <description>LOOP DETECTED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>509</code>
+        <description>BANDWIDTH LIMIT EXCEEDED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>510</code>
+        <description>NOT EXTENDED</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+    <statuscode>
+        <code>520</code>
+        <description>WEB SERVER IS RETURNING AN UNKNOWN ERROR</description>
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>DELETE</method>
+    </statuscode>
+</statuscodes>

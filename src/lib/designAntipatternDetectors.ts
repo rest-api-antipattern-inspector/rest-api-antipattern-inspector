@@ -1,13 +1,7 @@
 import IHeadersObject from '../interfaces/IHeadersObject'
 import INonStandardHeader from '../interfaces/INonStandardHeader'
-import { GET, POST, PUT, PATCH, DELETE } from '../utils/HTTPMethods'
-import {
-  GETStatuses,
-  POSTStatuses,
-  PUTStatuses,
-  PATCHStatuses,
-  DELETEStatuses,
-} from './statusCodes'
+import { GET, POST } from '../utils/HTTPMethods'
+import { HTTPMethods } from '../enums/HTTPMethods'
 import {
   getStandardRequestHeaders,
   getStandardResponseHeaders,
@@ -21,7 +15,10 @@ import {
   containsHeaderLowercasedOrCapitalized,
   getHeaderValue,
   containsCookieHeader,
+  getStatusCombo,
+  getStatusText,
 } from './detectorHelpers'
+import IStatusCombo from '../interfaces/IStatusCombo'
 
 /**
  * @param requestHeaders request headers
@@ -118,32 +115,24 @@ export const isIgnoringMIMEType = (
 }
 
 /**
+ *
  * @param httpMethod request method
  * @param statusCode
- * @returns true if detects Ignoring Status Code antipattern
+ * @param statusText
+ * @param standardStatusCombos standard combinations of httpMethod, statusCode & statusText
  */
 export const isIgnoringStatusCode = (
-  httpMethod: string,
-  statusCode: number
+  httpMethod: HTTPMethods,
+  statusCode: number,
+  statusText: string,
+  standardStatusCombos: IStatusCombo[]
 ): boolean => {
-  // TODO this function needs to be fixed still
-  // ask for list of appropriate combinations of:
-  // httpMethod, statusCode and statusText
+  const standardStatusCombo = getStatusCombo(standardStatusCombos, statusCode)
 
-  switch (httpMethod) {
-    case GET:
-      return !GETStatuses().includes(statusCode)
-    case POST:
-      return !POSTStatuses().includes(statusCode)
-    case PUT:
-      return !PUTStatuses().includes(statusCode)
-    case PATCH:
-      return !PATCHStatuses().includes(statusCode)
-    case DELETE:
-      return !DELETEStatuses().includes(statusCode)
-    default:
-      return false
-  }
+  return (
+    getStatusText(standardStatusCombo) !== statusText.toUpperCase() ||
+    !standardStatusCombo.method.includes(httpMethod)
+  )
 }
 
 /**

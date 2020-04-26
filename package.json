@@ -19,13 +19,15 @@
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.0",
-    "twit": "^2.2.11"
+    "twit": "^2.2.11",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/node": "^13.11.0",
     "@types/node-fetch": "^2.5.5",
     "@types/twit": "^2.2.23",
+    "@types/xml2js": "^0.4.5",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",

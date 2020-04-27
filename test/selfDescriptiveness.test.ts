@@ -65,8 +65,6 @@ test('Looping through standard request headers, lowercased: false', () => {
   }
 })
 
-// TODO same w req
-
 test('Some standard and some non-standard response headers: true', () => {
   expect(
     isBreakingSelfDescriptiveness(

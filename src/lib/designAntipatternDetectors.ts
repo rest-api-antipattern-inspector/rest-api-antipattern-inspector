@@ -110,8 +110,9 @@ export const isIgnoringMIMEType = (
   const contentType = getHeaderValue(responseHeaders, 'Content-Type')
 
   return (
-    !isAcceptedMIMEType(contentType, acceptedMIMETypes) &&
-    !isStandardMIMEType(contentType)
+    !contentType ||
+    (!isAcceptedMIMEType(contentType, acceptedMIMETypes) &&
+      !isStandardMIMEType(contentType))
   )
 }
 

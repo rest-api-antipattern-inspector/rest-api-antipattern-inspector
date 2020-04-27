@@ -14,6 +14,7 @@ import {
   isStandardMIMEType,
   containsHeaderLowercasedOrCapitalized,
   getHeaderValue,
+  getHeaderValues,
   containsCookieHeader,
   getStatusCombo,
   getStatusText,
@@ -105,8 +106,8 @@ export const isIgnoringMIMEType = (
   requestHeaders: IHeadersObject,
   responseHeaders: IHeadersObject
 ): boolean => {
-  const acceptedMIMETypes: string[] = getHeaderValue(requestHeaders, 'Accept')
-  const contentType: string = getHeaderValue(responseHeaders, 'Content-Type')
+  const acceptedMIMETypes = getHeaderValues(requestHeaders, 'Accept')
+  const contentType = getHeaderValue(responseHeaders, 'Content-Type')
 
   return (
     !isAcceptedMIMEType(contentType, acceptedMIMETypes) &&

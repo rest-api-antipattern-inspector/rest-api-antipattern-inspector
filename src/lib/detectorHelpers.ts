@@ -67,6 +67,29 @@ export const isAcceptedMIMEType = (
 export const isStandardMIMEType = (contentType: string): boolean =>
   MIMETypes.some((type) => contentType.includes(type))
 
+export const getHeaderValue = (
+  headers: IHeadersObject,
+  capitalizedHeaderName: string
+): string =>
+  headers[capitalizedHeaderName].toLowerCase() ||
+  headers[capitalizedHeaderName.toLowerCase()].toLowerCase()
+
+export const getHeaderValues = (
+  headers: IHeadersObject,
+  capitalizedHeaderName: string
+): string[] => {
+  const headerContent =
+    headers[capitalizedHeaderName] ||
+    headers[capitalizedHeaderName.toLowerCase()]
+
+  const headerValues =
+    typeof headerContent === 'string'
+      ? headerContent.split(', ')
+      : headerContent
+
+  return headerValues.map((hv) => hv.toLowerCase())
+}
+
 export const containsCookieHeader = (headers: IHeadersObject): boolean => {
   const cookieHeaders = [
     'Cookie',
@@ -94,21 +117,6 @@ export const containsHeaderLowercasedOrCapitalized = (
     headers[capitalizedHeaderName] !== undefined ||
     headers[capitalizedHeaderName.toLowerCase()] !== undefined
   )
-}
-
-export const getHeaderValue = (
-  headers: IHeadersObject,
-  capitalizedHeaderName: string
-): any => {
-  const headerValue =
-    headers[capitalizedHeaderName] ||
-    headers[capitalizedHeaderName.toLowerCase()]
-
-  if (!headerValue) return undefined
-
-  return typeof headerValue === 'string'
-    ? headerValue.toLowerCase()
-    : headerValue
 }
 
 export const getStatusCombo = (

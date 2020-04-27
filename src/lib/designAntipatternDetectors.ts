@@ -14,9 +14,9 @@ import {
   isStandardMIMEType,
   containsHeaderLowercasedOrCapitalized,
   getHeaderValue,
+  getHeaderValues,
   containsCookieHeader,
-  getStatusCombo,
-  getStatusText,
+  isValidStatusCombo,
 } from './detectorHelpers'
 import IStatusCombo from '../interfaces/IStatusCombo'
 
@@ -105,12 +105,13 @@ export const isIgnoringMIMEType = (
   requestHeaders: IHeadersObject,
   responseHeaders: IHeadersObject
 ): boolean => {
-  const acceptedMIMETypes: string[] = getHeaderValue(requestHeaders, 'Accept')
-  const contentType: string = getHeaderValue(responseHeaders, 'Content-Type')
+  const acceptedMIMETypes = getHeaderValues(requestHeaders, 'Accept')
+  const contentType = getHeaderValue(responseHeaders, 'Content-Type')
 
   return (
-    !isAcceptedMIMEType(contentType, acceptedMIMETypes) &&
-    !isStandardMIMEType(contentType)
+    !contentType ||
+    !isStandardMIMEType(contentType) ||
+    !isAcceptedMIMEType(contentType, acceptedMIMETypes)
   )
 }
 
@@ -126,14 +127,8 @@ export const isIgnoringStatusCode = (
   statusCode: number,
   statusText: string,
   standardStatusCombos: IStatusCombo[]
-): boolean => {
-  const standardStatusCombo = getStatusCombo(standardStatusCombos, statusCode)
-
-  return (
-    getStatusText(standardStatusCombo) !== statusText.toUpperCase() ||
-    !standardStatusCombo.method.includes(httpMethod)
-  )
-}
+): boolean =>
+  !isValidStatusCombo(httpMethod, statusCode, statusText, standardStatusCombos)
 
 /**
  * @param headers response headers

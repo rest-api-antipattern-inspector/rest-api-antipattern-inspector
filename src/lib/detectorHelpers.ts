@@ -2,6 +2,7 @@ import IHeadersObject from '../interfaces/IHeadersObject'
 import INonStandardHeader from '../interfaces/INonStandardHeader'
 import MIMETypes from './MIMETypes'
 import IStatusCombo from '../interfaces/IStatusCombo'
+import { HTTPMethods } from '../enums/HTTPMethods'
 
 export const registerHeader = (
   nonstandardHeaders: INonStandardHeader[],
@@ -67,6 +68,37 @@ export const isAcceptedMIMEType = (
 export const isStandardMIMEType = (contentType: string): boolean =>
   MIMETypes.some((type) => contentType.includes(type))
 
+export const getHeaderValue = (
+  headers: IHeadersObject,
+  capitalizedHeaderName: string
+): string | undefined => {
+  const headerValue =
+    headers[capitalizedHeaderName] ||
+    headers[capitalizedHeaderName.toLowerCase()]
+
+  if (!headerValue) return undefined
+
+  return headerValue.toLowerCase()
+}
+
+export const getHeaderValues = (
+  headers: IHeadersObject,
+  capitalizedHeaderName: string
+): string[] | undefined => {
+  const headerContent =
+    headers[capitalizedHeaderName] ||
+    headers[capitalizedHeaderName.toLowerCase()]
+
+  if (!headerContent) return undefined
+
+  const headerValues =
+    typeof headerContent === 'string'
+      ? headerContent.split(', ')
+      : headerContent
+
+  return headerValues.map((hv) => hv.toLowerCase())
+}
+
 export const containsCookieHeader = (headers: IHeadersObject): boolean => {
   const cookieHeaders = [
     'Cookie',
@@ -96,28 +128,15 @@ export const containsHeaderLowercasedOrCapitalized = (
   )
 }
 
-export const getHeaderValue = (
-  headers: IHeadersObject,
-  capitalizedHeaderName: string
-): any => {
-  const headerValue =
-    headers[capitalizedHeaderName] ||
-    headers[capitalizedHeaderName.toLowerCase()]
-
-  if (!headerValue) return undefined
-
-  return typeof headerValue === 'string'
-    ? headerValue.toLowerCase()
-    : headerValue
-}
-
-export const getStatusCombo = (
-  standardStatusCombos: IStatusCombo[],
-  statusCode: number
-): IStatusCombo | undefined =>
+export const isValidStatusCombo = (
+  httpMethod: HTTPMethods,
+  statusCode: number,
+  statusText: string,
+  standardStatusCombos: IStatusCombo[]
+): boolean =>
   standardStatusCombos.filter(
-    (combo) => combo.code[0] === statusCode.toString()
-  )[0]
-
-export const getStatusText = (statusCombo: IStatusCombo): string =>
-  statusCombo.description[0]
+    (combo) =>
+      combo.method.includes(httpMethod) &&
+      combo.code[0] === statusCode.toString() &&
+      combo.description[0] === statusText.toUpperCase()
+  )[0] !== undefined

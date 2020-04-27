@@ -21,10 +21,12 @@ export const endpoints = [
   {
     url: `organizations/${ORG_ID}/shorten_counts`,
     method: GET,
+    endpoint: 'organizations/{ORG_ID}/shorten_counts',
   },
   {
     url: `organizations/${ORG_ID}`,
     method: GET,
+    endpoint: 'organizations/{ORG_ID}',
   },
   // Bitlinks
   {
@@ -39,14 +41,17 @@ export const endpoints = [
   {
     url: `bitlinks/${BITLINK}/countries`,
     method: GET,
+    endpoint: 'bitlinks/{BITLINK}/countries',
   },
   {
     url: `bitlinks/${BITLINK}/clicks`,
     method: GET,
+    endpoint: 'bitlinks/{BITLINK}/clicks',
   },
   {
     url: `bitlinks/${BITLINK}/referrers_by_domains`,
     method: GET,
+    endpoint: 'bitlinks/{BITLINK}/referrers_by_domains',
   },
   {
     url: 'expand',
@@ -69,10 +74,12 @@ export const endpoints = [
   {
     url: `bitlinks/${BITLINK}/referrers`,
     method: GET,
+    endpoint: 'bitlinks/{BITLINK}/referrers',
   },
   {
     url: `bitlinks/${BITLINK}/clicks/summary`,
     method: GET,
+    endpoint: 'bitlinks/{BITLINK}/clicks/summary',
   },
   {
     url: `bitlinks/${BITLINK}`,
@@ -81,14 +88,17 @@ export const endpoints = [
       title: 'example',
       tags: ['string', 'hola', 'ghghgh'],
     },
+    endpoint: 'bitlinks/{BITLINK}',
   },
   {
     url: `bitlinks/${BITLINK}`,
     method: GET,
+    endpoint: 'bitlinks/{BITLINK}',
   },
   {
     url: `bitlinks/${BITLINK}/referring_domains`,
     method: GET,
+    endpoint: 'bitlinks/{BITLINK}/referring_domains',
   },
 ]
 

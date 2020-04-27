@@ -2,6 +2,7 @@ import IHeadersObject from '../interfaces/IHeadersObject'
 import INonStandardHeader from '../interfaces/INonStandardHeader'
 import MIMETypes from './MIMETypes'
 import IStatusCombo from '../interfaces/IStatusCombo'
+import { HTTPMethods } from '../enums/HTTPMethods'
 
 export const registerHeader = (
   nonstandardHeaders: INonStandardHeader[],
@@ -126,14 +127,3 @@ export const containsHeaderLowercasedOrCapitalized = (
     headers[capitalizedHeaderName.toLowerCase()] !== undefined
   )
 }
-
-export const getStatusCombo = (
-  standardStatusCombos: IStatusCombo[],
-  statusCode: number
-): IStatusCombo | undefined =>
-  standardStatusCombos.filter(
-    (combo) => combo.code[0] === statusCode.toString()
-  )[0]
-
-export const getStatusText = (statusCombo: IStatusCombo): string =>
-  statusCombo.description[0]

@@ -16,8 +16,6 @@ import {
   getHeaderValue,
   getHeaderValues,
   containsCookieHeader,
-  getStatusCombo,
-  getStatusText,
 } from './detectorHelpers'
 import IStatusCombo from '../interfaces/IStatusCombo'
 
@@ -129,12 +127,17 @@ export const isIgnoringStatusCode = (
   statusText: string,
   standardStatusCombos: IStatusCombo[]
 ): boolean => {
-  const standardStatusCombo = getStatusCombo(standardStatusCombos, statusCode)
+  // TODO getCombo func
+  const validCombo = standardStatusCombos.filter(
+    (combo) =>
+      combo.code[0] === statusCode.toString() &&
+      combo.description[0] === statusText.toUpperCase() &&
+      combo.method.includes(httpMethod)
+  )[0]
 
-  return (
-    getStatusText(standardStatusCombo) !== statusText.toUpperCase() ||
-    !standardStatusCombo.method.includes(httpMethod)
-  )
+  console.log(validCombo)
+
+  return !validCombo
 }
 
 /**

@@ -111,8 +111,8 @@ export const isIgnoringMIMEType = (
 
   return (
     !contentType ||
-    (!isAcceptedMIMEType(contentType, acceptedMIMETypes) &&
-      !isStandardMIMEType(contentType))
+    !isStandardMIMEType(contentType) ||
+    !isAcceptedMIMEType(contentType, acceptedMIMETypes)
   )
 }
 

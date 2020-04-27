@@ -70,17 +70,25 @@ export const isStandardMIMEType = (contentType: string): boolean =>
 export const getHeaderValue = (
   headers: IHeadersObject,
   capitalizedHeaderName: string
-): string =>
-  headers[capitalizedHeaderName].toLowerCase() ||
-  headers[capitalizedHeaderName.toLowerCase()].toLowerCase()
+): string | undefined => {
+  const headerValue =
+    headers[capitalizedHeaderName] ||
+    headers[capitalizedHeaderName.toLowerCase()]
+
+  if (!headerValue) return undefined
+
+  return headerValue.toLowerCase()
+}
 
 export const getHeaderValues = (
   headers: IHeadersObject,
   capitalizedHeaderName: string
-): string[] => {
+): string[] | undefined => {
   const headerContent =
     headers[capitalizedHeaderName] ||
     headers[capitalizedHeaderName.toLowerCase()]
+
+  if (!headerContent) return undefined
 
   const headerValues =
     typeof headerContent === 'string'

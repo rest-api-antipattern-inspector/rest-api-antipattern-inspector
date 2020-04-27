@@ -127,3 +127,16 @@ export const containsHeaderLowercasedOrCapitalized = (
     headers[capitalizedHeaderName.toLowerCase()] !== undefined
   )
 }
+
+export const isValidStatusCombo = (
+  httpMethod: HTTPMethods,
+  statusCode: number,
+  statusText: string,
+  standardStatusCombos: IStatusCombo[]
+): boolean =>
+  standardStatusCombos.filter(
+    (combo) =>
+      combo.method.includes(httpMethod) &&
+      combo.code[0] === statusCode.toString() &&
+      combo.description[0] === statusText.toUpperCase()
+  )[0] !== undefined

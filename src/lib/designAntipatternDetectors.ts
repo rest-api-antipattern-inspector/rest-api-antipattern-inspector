@@ -16,6 +16,7 @@ import {
   getHeaderValue,
   getHeaderValues,
   containsCookieHeader,
+  isValidStatusCombo,
 } from './detectorHelpers'
 import IStatusCombo from '../interfaces/IStatusCombo'
 
@@ -126,17 +127,8 @@ export const isIgnoringStatusCode = (
   statusCode: number,
   statusText: string,
   standardStatusCombos: IStatusCombo[]
-): boolean => {
-  // TODO getCombo func
-  const validCombo = standardStatusCombos.filter(
-    (combo) =>
-      combo.code[0] === statusCode.toString() &&
-      combo.description[0] === statusText.toUpperCase() &&
-      combo.method.includes(httpMethod)
-  )[0]
-
-  return !validCombo
-}
+): boolean =>
+  !isValidStatusCombo(httpMethod, statusCode, statusText, standardStatusCombos)
 
 /**
  * @param headers response headers

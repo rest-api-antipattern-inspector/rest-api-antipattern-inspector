@@ -4,8 +4,6 @@ import { GET, POST, PUT, PATCH, DELETE } from '../src/utils/HTTPMethods'
 // TODO mention full coverage of all branches, statements etc of detector functions in report
 // with image
 
-// TODO add some tests for req header
-
 const exampleReqHeader = {
   host: 'api.google.com',
   accept: 'application/json',

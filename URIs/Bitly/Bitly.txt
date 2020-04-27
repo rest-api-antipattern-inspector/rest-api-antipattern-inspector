@@ -1,0 +1,16 @@
+GET >> /user >> null
+PATCH >> /user >> null
+GET >> /organizations >> null
+GET >> /organizations/{ORG_ID}/shorten_counts >> null
+GET >> /organizations/{ORG_ID} >> null
+POST >> /shorten >> null
+GET >> /bitlinks/{BITLINK}/countries >> null
+GET >> /bitlinks/{BITLINK}/clicks >> null
+GET >> /bitlinks/{BITLINK}/referrers_by_domains >> null
+POST >> /expand >> null
+POST >> /bitlinks >> null
+GET >> /bitlinks/{BITLINK}/referrers >> null
+GET >> /bitlinks/{BITLINK}/clicks/summary >> null
+PATCH >> /bitlinks/{BITLINK} >> null
+GET >> /bitlinks/{BITLINK} >> null
+GET >> /bitlinks/{BITLINK}/referring_domains >> null

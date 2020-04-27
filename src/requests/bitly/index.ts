@@ -10,6 +10,7 @@ interface Endpoint {
   readonly method: string
   readonly url: string
   readonly data?: object
+  readonly endpoint?: string
 }
 
 export default async () => {
@@ -33,7 +34,7 @@ export default async () => {
         storeResponseMeta({
           api: APIs.bitly,
           wholeURI: `${BASE_URL}${endpoint.url}`,
-          endpoint: endpoint.url,
+          endpoint: endpoint.endpoint ? endpoint.endpoint : endpoint.url,
           status: {
             statusCode: res.status,
             statusText: res.statusText,

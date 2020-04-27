@@ -135,8 +135,6 @@ export const isIgnoringStatusCode = (
       combo.method.includes(httpMethod)
   )[0]
 
-  console.log(validCombo)
-
   return !validCombo
 }
 

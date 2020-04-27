@@ -26,6 +26,15 @@ test('Ignoring MIME Type: false. accept: */*', () => {
   ).toBeFalsy()
 })
 
+test('Ignoring MIME Type: false. accept both json & xml, array', () => {
+  expect(
+    isIgnoringMIMEType(
+      { accept: ['application/json', 'application/xml'] },
+      { 'content-type': 'application/xml' }
+    )
+  ).toBeFalsy()
+})
+
 test('Ignoring MIME Type: true. Missing Content-Type header', () => {
   expect(
     isIgnoringMIMEType(
@@ -33,6 +42,10 @@ test('Ignoring MIME Type: true. Missing Content-Type header', () => {
       { location: 'google.com' }
     )
   ).toBeTruthy()
+})
+
+test('Ignoring MIME Type: true. Missing Content-Type header2', () => {
+  expect(isIgnoringMIMEType({}, { location: 'google.com' })).toBeTruthy()
 })
 
 test('Ignoring MIME Type: true. Invalid MIME type', () => {
@@ -57,6 +70,15 @@ test('Ignoring MIME Type: true. Mime type not accepted2', () => {
   expect(
     isIgnoringMIMEType(
       { accept: 'application/json, application/xml' },
+      { 'content-type': 'application/msword' }
+    )
+  ).toBeTruthy()
+})
+
+test('Ignoring MIME Type: true. Array mime type not accepted', () => {
+  expect(
+    isIgnoringMIMEType(
+      { accept: ['application/json', 'application/xml'] },
       { 'content-type': 'application/msword' }
     )
   ).toBeTruthy()

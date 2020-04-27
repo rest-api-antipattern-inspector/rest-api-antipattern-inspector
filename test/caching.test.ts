@@ -19,22 +19,22 @@ const exampleReqHeader = {
 ///
 
 test('Ignoring Caching: false, post request', () => {
-  expect(isIgnoringCaching(POST, {}, {})).toBeFalsy()
+  expect(isIgnoringCaching(POST, exampleReqHeader, {})).toBeFalsy()
 })
 
 test('Ignoring Caching: false, PUT request', () => {
-  expect(isIgnoringCaching(PUT, {}, {})).toBeFalsy()
+  expect(isIgnoringCaching(PUT, exampleReqHeader, {})).toBeFalsy()
 })
 
 test('Ignoring Caching: false, PATCH request', () => {
-  expect(isIgnoringCaching(PATCH, {}, {})).toBeFalsy()
+  expect(isIgnoringCaching(PATCH, exampleReqHeader, {})).toBeFalsy()
 })
 
 test('Ignoring Caching: false, DELETE request', () => {
-  expect(isIgnoringCaching(DELETE, {}, {})).toBeFalsy()
+  expect(isIgnoringCaching(DELETE, exampleReqHeader, {})).toBeFalsy()
 })
 
-test('Ignoring Caching: false, Capitalized headers', () => {
+test('Ignoring Caching: false, Capitalized response headers', () => {
   expect(
     isIgnoringCaching(GET, exampleReqHeader, {
       Etag: '33a64df551425fcc55e4d42a148795d9f25f89d4',
@@ -59,6 +59,21 @@ test('Ignoring Caching: false, lowecase cache-control', () => {
       'cache-control': 'public',
     })
   ).toBeFalsy()
+})
+
+test('Ignoring Caching: false, client side caching', () => {
+  const reqHeader = {
+    host: 'api.google.com',
+    accept: 'application/json',
+    Connection: 'close',
+    'Cache-Control': 'public',
+  }
+
+  expect(
+    isIgnoringCaching(GET, reqHeader, {
+      Etag: '33a64df551425fcc55e4d42a148795d9f25f89d4',
+    })
+  )
 })
 
 ///

@@ -35,11 +35,11 @@ export const isBreakingSelfDescriptiveness = (
   const responseHeaderKeys = Object.keys(responseHeaders)
 
   for (const headerKey of requestHeaderKeys)
-    if (!getStandardRequestHeaders().includes(headerKey))
+    if (!getStandardRequestHeaders().includes(headerKey.toLowerCase()))
       registerHeader(nonstandardHeaders, 'Request Header', headerKey)
 
   for (const headerKey of responseHeaderKeys)
-    if (!getStandardResponseHeaders().includes(headerKey))
+    if (!getStandardResponseHeaders().includes(headerKey.toLowerCase()))
       registerHeader(nonstandardHeaders, 'Response Header', headerKey)
 
   return nonstandardHeaders.length !== 0

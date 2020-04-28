@@ -1,5 +1,5 @@
-export const getStandardRequestHeaders = (): string[] => {
-  const capitalizedHeaders = [
+export const getStandardRequestHeaders = (): string[] =>
+  [
     'A-IM',
     'Accept',
     'Accept-Charset',
@@ -40,15 +40,10 @@ export const getStandardRequestHeaders = (): string[] => {
     'Upgrade',
     'Via',
     'Warning',
-  ]
+  ].map((h) => h.toLowerCase())
 
-  const lowerCaseHeaders = capitalizedHeaders.map((h) => h.toLowerCase())
-
-  return [].concat(capitalizedHeaders, lowerCaseHeaders)
-}
-
-export const getStandardResponseHeaders = (): string[] => {
-  const capitalizedHeaders = [
+export const getStandardResponseHeaders = (): string[] =>
+  [
     'Access-Control-Allow-Origin',
     'Access-Control-Allow-Credentials',
     'Access-Control-Expose-Headers',
@@ -95,9 +90,4 @@ export const getStandardResponseHeaders = (): string[] => {
     'Warning',
     'WWW-Authenticate',
     'X-Frame-Options',
-  ]
-
-  const lowerCaseHeaders = capitalizedHeaders.map((h) => h.toLowerCase())
-
-  return [].concat(capitalizedHeaders, lowerCaseHeaders)
-}
+  ].map((h) => h.toLowerCase())

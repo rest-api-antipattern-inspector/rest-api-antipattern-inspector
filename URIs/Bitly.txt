@@ -1,0 +1,16 @@
+/user
+/user
+/organizations
+/organizations/Ok3sdj3Oa5X/shorten_counts
+/organizations/Ok3sdj3Oa5X
+/shorten
+/bitlinks/bit.ly/2xy1gEU/countries
+/bitlinks/bit.ly/2xy1gEU/clicks
+/bitlinks/bit.ly/2xy1gEU/referrers_by_domains
+/expand
+/bitlinks
+/bitlinks/bit.ly/2xy1gEU/referrers
+/bitlinks/bit.ly/2xy1gEU/clicks/summary
+/bitlinks/bit.ly/2xy1gEU
+/bitlinks/bit.ly/2xy1gEU
+/bitlinks/bit.ly/2xy1gEU/referring_domains

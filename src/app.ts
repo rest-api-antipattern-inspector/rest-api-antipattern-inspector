@@ -16,9 +16,9 @@ const APIs: any = {
   disqus: disqusRequests,
 }
 
-// TODO create text file for Java based on responses.json
-
-// TODO add versions to endpoint to store
+// TODO add responses.json as appendix
+// extra important since it can't be replicated
+// without needed keys
 
 const appArguments = process.argv.slice(2)
 

@@ -3,4 +3,5 @@ export enum APIs {
   disqus = 'disqus',
   stackExchange = 'stackExchange',
   twitter = 'twitter',
+  imgur = 'imgur'
 }

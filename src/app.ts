@@ -7,6 +7,7 @@ import { doStackExchangeRequests } from './requests/stackExchange/stackExchange'
 import doTwitterRequests from './requests/twitter'
 import bitlyRequests from './requests/bitly'
 import disqusRequests from './requests/disqus'
+import imgurRequests from './requests/imgur'
 import writeURIToFile from './utils/writeURIToFile'
 
 const APIs: any = {
@@ -14,6 +15,7 @@ const APIs: any = {
   twitter: doTwitterRequests,
   bitly: bitlyRequests,
   disqus: disqusRequests,
+  imgur: imgurRequests
 }
 
 // TODO create text file for Java based on responses.json

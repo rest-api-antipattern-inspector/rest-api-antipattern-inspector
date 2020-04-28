@@ -13,6 +13,9 @@ interface Endpoint {
   readonly endpoint?: string
 }
 
+// TODO investigate why patch is not among
+// methods used json
+
 export default async () => {
   const result = await Promise.all(
     endpoints.map(async (endpoint: Endpoint) => {

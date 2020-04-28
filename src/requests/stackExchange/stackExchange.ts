@@ -4,6 +4,9 @@ import { APIs } from '../../enums/APIs'
 import { GET, POST, PUT, PATCH, DELETE } from '../../utils/HTTPMethods'
 import extractRequestHeaders from '../../utils/extractRequestHeaders'
 
+// TODO perhaps manually alter all axios req headers
+// to not accept */*, but to be more specific, e.g. ask for json
+
 export const doStackExchangeRequests = (): void => {
   stackOverflowInfo()
   relatedQuestionsSO()

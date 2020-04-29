@@ -20,11 +20,14 @@ export default async () => {
         const res = await axios[endpoint.method](`${BASE_URL}${endpoint.url}`, {
           headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json',
+            'Content-Type':
+              endpoint.method === 'put'
+                ? 'multipart/form-data'
+                : 'application/json',
             Authorization: `Bearer ${ACCESS_TOKEN}`,
           },
           data:
-            endpoint.data && endpoint.method !== 'GET'
+            endpoint.data && endpoint.method !== 'get'
               ? JSON.stringify(endpoint.data)
               : undefined,
         })

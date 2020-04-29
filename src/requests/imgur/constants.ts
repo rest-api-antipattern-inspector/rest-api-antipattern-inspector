@@ -1,1 +1,1 @@
-export const username = process.env.IMGUR_ACCOUNT
+export const username = 'jeppan875'

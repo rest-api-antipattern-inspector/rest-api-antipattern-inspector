@@ -16,6 +16,10 @@ const APIs: any = {
   disqus: disqusRequests,
 }
 
+// TODO 1 table per api first
+
+// TODO add instagram & facebook to have 10 APIs
+
 // TODO add responses.json as appendix
 // extra important since it can't be replicated
 // without needed keys

@@ -79,6 +79,10 @@ export const isIgnoringCaching = (
 ): boolean => {
   if (httpMethod !== GET) return false
 
+  // TODO if no etag and no cache-control then antipattern
+  // 2 alternatives
+  // both variants are valid
+
   if (
     !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Etag') ||
     !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Cache-Control')

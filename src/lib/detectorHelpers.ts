@@ -118,15 +118,12 @@ export const containsCookieHeader = (headers: IHeadersObject): boolean => {
   return false
 }
 
-export const containsHeaderLowercasedOrCapitalized = (
+export const containsHeader = (
   headers: IHeadersObject,
   capitalizedHeaderName: string
-): boolean => {
-  return (
-    headers[capitalizedHeaderName] !== undefined ||
-    headers[capitalizedHeaderName.toLowerCase()] !== undefined
-  )
-}
+): boolean =>
+  headers[capitalizedHeaderName] !== undefined ||
+  headers[capitalizedHeaderName.toLowerCase()] !== undefined
 
 export const isValidStatusCombo = (
   httpMethod: HTTPMethods,
@@ -140,3 +137,6 @@ export const isValidStatusCombo = (
       combo.code[0] === statusCode.toString() &&
       combo.description[0] === statusText.toUpperCase()
   )[0] !== undefined
+
+export const isNoCacheOrNoStore = (cachingValue: string): boolean =>
+  cachingValue === 'no-cache' || cachingValue === 'no-store'

@@ -4,6 +4,9 @@ import MIMETypes from './MIMETypes'
 import IStatusCombo from '../interfaces/IStatusCombo'
 import { HTTPMethods } from '../enums/HTTPMethods'
 
+// TODO header, test uppercase
+// get one where after first case lowercased
+
 export const registerHeader = (
   nonstandardHeaders: INonStandardHeader[],
   headerType: string,
@@ -74,7 +77,8 @@ export const getHeaderValue = (
 ): string | undefined => {
   const headerValue =
     headers[capitalizedHeaderName] ||
-    headers[capitalizedHeaderName.toLowerCase()]
+    headers[capitalizedHeaderName.toLowerCase()] ||
+    headers[onlyFirstCap(capitalizedHeaderName)]
 
   if (!headerValue) return undefined
 
@@ -87,7 +91,8 @@ export const getHeaderValues = (
 ): string[] | undefined => {
   const headerContent =
     headers[capitalizedHeaderName] ||
-    headers[capitalizedHeaderName.toLowerCase()]
+    headers[capitalizedHeaderName.toLowerCase()] ||
+    headers[onlyFirstCap(capitalizedHeaderName)]
 
   if (!headerContent) return undefined
 
@@ -123,7 +128,8 @@ export const containsHeader = (
   capitalizedHeaderName: string
 ): boolean =>
   headers[capitalizedHeaderName] !== undefined ||
-  headers[capitalizedHeaderName.toLowerCase()] !== undefined
+  headers[capitalizedHeaderName.toLowerCase()] !== undefined ||
+  headers[onlyFirstCap(capitalizedHeaderName)]
 
 export const isValidStatusCombo = (
   httpMethod: HTTPMethods,
@@ -138,5 +144,7 @@ export const isValidStatusCombo = (
       combo.description[0] === statusText.toUpperCase()
   )[0] !== undefined
 
-export const isNoCacheOrNoStore = (cachingValue: string): boolean =>
-  cachingValue === 'no-cache' || cachingValue === 'no-store'
+export const isNoCacheOrNoStore = (lowerCaseCachingValue: string): boolean =>
+  lowerCaseCachingValue === 'no-cache' || lowerCaseCachingValue === 'no-store'
+
+const onlyFirstCap = (str: string) => str.charAt(0) + str.slice(1).toLowerCase()

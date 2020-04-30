@@ -137,19 +137,19 @@ export const isValidStatusCombo = (
 export const isNoCacheOrNoStore = (lowerCaseCachingValue: string): boolean =>
   lowerCaseCachingValue === 'no-cache' || lowerCaseCachingValue === 'no-store'
 
-const onlyFirstCap = (str: string) =>
+const onlyFirstCap = (str: string): string =>
   str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
 
-const cappedAfterDash = (str: string) =>
+const cappedAfterDash = (str: string): string =>
   str
     .split('-')
     .map((w) => onlyFirstCap(w))
     .join('-')
 
 const addCapsVariations = (lowerCasedArr: string[]): void => {
-  lowerCasedArr.forEach((item) => {
-    lowerCasedArr.push(item.toUpperCase())
-    lowerCasedArr.push(onlyFirstCap(item))
-    lowerCasedArr.push(cappedAfterDash(item))
+  lowerCasedArr.forEach((str) => {
+    lowerCasedArr.push(str.toUpperCase())
+    lowerCasedArr.push(onlyFirstCap(str))
+    lowerCasedArr.push(cappedAfterDash(str))
   })
 }

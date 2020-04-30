@@ -41,6 +41,15 @@ test('Ignoring Caching: false, Capitalized response headers', () => {
   ).toBeFalsy()
 })
 
+test('Ignoring Caching: false, semi-Capitalized response headers', () => {
+  expect(
+    isIgnoringCaching(GET, exampleReqHeader, {
+      Etag: '33a64df551425fcc55e4d42a148795d9f25f89d4',
+      'Cache-control': 'public',
+    })
+  ).toBeFalsy()
+})
+
 test('Ignoring Caching: false, lowecase etag', () => {
   expect(
     isIgnoringCaching(GET, exampleReqHeader, {

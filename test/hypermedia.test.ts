@@ -55,6 +55,15 @@ const LinksBody = {
   },
 }
 
+const LINKSBody = {
+  related: {
+    LINKS: [
+      'https://stackoverflow.com/questions/61100538/bboxes-not-optimal-recalculating-bounding-boxes-in-autodesk-forge-viewer',
+      'https://stackoverflow.com/questions/61100538/bboxes-not-optimal-recalculating-bounding-boxes-in-autodesk-forge-viewer2',
+    ],
+  },
+}
+
 const missingLinkBody = {
   animal: {
     name: 'Donald Duck',
@@ -145,6 +154,10 @@ test('Forgetting Hypermedia: false. GET & links', () => {
 
 test('Forgetting Hypermedia: false. GET & Links', () => {
   expect(isForgettingHypermedia(LinksBody, GET, {})).toBeFalsy()
+})
+
+test('Forgetting Hypermedia: false. GET & LINKS', () => {
+  expect(isForgettingHypermedia(LINKSBody, GET, {})).toBeFalsy()
 })
 
 ///

@@ -1,10 +1,24 @@
 import { isIgnoringMIMEType } from '../src/lib/designAntipatternDetectors'
 import MIMETypes from '../src/lib/MIMETypes'
 
+///
+
+// FALSE
+
+///
+
 test('Ignoring MIME Type: false. Capitalized Content-Type header', () => {
   for (let mt of MIMETypes) {
     expect(
       isIgnoringMIMEType({ Accept: mt }, { 'Content-Type': mt })
+    ).toBeFalsy()
+  }
+})
+
+test('Ignoring MIME Type: false. semi-Capitalized Content-type header', () => {
+  for (let mt of MIMETypes) {
+    expect(
+      isIgnoringMIMEType({ Accept: mt }, { 'Content-type': mt })
     ).toBeFalsy()
   }
 })
@@ -34,6 +48,12 @@ test('Ignoring MIME Type: false. accept both json & xml, array', () => {
     )
   ).toBeFalsy()
 })
+
+///
+
+// TRUE
+
+///
 
 test('Ignoring MIME Type: true. Missing Content-Type header', () => {
   expect(

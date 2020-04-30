@@ -8,6 +8,7 @@ import doTwitterRequests from './requests/twitter'
 import bitlyRequests from './requests/bitly'
 import disqusRequests from './requests/disqus'
 import imgurRequests from './requests/imgur'
+import vimeoRequests from './requests/vimeo'
 import writeURIToFile from './utils/writeURIToFile'
 
 const APIs: any = {
@@ -15,7 +16,8 @@ const APIs: any = {
   twitter: doTwitterRequests,
   bitly: bitlyRequests,
   disqus: disqusRequests,
-  imgur: imgurRequests
+  imgur: imgurRequests,
+  vimeo: vimeoRequests,
 }
 
 // TODO 1 table per api first

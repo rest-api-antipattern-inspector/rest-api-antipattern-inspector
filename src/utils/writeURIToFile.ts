@@ -4,6 +4,7 @@ import disqus from '../requests/disqus/endpoints'
 import bitly from '../requests/bitly/endpoints'
 import twitter from '../requests/twitter/endpoints'
 import imgur from '../requests/imgur/endpoints'
+import vimeo from '../requests/vimeo/endpoints'
 
 interface Endpoint {
   readonly method: string
@@ -31,8 +32,13 @@ const apis = [
   {
     name: 'Imgur',
     version: 3,
-    endpoints: imgur
-  }
+    endpoints: imgur,
+  },
+  {
+    name: 'Vimeo',
+    version: 3,
+    endpoint: vimeo,
+  },
 ]
 
 export default () => {

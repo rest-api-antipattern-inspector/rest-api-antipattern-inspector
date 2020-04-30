@@ -89,26 +89,9 @@ test('Ignoring Caching: false, client side caching', () => {
 
 ///
 
-test('Ignoring Caching: true, missing Etag', () => {
-  expect(
-    isIgnoringCaching(GET, exampleReqHeader, {
-      'Cache-Control': 'public',
-    })
-  ).toBeTruthy()
-})
-
-test('Ignoring Caching: true, missing Cache-Control', () => {
-  expect(
-    isIgnoringCaching(GET, exampleReqHeader, {
-      Etag: '33a64df551425fcc55e4d42a148795d9f25f89d4',
-    })
-  ).toBeTruthy()
-})
-
 test('Ignoring Caching: true, no-cache', () => {
   expect(
     isIgnoringCaching(GET, exampleReqHeader, {
-      Etag: '33a64df551425fcc55e4d42a148795d9f25f89d4',
       'Cache-Control': 'no-cache',
     })
   ).toBeTruthy()
@@ -117,7 +100,6 @@ test('Ignoring Caching: true, no-cache', () => {
 test('Ignoring Caching: true, no-store', () => {
   expect(
     isIgnoringCaching(GET, exampleReqHeader, {
-      Etag: '33a64df551425fcc55e4d42a148795d9f25f89d4',
       'Cache-Control': 'no-store',
     })
   ).toBeTruthy()

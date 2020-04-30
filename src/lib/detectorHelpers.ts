@@ -4,9 +4,6 @@ import MIMETypes from './MIMETypes'
 import IStatusCombo from '../interfaces/IStatusCombo'
 import { HTTPMethods } from '../enums/HTTPMethods'
 
-// TODO header, test uppercase
-// get one where after first case lowercased
-
 export const registerHeader = (
   nonstandardHeaders: INonStandardHeader[],
   headerType: string,
@@ -56,8 +53,8 @@ export const containsLinks = (keys: string[]): boolean => {
 }
 
 function isLinkTerm(key: string): boolean {
-  // TODO first cap & all cap
-  const linkTerms = ['link', 'Link', 'href', 'Href', 'links', 'Links']
+  const linkTerms = ['link', 'href', 'links']
+  addCapsVariations(linkTerms)
 
   return linkTerms.includes(key)
 }
@@ -106,16 +103,8 @@ export const getHeaderValues = (
 }
 
 export const containsCookieHeader = (headers: IHeadersObject): boolean => {
-  const cookieHeaders = [
-    'Cookie',
-    'Cookie2',
-    'Set-Cookie',
-    'Set-Cookie2',
-    'cookie',
-    'cookie2',
-    'set-cookie',
-    'set-cookie2',
-  ]
+  const cookieHeaders = ['cookie', 'cookie2', 'set-cookie', 'set-cookie2']
+  addCapsVariations(cookieHeaders)
 
   for (let cookieHeader of cookieHeaders) {
     if (headers[cookieHeader] !== undefined) return true
@@ -150,3 +139,17 @@ export const isNoCacheOrNoStore = (lowerCaseCachingValue: string): boolean =>
 
 const onlyFirstCap = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+
+const cappedAfterDash = (str: string) =>
+  str
+    .split('-')
+    .map((w) => onlyFirstCap(w))
+    .join('-')
+
+const addCapsVariations = (lowerCasedArr: string[]): void => {
+  lowerCasedArr.forEach((item) => {
+    lowerCasedArr.push(item.toUpperCase())
+    lowerCasedArr.push(onlyFirstCap(item))
+    lowerCasedArr.push(cappedAfterDash(item))
+  })
+}

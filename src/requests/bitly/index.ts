@@ -17,17 +17,29 @@ export default async () => {
   const result = await Promise.all(
     endpoints.map(async (endpoint: Endpoint) => {
       try {
-        const res = await axios[endpoint.method](`${BASE_URL}${endpoint.url}`, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${ACCESS_TOKEN}`,
-          },
-          data:
-            endpoint.data && endpoint.method !== 'GET'
-              ? JSON.stringify(endpoint.data)
-              : undefined,
-        })
+        const res = ['get', 'delete'].includes(endpoint.method)
+          ? await axios[endpoint.method](`${BASE_URL}${endpoint.url}`, {
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${ACCESS_TOKEN}`,
+              },
+              data:
+                endpoint.data && endpoint.method !== 'GET'
+                  ? JSON.stringify(endpoint.data)
+                  : undefined,
+            })
+          : await axios[endpoint.method](
+              `${BASE_URL}${endpoint.url}`,
+              endpoint.data ? JSON.stringify(endpoint.data) : undefined,
+              {
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${ACCESS_TOKEN}`,
+                },
+              }
+            )
         const reqHeaderString = res.request._header
         const reqHeaders = extractRequestHeaders(reqHeaderString)
 

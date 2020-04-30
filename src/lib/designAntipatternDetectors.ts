@@ -84,7 +84,9 @@ export const isIgnoringCaching = (
   const serverCaching = getHeaderValue(responseHeaders, 'Cache-Control')
 
   return (
-    (isNoCacheOrNoStore(clientCaching) || isNoCacheOrNoStore(serverCaching)) &&
+    (!containsHeader(responseHeaders, 'Cache-Control') ||
+      isNoCacheOrNoStore(clientCaching) ||
+      isNoCacheOrNoStore(serverCaching)) &&
     !containsHeader(responseHeaders, 'Etag')
   )
 }

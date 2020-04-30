@@ -56,6 +56,7 @@ export const containsLinks = (keys: string[]): boolean => {
 }
 
 function isLinkTerm(key: string): boolean {
+  // TODO first cap & all cap
   const linkTerms = ['link', 'Link', 'href', 'Href', 'links', 'Links']
 
   return linkTerms.includes(key)
@@ -147,4 +148,5 @@ export const isValidStatusCombo = (
 export const isNoCacheOrNoStore = (lowerCaseCachingValue: string): boolean =>
   lowerCaseCachingValue === 'no-cache' || lowerCaseCachingValue === 'no-store'
 
-const onlyFirstCap = (str: string) => str.charAt(0) + str.slice(1).toLowerCase()
+const onlyFirstCap = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()

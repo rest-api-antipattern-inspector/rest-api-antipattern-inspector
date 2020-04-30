@@ -12,11 +12,12 @@ import {
   containsLinks,
   isAcceptedMIMEType,
   isStandardMIMEType,
-  containsHeaderLowercasedOrCapitalized,
+  containsHeader,
   getHeaderValue,
   getHeaderValues,
   containsCookieHeader,
   isValidStatusCombo,
+  isNoCacheOrNoStore,
 } from './detectorHelpers'
 import IStatusCombo from '../interfaces/IStatusCombo'
 
@@ -61,7 +62,7 @@ export const isForgettingHypermedia = (
   return (
     (httpMethod === GET && !containsLinks(bodyKeys)) ||
     (httpMethod === POST &&
-      !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Location') &&
+      !containsHeader(responseHeaders, 'Location') &&
       !containsLinks(bodyKeys))
   )
 }
@@ -79,24 +80,14 @@ export const isIgnoringCaching = (
 ): boolean => {
   if (httpMethod !== GET) return false
 
-  // TODO if no etag and no cache-control then antipattern
-  // 2 alternatives
-  // both variants are valid
-
-  if (
-    !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Etag') ||
-    !containsHeaderLowercasedOrCapitalized(responseHeaders, 'Cache-Control')
-  )
-    return true
-
   const clientCaching = getHeaderValue(requestHeaders, 'Cache-Control')
   const serverCaching = getHeaderValue(responseHeaders, 'Cache-Control')
 
   return (
-    clientCaching === 'no-cache' ||
-    clientCaching === 'no-store' ||
-    serverCaching === 'no-cache' ||
-    serverCaching === 'no-store'
+    (!containsHeader(responseHeaders, 'Cache-Control') ||
+      isNoCacheOrNoStore(clientCaching) ||
+      isNoCacheOrNoStore(serverCaching)) &&
+    !containsHeader(responseHeaders, 'Etag')
   )
 }
 

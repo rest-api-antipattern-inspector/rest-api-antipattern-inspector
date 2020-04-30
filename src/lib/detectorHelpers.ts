@@ -53,7 +53,8 @@ export const containsLinks = (keys: string[]): boolean => {
 }
 
 function isLinkTerm(key: string): boolean {
-  const linkTerms = ['link', 'Link', 'href', 'Href', 'links', 'Links']
+  const linkTerms = ['link', 'href', 'links']
+  addCapsVariations(linkTerms)
 
   return linkTerms.includes(key)
 }
@@ -74,7 +75,8 @@ export const getHeaderValue = (
 ): string | undefined => {
   const headerValue =
     headers[capitalizedHeaderName] ||
-    headers[capitalizedHeaderName.toLowerCase()]
+    headers[capitalizedHeaderName.toLowerCase()] ||
+    headers[onlyFirstCap(capitalizedHeaderName)]
 
   if (!headerValue) return undefined
 
@@ -87,7 +89,8 @@ export const getHeaderValues = (
 ): string[] | undefined => {
   const headerContent =
     headers[capitalizedHeaderName] ||
-    headers[capitalizedHeaderName.toLowerCase()]
+    headers[capitalizedHeaderName.toLowerCase()] ||
+    headers[onlyFirstCap(capitalizedHeaderName)]
 
   if (!headerContent) return undefined
 
@@ -100,16 +103,8 @@ export const getHeaderValues = (
 }
 
 export const containsCookieHeader = (headers: IHeadersObject): boolean => {
-  const cookieHeaders = [
-    'Cookie',
-    'Cookie2',
-    'Set-Cookie',
-    'Set-Cookie2',
-    'cookie',
-    'cookie2',
-    'set-cookie',
-    'set-cookie2',
-  ]
+  const cookieHeaders = ['cookie', 'cookie2', 'set-cookie', 'set-cookie2']
+  addCapsVariations(cookieHeaders)
 
   for (let cookieHeader of cookieHeaders) {
     if (headers[cookieHeader] !== undefined) return true
@@ -118,15 +113,13 @@ export const containsCookieHeader = (headers: IHeadersObject): boolean => {
   return false
 }
 
-export const containsHeaderLowercasedOrCapitalized = (
+export const containsHeader = (
   headers: IHeadersObject,
   capitalizedHeaderName: string
-): boolean => {
-  return (
-    headers[capitalizedHeaderName] !== undefined ||
-    headers[capitalizedHeaderName.toLowerCase()] !== undefined
-  )
-}
+): boolean =>
+  headers[capitalizedHeaderName] !== undefined ||
+  headers[capitalizedHeaderName.toLowerCase()] !== undefined ||
+  headers[onlyFirstCap(capitalizedHeaderName)] !== undefined
 
 export const isValidStatusCombo = (
   httpMethod: HTTPMethods,
@@ -140,3 +133,23 @@ export const isValidStatusCombo = (
       combo.code[0] === statusCode.toString() &&
       combo.description[0] === statusText.toUpperCase()
   )[0] !== undefined
+
+export const isNoCacheOrNoStore = (lowerCaseCachingValue: string): boolean =>
+  lowerCaseCachingValue === 'no-cache' || lowerCaseCachingValue === 'no-store'
+
+const onlyFirstCap = (str: string): string =>
+  str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+
+const cappedAfterDash = (str: string): string =>
+  str
+    .split('-')
+    .map((w) => onlyFirstCap(w))
+    .join('-')
+
+const addCapsVariations = (lowerCasedArr: string[]): void => {
+  lowerCasedArr.forEach((str) => {
+    lowerCasedArr.push(str.toUpperCase())
+    lowerCasedArr.push(onlyFirstCap(str))
+    lowerCasedArr.push(cappedAfterDash(str))
+  })
+}

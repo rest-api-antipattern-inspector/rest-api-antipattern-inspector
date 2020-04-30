@@ -45,6 +45,12 @@ test('Misusing Cookies: true, response headers contain Set-Cookie', () => {
   ).toBeTruthy()
 })
 
+test('Misusing Cookies: true, response headers contain Set-cookie', () => {
+  expect(
+    isMisusingCookies(exampleReqHeader, { 'Set-cookie': '🍪' })
+  ).toBeTruthy()
+})
+
 test('Misusing Cookies: true, response headers contain Set-Cookie2', () => {
   expect(
     isMisusingCookies(exampleReqHeader, { 'Set-Cookie2': '🍪' })

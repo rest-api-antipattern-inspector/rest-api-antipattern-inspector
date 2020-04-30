@@ -119,7 +119,7 @@ export const containsHeader = (
 ): boolean =>
   headers[capitalizedHeaderName] !== undefined ||
   headers[capitalizedHeaderName.toLowerCase()] !== undefined ||
-  headers[onlyFirstCap(capitalizedHeaderName)]
+  headers[onlyFirstCap(capitalizedHeaderName)] !== undefined
 
 export const isValidStatusCombo = (
   httpMethod: HTTPMethods,

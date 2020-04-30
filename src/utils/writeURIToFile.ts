@@ -3,6 +3,14 @@ import fs from 'fs'
 import disqus from '../requests/disqus/endpoints'
 import bitly from '../requests/bitly/endpoints'
 import twitter from '../requests/twitter/endpoints'
+import imgur from '../requests/imgur/endpoints'
+
+interface Endpoint {
+  readonly method: string
+  readonly url: string
+  readonly data?: object
+  readonly endpoint?: string
+}
 
 const apis = [
   {
@@ -20,13 +28,18 @@ const apis = [
     version: '1.1',
     endpoints: twitter,
   },
+  {
+    name: 'Imgur',
+    version: 3,
+    endpoints: imgur
+  }
 ]
 
 export default () => {
   apis.forEach((api) => {
     try {
       let str = ''
-      api.endpoints.forEach((endpoint) => {
+      api.endpoints.forEach((endpoint: Endpoint) => {
         str += `/${
           endpoint.endpoint
             ? endpoint.endpoint.replace(',', '')
@@ -46,7 +59,7 @@ export default () => {
       })
 
       str = ''
-      api.endpoints.forEach((endpoint) => {
+      api.endpoints.forEach((endpoint: Endpoint) => {
         str += `${endpoint.method.toUpperCase()} >> /${
           endpoint.endpoint
             ? endpoint.endpoint.replace(',', '')

@@ -19,20 +19,28 @@ export default async () => {
     const result = await Promise.all(
       level.map(async (endpoint: Endpoint) => {
         try {
-          const res = await axios[endpoint.method](
-            `${BASE_URL}${
-              endpoint.url
-            }?api_secret=${DISQUS_SECRET}&access_token=${DISQUS_ACCESS_TOKEN}${
-              endpoint.params ? endpoint.params : ''
-            }`,
-            {
-              method: endpoint.method,
-              data:
-                endpoint.data && endpoint.method !== 'get'
-                  ? JSON.stringify(endpoint.data)
-                  : undefined,
-            }
-          )
+          const res = ['get', 'delete'].includes(endpoint.method)
+            ? await axios[endpoint.method](
+                `${BASE_URL}${
+                  endpoint.url
+                }?api_secret=${DISQUS_SECRET}&access_token=${DISQUS_ACCESS_TOKEN}${
+                  endpoint.params ? endpoint.params : ''
+                }`,
+                {
+                  method: endpoint.method,
+                }
+              )
+            : await axios[endpoint.method](
+                `${BASE_URL}${
+                  endpoint.url
+                }?api_secret=${DISQUS_SECRET}&access_token=${DISQUS_ACCESS_TOKEN}${
+                  endpoint.params ? endpoint.params : ''
+                }`,
+                endpoint.data ? JSON.stringify(endpoint.data) : undefined,
+                {
+                  method: endpoint.method,
+                }
+              )
 
           const reqHeaderString = res.request._header
           const reqHeaders = extractRequestHeaders(reqHeaderString)
@@ -55,18 +63,5 @@ export default async () => {
         }
       })
     )
-    // TODO argument should now be an object, see: src/interfaces/IResponseParams.ts
-
-    // result.map((res) =>
-    //   storeResponseMeta(
-    //     APIs.disqus,
-    //     res.wholeURI,
-    //     res.endpoint,
-    //     res.statusCode,
-    //     res.headers,
-    //     res.body,
-    //     res.httpMethod
-    //   )
-    // )
   }
 }

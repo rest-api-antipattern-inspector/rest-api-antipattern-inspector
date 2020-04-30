@@ -3,8 +3,8 @@ import axios from 'axios'
 import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import { APIs } from '../../enums/APIs'
 import extractRequestHeaders from '../../utils/extractRequestHeaders'
-const ACCESS_TOKEN = process.env.BITLY_ACCESS_TOKEN
-const BASE_URL = 'https://api-ssl.bitly.com/v4/'
+const ACCESS_TOKEN = process.env.IMGUR_ACCESS_TOKEN
+const BASE_URL = 'https://api.imgur.com/3/'
 
 interface Endpoint {
   readonly method: string
@@ -12,9 +12,6 @@ interface Endpoint {
   readonly data?: object
   readonly endpoint?: string
 }
-
-// TODO investigate why patch is not among
-// methods used json
 
 export default async () => {
   const result = await Promise.all(
@@ -24,21 +21,23 @@ export default async () => {
           ? await axios[endpoint.method](`${BASE_URL}${endpoint.url}`, {
               headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type':
+                  endpoint.method === 'put'
+                    ? 'multipart/form-data'
+                    : 'application/json',
                 Authorization: `Bearer ${ACCESS_TOKEN}`,
               },
-              data:
-                endpoint.data && endpoint.method !== 'GET'
-                  ? JSON.stringify(endpoint.data)
-                  : undefined,
             })
           : await axios[endpoint.method](
               `${BASE_URL}${endpoint.url}`,
-              endpoint.data ? JSON.stringify(endpoint.data) : undefined,
+              endpoint.data ? JSON.stringify(endpoint.data) : {},
               {
                 headers: {
                   Accept: 'application/json',
-                  'Content-Type': 'application/json',
+                  'Content-Type':
+                    endpoint.method === 'put'
+                      ? 'multipart/form-data'
+                      : 'application/json',
                   Authorization: `Bearer ${ACCESS_TOKEN}`,
                 },
               }
@@ -47,7 +46,7 @@ export default async () => {
         const reqHeaders = extractRequestHeaders(reqHeaderString)
 
         storeResponseMeta({
-          api: APIs.bitly,
+          api: APIs.imgur,
           wholeURI: `${BASE_URL}${endpoint.url}`,
           endpoint: endpoint.endpoint ? endpoint.endpoint : endpoint.url,
           status: {

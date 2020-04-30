@@ -33,5 +33,5 @@ npm run build
 ### Run program without building
 
 ```
-npm run program
+npm run program <names of APIs separated with space or "all">
 ```

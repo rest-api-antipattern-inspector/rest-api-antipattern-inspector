@@ -1,31 +1,22 @@
 import { forum, username, threadId, categoryId, postId } from './constants'
 import { GET, POST, PATCH } from '../../utils/HTTPMethods'
 const DISQUS_ACCESS_TOKEN = process.env.DISQUS_ACCESS_TOKEN
+import randomWords from 'random-words'
+
+const rndWord = randomWords()
 // https://disqus.com/api/docs/
 // start by creating a forum:
 // http://disqus.com&name=lnu+test&short_name=lnutest
-export const staticEnpoints = [
-  {
-    method: POST,
-    url: 'forums/create.json',
-    params: ``,
-  },
-  {
-    method: POST,
-    url: 'categories/create.json',
-    params: ``,
-  },
-]
 export const level1 = [
   {
     method: POST,
     url: 'threads/create.json',
-    params: `&forum=${forum}&title=testing`,
+    params: `&forum=${forum}&title=${rndWord}`,
   },
   {
     method: POST,
     url: 'posts/create.json',
-    params: `&thread=${threadId}&message=testing`,
+    params: `&thread=${threadId}&message=${rndWord}`,
   },
 ]
 export const level2 = [
@@ -142,11 +133,6 @@ export const level2 = [
   },
   {
     method: POST,
-    url: 'posts/update.json',
-    params: `&post=${postId}&message=updating`,
-  },
-  {
-    method: POST,
     url: 'posts/vote.json',
     params: `&post=${postId}&vote=1`,
   },
@@ -212,4 +198,4 @@ export const level2 = [
   },
 ]
 
-export default [...level1, ...level2, ...staticEnpoints]
+export default [...level1, ...level2]

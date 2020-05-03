@@ -22,7 +22,6 @@ GET >> /posts/list.json >> null
 GET >> /posts/listModerationHistory.json >> null
 GET >> /posts/listPopular.json >> null
 GET >> /posts/listReporters.json >> null
-POST >> /posts/update.json >> null
 POST >> /posts/vote.json >> null
 GET >> /threads/details.json >> null
 GET >> /threads/list.json >> null
@@ -36,5 +35,3 @@ GET >> /users/listMostActiveForums.json >> null
 GET >> /users/listOwnedChannels.json >> null
 GET >> /users/listPosts.json >> null
 POST >> /users/updateProfile.json >> null
-POST >> /forums/create.json >> null
-POST >> /categories/create.json >> null

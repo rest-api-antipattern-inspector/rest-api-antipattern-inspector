@@ -22,7 +22,6 @@
 /posts/listModerationHistory.json
 /posts/listPopular.json
 /posts/listReporters.json
-/posts/update.json
 /posts/vote.json
 /threads/details.json
 /threads/list.json
@@ -36,5 +35,3 @@
 /users/listOwnedChannels.json
 /users/listPosts.json
 /users/updateProfile.json
-/forums/create.json
-/categories/create.json

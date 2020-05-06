@@ -123,6 +123,8 @@ export const isIgnoringStatusCode = (
   statusText: string,
   standardStatusCombos: IStatusCombo[]
 ): boolean =>
+  // TODO breaks for patch, patch not included in xml, fix this
+  // ignore check if patch in function
   !isValidStatusCombo(httpMethod, statusCode, statusText, standardStatusCombos)
 
 /**

@@ -3,6 +3,10 @@ import fs from 'fs'
 
 dotenv.config()
 
+// TODO
+// 1. fix status, patch, only check get/post/put/delete ignore any other http methods
+// 2. investigate mime type
+
 // TODO fix stack exchange
 // import { doStackExchangeRequests } from './requests/stackExchange/stackExchange'
 import doTwitterRequests from './requests/twitter'

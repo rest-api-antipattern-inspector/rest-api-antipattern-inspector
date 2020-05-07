@@ -127,6 +127,13 @@ export const isValidStatusCombo = (
   statusText: string,
   standardStatusCombos: IStatusCombo[]
 ): boolean =>
+  // standard status combos only includes checks for
+  // http methods get, post, put & delete
+  httpMethod !==
+    (HTTPMethods.GET ||
+      HTTPMethods.POST ||
+      HTTPMethods.PUT ||
+      HTTPMethods.DELETE) ||
   standardStatusCombos.filter(
     (combo) =>
       combo.method.includes(httpMethod) &&

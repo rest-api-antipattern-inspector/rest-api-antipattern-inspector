@@ -64,7 +64,11 @@ export const isAcceptedMIMEType = (
   acceptedMIMETypes: string[]
 ): boolean =>
   // '*/*' means data of any kind is accepted
-  acceptedMIMETypes.includes('*/*') || acceptedMIMETypes.includes(contentType)
+  acceptedMIMETypes.includes('*/*') ||
+  acceptedMIMETypes.includes(trimmedContentType(contentType))
+
+const trimmedContentType = (contentType: string): string =>
+  contentType.split(';')[0]
 
 export const isStandardMIMEType = (contentType: string): boolean =>
   MIMETypes.some((type) => contentType.includes(type))
@@ -127,6 +131,13 @@ export const isValidStatusCombo = (
   statusText: string,
   standardStatusCombos: IStatusCombo[]
 ): boolean =>
+  // standard status combos only includes checks for
+  // http methods get, post, put & delete
+  httpMethod !==
+    (HTTPMethods.GET ||
+      HTTPMethods.POST ||
+      HTTPMethods.PUT ||
+      HTTPMethods.DELETE) ||
   standardStatusCombos.filter(
     (combo) =>
       combo.method.includes(httpMethod) &&

@@ -15,32 +15,33 @@ interface Endpoint {
 }
 
 export default async () => {
+
   for (const level of [level1, level2]) {
     const result = await Promise.all(
       level.map(async (endpoint: Endpoint) => {
         try {
           const res = ['get', 'delete'].includes(endpoint.method)
             ? await axios[endpoint.method](
-                `${BASE_URL}${
-                  endpoint.url
-                }?api_secret=${DISQUS_SECRET}&access_token=${DISQUS_ACCESS_TOKEN}${
-                  endpoint.params ? endpoint.params : ''
-                }`,
-                {
-                  method: endpoint.method,
-                }
-              )
+              `${BASE_URL}${
+              endpoint.url
+              }?api_secret=${DISQUS_SECRET}&access_token=${DISQUS_ACCESS_TOKEN}${
+              endpoint.params ? endpoint.params : ''
+              }`,
+              {
+                method: endpoint.method,
+              }
+            )
             : await axios[endpoint.method](
-                `${BASE_URL}${
-                  endpoint.url
-                }?api_secret=${DISQUS_SECRET}&access_token=${DISQUS_ACCESS_TOKEN}${
-                  endpoint.params ? endpoint.params : ''
-                }`,
-                endpoint.data ? JSON.stringify(endpoint.data) : undefined,
-                {
-                  method: endpoint.method,
-                }
-              )
+              `${BASE_URL}${
+              endpoint.url
+              }?api_secret=${DISQUS_SECRET}&access_token=${DISQUS_ACCESS_TOKEN}${
+              endpoint.params ? endpoint.params : ''
+              }`,
+              endpoint.data ? JSON.stringify(endpoint.data) : undefined,
+              {
+                method: endpoint.method,
+              }
+            )
 
           const reqHeaderString = res.request._header
           const reqHeaders = extractRequestHeaders(reqHeaderString)

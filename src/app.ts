@@ -3,7 +3,8 @@ import fs from 'fs'
 
 dotenv.config()
 
-import { doStackExchangeRequests } from './requests/stackExchange/stackExchange'
+// TODO fix stack exchange
+// import { doStackExchangeRequests } from './requests/stackExchange/stackExchange'
 import doTwitterRequests from './requests/twitter'
 import bitlyRequests from './requests/bitly'
 import disqusRequests from './requests/disqus'
@@ -12,7 +13,7 @@ import vimeoRequests from './requests/vimeo'
 import writeURIToFile from './utils/writeURIToFile'
 
 const APIs: any = {
-  stackexchange: doStackExchangeRequests,
+  // stackexchange: doStackExchangeRequests,
   twitter: doTwitterRequests,
   bitly: bitlyRequests,
   disqus: disqusRequests,

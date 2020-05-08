@@ -21,10 +21,7 @@ export default async () => {
           ? await axios[endpoint.method](`${BASE_URL}${endpoint.url}`, {
               headers: {
                 Accept: 'application/json',
-                'Content-Type':
-                  endpoint.method === 'put'
-                    ? 'multipart/form-data'
-                    : 'application/json',
+                'Content-Type': 'application/json',
                 Authorization: `bearer ${ACCESS_TOKEN}`,
               },
             })
@@ -42,7 +39,6 @@ export default async () => {
                 },
               }
             )
-        console.log(res)
         const reqHeaderString = res.request._header
         const reqHeaders = extractRequestHeaders(reqHeaderString)
 

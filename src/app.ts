@@ -1,4 +1,6 @@
 import dotenv from 'dotenv'
+dotenv.config()
+
 import fs from 'fs'
 import stackExchangeRequests from './requests/stackExchange'
 import doTwitterRequests from './requests/twitter'
@@ -7,8 +9,6 @@ import disqusRequests from './requests/disqus'
 import imgurRequests from './requests/imgur'
 import nasaRequests from './requests/nasa'
 import writeURIToFile from './utils/writeURIToFile'
-
-dotenv.config()
 
 const APIs: any = {
   stackexchange: stackExchangeRequests,

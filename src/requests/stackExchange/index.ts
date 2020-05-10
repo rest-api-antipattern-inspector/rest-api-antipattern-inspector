@@ -3,14 +3,18 @@ import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import { APIs } from '../../enums/APIs'
 import { GET, POST, PUT, PATCH, DELETE } from '../../utils/HTTPMethods'
 import extractRequestHeaders from '../../utils/extractRequestHeaders'
+import endpoints from './endpoints'
 
 export default (): void => {
-  stackOverflowInfo()
-  relatedQuestionsSO()
+  endpoints.forEach((ep) => {
+    const url = ep.url
+  })
 }
 
 function stackOverflowInfo() {
   const uri = 'https://api.stackexchange.com/2.2/info?site=stackoverflow'
+
+  // TODO for each url, check valid
 
   axios.get(uri).then((response) => {
     const reqHeaderString = response.request._header

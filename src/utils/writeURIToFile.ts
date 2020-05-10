@@ -4,6 +4,7 @@ import disqus from '../requests/disqus/endpoints'
 import bitly from '../requests/bitly/endpoints'
 import twitter from '../requests/twitter/endpoints'
 import imgur from '../requests/imgur/endpoints'
+import vimeo from '../requests/vimeo/endpoints'
 import nasa from '../requests/nasa/endpoints'
 
 interface Endpoint {
@@ -35,6 +36,11 @@ const apis = [
     endpoints: imgur,
   },
   {
+    name: 'Vimeo',
+    version: 3,
+  },
+  {
+    endpoint: vimeo,
     name: 'Nasa',
     endpoints: nasa,
   },

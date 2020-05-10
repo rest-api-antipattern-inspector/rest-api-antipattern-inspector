@@ -10,6 +10,7 @@ import bitlyRequests from './requests/bitly'
 import disqusRequests from './requests/disqus'
 import imgurRequests from './requests/imgur'
 import vimeoRequests from './requests/vimeo'
+import nasaRequests from './requests/nasa'
 import writeURIToFile from './utils/writeURIToFile'
 
 const APIs: any = {
@@ -19,6 +20,7 @@ const APIs: any = {
   disqus: disqusRequests,
   imgur: imgurRequests,
   vimeo: vimeoRequests,
+  nasa: nasaRequests,
 }
 
 // TODO 1 table per api first

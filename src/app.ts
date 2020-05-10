@@ -13,11 +13,11 @@ import writeURIToFile from './utils/writeURIToFile'
 
 const APIs: any = {
   stackexchange: stackExchangeRequests,
-  // twitter: doTwitterRequests,
-  // bitly: bitlyRequests,
-  // disqus: disqusRequests,
-  // imgur: imgurRequests,
-  // nasa: nasaRequests,
+  twitter: doTwitterRequests,
+  bitly: bitlyRequests,
+  disqus: disqusRequests,
+  imgur: imgurRequests,
+  nasa: nasaRequests,
 }
 
 // TODO add responses.json as appendix

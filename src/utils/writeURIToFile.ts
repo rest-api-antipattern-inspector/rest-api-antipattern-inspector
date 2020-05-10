@@ -13,6 +13,9 @@ interface Endpoint {
   readonly endpoint?: string
 }
 
+// TODO perhaps add file for ?acronyms here
+// desc in SE
+
 const apis = [
   {
     name: 'Disqus',
@@ -41,6 +44,9 @@ const apis = [
 ]
 
 export default () => {
+  // TODO create folders here if not exists
+  // URIs and then foreach api
+
   apis.forEach((api) => {
     try {
       let str = ''

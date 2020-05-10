@@ -3,8 +3,7 @@ import fs from 'fs'
 
 dotenv.config()
 
-// TODO fix stack exchange
-// import { doStackExchangeRequests } from './requests/stackExchange/stackExchange'
+import stackExchangeRequests from './requests/stackExchange'
 import doTwitterRequests from './requests/twitter'
 import bitlyRequests from './requests/bitly'
 import disqusRequests from './requests/disqus'
@@ -13,17 +12,13 @@ import nasaRequests from './requests/nasa'
 import writeURIToFile from './utils/writeURIToFile'
 
 const APIs: any = {
-  // stackexchange: doStackExchangeRequests,
-  twitter: doTwitterRequests,
-  bitly: bitlyRequests,
-  disqus: disqusRequests,
-  imgur: imgurRequests,
-  nasa: nasaRequests,
+  stackexchange: stackExchangeRequests,
+  // twitter: doTwitterRequests,
+  // bitly: bitlyRequests,
+  // disqus: disqusRequests,
+  // imgur: imgurRequests,
+  // nasa: nasaRequests,
 }
-
-// TODO 1 table per api first
-
-// TODO add instagram & facebook to have 10 APIs
 
 // TODO add responses.json as appendix
 // extra important since it can't be replicated

@@ -10,8 +10,6 @@ const answerIDs = '52326666;123212'
 const userID = process.env.STACKEXCHANGE_USER_ID
 const usersQuestionsTag = process.env.STACKEXCHANGE_USER_TAG
 
-// TODO try badges, maybe need to add site
-
 const endpoints: ISEEndpoint[] = [
   {
     endpoint: 'answers?order=desc&sort=activity&site={site}',
@@ -31,6 +29,26 @@ const endpoints: ISEEndpoint[] = [
   {
     endpoint: 'answers/{id}/flags/options?site={site}',
     url: `answers/${oneAnswerID}/flags/options?site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'badges',
+    url: 'badges?order=desc&sort=rank&site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'badges/name',
+    url: 'badges/name?order=desc&sort=rank&site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'badges/recipients',
+    url: 'badges/recipients?site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'badges/tags',
+    url: 'badges/tags?order=desc&sort=rank&site=stackoverflow',
     method: HTTPMethods.GET,
   },
   {
@@ -176,6 +194,41 @@ const endpoints: ISEEndpoint[] = [
   {
     endpoint: 'users/{id}/tags/{tags}/top-questions',
     url: `users/${userID}/tags/${usersQuestionsTag}/top-questions`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{ids}/timeline',
+    url: `users/${userID}/timeline`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{id}/top-question-tags',
+    url: `users/${userID}/top-question-tags`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{id}/top-tags',
+    url: `users/${userID}/top-tags`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/moderators',
+    url: `users/moderators?order=desc&sort=reputation&site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/moderators/elected',
+    url: `users/moderators/elected`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'errors',
+    url: 'errors',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'sites',
+    url: 'sites',
     method: HTTPMethods.GET,
   },
 ]

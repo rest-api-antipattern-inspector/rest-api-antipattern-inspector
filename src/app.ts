@@ -11,7 +11,7 @@ import disqusRequests from './requests/disqus'
 import imgurRequests from './requests/imgur'
 import vimeoRequests from './requests/vimeo'
 import nasaRequests from './requests/nasa'
-import guthubRequests from './requests/github'
+import githubRequests from './requests/github'
 import writeURIToFile from './utils/writeURIToFile'
 
 const APIs: any = {
@@ -22,7 +22,7 @@ const APIs: any = {
   imgur: imgurRequests,
   vimeo: vimeoRequests,
   nasa: nasaRequests,
-  github: guthubRequests,
+  github: githubRequests,
 }
 
 // TODO 1 table per api first

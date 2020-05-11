@@ -10,6 +10,8 @@ const questionIDs = '60075228;60075237;57496313'
 const oneAnswerID = '52326666'
 const answerIDs = '52326666;123212'
 
+const userID = process.env.STACKEXCHANGE_USER_ID
+
 // TODO try badges, maybe need to add site
 
 const endpoints: ISEEndpoint[] = [
@@ -131,6 +133,31 @@ const endpoints: ISEEndpoint[] = [
   {
     endpoint: 'tags/{tags}/wikis',
     url: 'tags/javascript/wikis',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{ids}',
+    url: `users/${userID}`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{ids}/answers',
+    url: `users/${userID}/answers`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{ids}/badges',
+    url: `users/${userID}/badges`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{id}/privileges',
+    url: `users/${userID}/privileges`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{ids}/questions',
+    url: `users/${userID}/questions`,
     method: HTTPMethods.GET,
   },
 ]

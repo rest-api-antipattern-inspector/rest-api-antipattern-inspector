@@ -1,39 +1,70 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import { APIs } from '../../enums/APIs'
 import extractRequestHeaders from '../../utils/extractRequestHeaders'
 import endpoints from './endpoints'
+import ISEEndpoint from './ISEEndpoint'
 
 export default (): void => {
-  console.log('Endpoints length', endpoints.length)
+  // 44 endpoints
+  axiosGetRequests(endpoints, 0)
+}
 
-  endpoints.forEach(async (ep) => {
-    const fullUri = `https://api.stackexchange.com/2.2/${ep.url}`
+/**
+ * Recursive function, exits after all se endpoints have been called
+ */
+function axiosGetRequests(seEndpoints: ISEEndpoint[], i: number) {
+  const timeout = getTimeOut(i)
+  console.log('timeout', timeout)
 
-    try {
-      const res = await axios.get(fullUri)
+  const fullUri = `https://api.stackexchange.com/2.2/${seEndpoints[i].url}`
 
-      const reqHeaderString = res.request._header
-      const reqHeaders = extractRequestHeaders(reqHeaderString)
+  setTimeout(() => {
+    // axios
+    //   .get(fullUri)
+    //   .then((res) => {
+    //     handleResponse(fullUri, seEndpoints[i], res)
 
-      storeResponseMeta({
-        api: APIs.stackExchange,
-        wholeURI: fullUri,
-        endpoint: ep.endpoint ? ep.endpoint : ep.url,
+    console.log(i, fullUri)
 
-        status: {
-          statusCode: res.status,
-          statusText: res.statusText,
-        },
+    i++
 
-        requestHeaders: reqHeaders,
-        responseHeaders: res.headers,
-
-        body: res.data,
-        httpMethod: ep.method,
-      })
-    } catch (err) {
-      console.log('Req failed for', fullUri)
+    if (i < seEndpoints.length) {
+      axiosGetRequests(seEndpoints, i)
     }
+    // })
+    // .catch((error) => {
+    //   console.log('Req failed for', fullUri)
+    // })
+  }, timeout)
+}
+
+function getTimeOut(i): number {
+  // pause every 25th request, stackexchange only allows 30 per second
+  return i === 24 || (i !== (0 || 25) && i % 25 === 0) ? 3000 : 0
+}
+
+function handleResponse(
+  fullUri: string,
+  endpoint: ISEEndpoint,
+  res: AxiosResponse
+) {
+  const reqHeaderString = res.request._header
+  const reqHeaders = extractRequestHeaders(reqHeaderString)
+
+  storeResponseMeta({
+    api: APIs.stackExchange,
+    wholeURI: fullUri,
+    endpoint: endpoint.endpoint ? endpoint.endpoint : endpoint.url,
+
+    status: {
+      statusCode: res.status,
+      statusText: res.statusText,
+    },
+
+    requestHeaders: reqHeaders,
+    responseHeaders: res.headers,
+    body: res.data,
+    httpMethod: endpoint.method,
   })
 }

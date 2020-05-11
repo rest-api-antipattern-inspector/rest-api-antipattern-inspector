@@ -5,4 +5,5 @@ export enum APIs {
   twitter = 'twitter',
   imgur = 'imgur',
   vimeo = 'vimeo',
+  github = 'github',
 }

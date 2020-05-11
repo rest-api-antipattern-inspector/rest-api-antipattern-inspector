@@ -8,6 +8,7 @@ const oneAnswerID = '52326666'
 const answerIDs = '52326666;123212'
 
 const userID = process.env.STACKEXCHANGE_USER_ID
+const usersQuestionsTag = process.env.STACKEXCHANGE_USER_TAG
 
 // TODO try badges, maybe need to add site
 
@@ -160,6 +161,21 @@ const endpoints: ISEEndpoint[] = [
   {
     endpoint: 'users/{ids}/reputation',
     url: `users/${userID}/reputation`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{ids}/reputation-history',
+    url: `users/${userID}/reputation-history?site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{ids}/tags',
+    url: `users/${userID}/tags`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{id}/tags/{tags}/top-questions',
+    url: `users/${userID}/tags/${usersQuestionsTag}/top-questions`,
     method: HTTPMethods.GET,
   },
 ]

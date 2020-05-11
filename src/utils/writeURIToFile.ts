@@ -55,8 +55,7 @@ const apis = [
 ]
 
 export default () => {
-  // TODO create folders here if not exists
-  // URIs and then foreach api
+  !fs.existsSync('./URIs') && fs.mkdirSync('./URIs')
 
   apis.forEach((api) => {
     try {
@@ -68,6 +67,8 @@ export default () => {
             : endpoint.url.replace(',', '')
         }\n`
       })
+
+      !fs.existsSync(`./URIs/${api.name}`) && fs.mkdirSync(`./URIs/${api.name}`)
 
       fs.writeFile(`./URIs/${api.name}/APIIndex.txt`, str, (err) => {
         if (err) {

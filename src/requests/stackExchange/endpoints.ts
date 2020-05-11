@@ -1,9 +1,6 @@
 import ISEEndpoint from './ISEEndpoint'
 import { HTTPMethods } from '../../enums/HTTPMethods'
 
-// These are done without keys, some will result in errors
-// TODO write in .md that stackexchange can be run w.o. keys
-
 const oneQuestionID = '52326174'
 const questionIDs = '60075228;60075237;57496313'
 
@@ -158,6 +155,11 @@ const endpoints: ISEEndpoint[] = [
   {
     endpoint: 'users/{ids}/questions',
     url: `users/${userID}/questions`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{ids}/reputation',
+    url: `users/${userID}/reputation`,
     method: HTTPMethods.GET,
   },
 ]

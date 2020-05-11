@@ -7,37 +7,43 @@ import { HTTPMethods } from '../../enums/HTTPMethods'
 const oneQuestionID = '60075228'
 const questionIDs = '60075228;60075237;57496313'
 
-const oneAnswerID = '123212'
+const oneAnswerID = '52326666'
 const answerIDs = '52326666;123212'
 
 const endpoints: ISEEndpoint[] = [
   {
-    method: HTTPMethods.GET,
-    url: 'answers?order=desc&sort=activity&site=stackoverflow',
     endpoint: 'answers?order=desc&sort=activity&site={site}',
+    url: 'answers?order=desc&sort=activity&site=stackoverflow',
+    method: HTTPMethods.GET,
   },
   {
-    method: HTTPMethods.GET,
-    // made up IDs
-    url: 'answers/123;456;789?order=desc&sort=activity&site=stackoverflow',
     endpoint: 'answers/{ids}?order=desc&sort=activity&site={site}',
-  },
-  // next, real ids but err because no key
-  {
+    url: `answers/${answerIDs}?order=desc&sort=activity&site=stackoverflow`,
     method: HTTPMethods.GET,
-    url: 'info?site=stackoverflow',
+  },
+  {
+    endpoint: 'answers/{ids}/comments?order=desc&sort=creation&site={site}',
+    url: `answers/${oneAnswerID}/comments?order=desc&sort=creation&site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'answers/{id}/flags/options?site={site}',
+    url: `answers/${oneAnswerID}/flags/options?site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+
+  // TODO badges, forget about badges ids
+
+  // Done earlier
+  {
     endpoint: 'info?site={site}',
+    url: 'info?site=stackoverflow',
+    method: HTTPMethods.GET,
   },
   {
-    method: HTTPMethods.GET,
-    /**
-     * Related questions to these 3 questions:
-     * https://stackoverflow.com/questions/60075228/exchange-different-arrays-elements-in-ruby
-     * https://stackoverflow.com/questions/60075237/best-way-to-handle-an-account-linking-verification-system
-     * https://stackoverflow.com/questions/57496313/execution-failed-for-task-appmergedebugresources-com-android-builder-interna
-     */
-    url: `questions/${questionIDs}/related?order=desc&sort=activity&site=stackoverflow`,
     endpoint: 'questions/{ids}/related?order=desc&sort=activity&site={site}',
+    url: `questions/${questionIDs}/related?order=desc&sort=activity&site=stackoverflow`,
+    method: HTTPMethods.GET,
   },
 ]
 

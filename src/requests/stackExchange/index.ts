@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import { APIs } from '../../enums/APIs'
 import extractRequestHeaders from '../../utils/extractRequestHeaders'
@@ -10,26 +10,30 @@ export default (): void => {
   endpoints.forEach(async (ep) => {
     const fullUri = `https://api.stackexchange.com/2.2/${ep.url}`
 
-    const res = await axios.get(fullUri)
+    try {
+      const res = await axios.get(fullUri)
 
-    const reqHeaderString = res.request._header
-    const reqHeaders = extractRequestHeaders(reqHeaderString)
+      const reqHeaderString = res.request._header
+      const reqHeaders = extractRequestHeaders(reqHeaderString)
 
-    storeResponseMeta({
-      api: APIs.stackExchange,
-      wholeURI: fullUri,
-      endpoint: ep.endpoint ? ep.endpoint : ep.url,
+      storeResponseMeta({
+        api: APIs.stackExchange,
+        wholeURI: fullUri,
+        endpoint: ep.endpoint ? ep.endpoint : ep.url,
 
-      status: {
-        statusCode: res.status,
-        statusText: res.statusText,
-      },
+        status: {
+          statusCode: res.status,
+          statusText: res.statusText,
+        },
 
-      requestHeaders: reqHeaders,
-      responseHeaders: res.headers,
+        requestHeaders: reqHeaders,
+        responseHeaders: res.headers,
 
-      body: res.data,
-      httpMethod: ep.method,
-    })
+        body: res.data,
+        httpMethod: ep.method,
+      })
+    } catch (err) {
+      console.log('Req failed for', fullUri)
+    }
   })
 }

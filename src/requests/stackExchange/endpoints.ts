@@ -31,10 +31,11 @@ const endpoints: ISEEndpoint[] = [
     url: `answers/${oneAnswerID}/flags/options?site=stackoverflow`,
     method: HTTPMethods.GET,
   },
-
-  // TODO badges, forget about badges ids
-
-  // Done earlier
+  {
+    endpoint: 'comments/{ids}',
+    url: `comments/52326174`,
+    method: HTTPMethods.GET,
+  },
   {
     endpoint: 'info?site={site}',
     url: 'info?site=stackoverflow',

@@ -7,6 +7,8 @@ import imgur from '../requests/imgur/endpoints'
 import vimeo from '../requests/vimeo/endpoints'
 import nasa from '../requests/nasa/endpoints'
 import github from '../requests/github/endpoints'
+import stackexchange from '../requests/stackExchange/endpoints'
+import { APIs } from '../enums/APIs'
 
 interface Endpoint {
   readonly method: string
@@ -49,9 +51,17 @@ const apis = [
     name: 'Github',
     endpoints: github,
   },
+  {
+    name: Capitalize(APIs.stackExchange),
+    version: '2.2',
+    endpoints: stackexchange,
+    acronyms: ['desc ->descending'],
+  },
 ]
 
 export default () => {
+  !fs.existsSync('./URIs') && fs.mkdirSync('./URIs')
+
   apis.forEach((api) => {
     try {
       let str = ''
@@ -62,6 +72,10 @@ export default () => {
             : endpoint.url.replace(',', '')
         }\n`
       })
+
+      !fs.existsSync(`./URIs/${api.name}`) && fs.mkdirSync(`./URIs/${api.name}`)
+
+      writeAcronymsIfExists(api.name, api.acronyms)
 
       fs.writeFile(`./URIs/${api.name}/APIIndex.txt`, str, (err) => {
         if (err) {
@@ -91,4 +105,22 @@ export default () => {
       console.log(e)
     }
   })
+}
+
+function Capitalize(apiName: APIs): string {
+  return apiName.charAt(0).toUpperCase() + apiName.slice(1)
+}
+
+function writeAcronymsIfExists(
+  apiName: string,
+  acronyms: string[] | undefined
+) {
+  if (!acronyms) return
+
+  const dir = `./URIs/${apiName}/acronym`
+  const filePath = `${dir}/${apiName}.txt`
+  const txt = acronyms.join('\n')
+
+  !fs.existsSync(dir) && fs.mkdirSync(dir)
+  fs.writeFileSync(filePath, txt)
 }

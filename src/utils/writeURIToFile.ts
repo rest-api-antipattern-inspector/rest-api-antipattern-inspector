@@ -7,6 +7,8 @@ import imgur from '../requests/imgur/endpoints'
 import vimeo from '../requests/vimeo/endpoints'
 import nasa from '../requests/nasa/endpoints'
 import github from '../requests/github/endpoints'
+import stackexchange from '../requests/stackExchange/endpoints'
+import { APIs } from '../enums/APIs'
 
 interface Endpoint {
   readonly method: string
@@ -14,9 +16,6 @@ interface Endpoint {
   readonly data?: object
   readonly endpoint?: string
 }
-
-// TODO perhaps add file for ?acronyms here
-// desc in SE
 
 const apis = [
   {
@@ -52,7 +51,15 @@ const apis = [
     name: 'Github',
     endpoints: github,
   },
+  {
+    name: Capitalize(APIs.stackExchange),
+    version: '2.2',
+    endpoints: stackexchange,
+    acronyms: ['desc -> descending'],
+  },
 ]
+
+// TODO if acronyms, write file
 
 export default () => {
   !fs.existsSync('./URIs') && fs.mkdirSync('./URIs')
@@ -98,4 +105,8 @@ export default () => {
       console.log(e)
     }
   })
+}
+
+function Capitalize(str: string): string {
+  return str.charAt(0).toUpperCase + str.slice(1)
 }

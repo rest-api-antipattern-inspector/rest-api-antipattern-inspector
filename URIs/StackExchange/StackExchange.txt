@@ -1,0 +1,2 @@
+GET >> /info?site={site} >> null
+GET >> /questions/{ids}/related?order=desc&sort=activity&site={site} >> null

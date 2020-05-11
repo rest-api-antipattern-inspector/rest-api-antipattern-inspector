@@ -55,11 +55,9 @@ const apis = [
     name: Capitalize(APIs.stackExchange),
     version: '2.2',
     endpoints: stackexchange,
-    acronyms: ['desc -> descending'],
+    acronyms: ['desc ->descending'],
   },
 ]
-
-// TODO if acronyms, write file
 
 export default () => {
   !fs.existsSync('./URIs') && fs.mkdirSync('./URIs')
@@ -76,6 +74,8 @@ export default () => {
       })
 
       !fs.existsSync(`./URIs/${api.name}`) && fs.mkdirSync(`./URIs/${api.name}`)
+
+      writeAcronymsIfExists(api.name, api.acronyms)
 
       fs.writeFile(`./URIs/${api.name}/APIIndex.txt`, str, (err) => {
         if (err) {
@@ -107,6 +107,20 @@ export default () => {
   })
 }
 
-function Capitalize(str: string): string {
-  return str.charAt(0).toUpperCase + str.slice(1)
+function Capitalize(apiName: APIs): string {
+  return apiName.charAt(0).toUpperCase() + apiName.slice(1)
+}
+
+function writeAcronymsIfExists(
+  apiName: string,
+  acronyms: string[] | undefined
+) {
+  if (!acronyms) return
+
+  const dir = `./URIs/${apiName}/acronym`
+  const filePath = `${dir}/${apiName}.txt`
+  const txt = acronyms.join('\n')
+
+  !fs.existsSync(dir) && fs.mkdirSync(dir)
+  fs.writeFileSync(filePath, txt)
 }

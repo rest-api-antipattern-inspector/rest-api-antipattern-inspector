@@ -1,0 +1,2 @@
+/info?site={site}
+/questions/{ids}/related?order=desc&sort=activity&site={site}

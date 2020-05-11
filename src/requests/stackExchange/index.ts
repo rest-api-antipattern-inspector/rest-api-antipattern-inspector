@@ -41,7 +41,7 @@ function axiosGetRequests(seEndpoints: ISEEndpoint[], i: number) {
 
 function getTimeOut(i): number {
   // pause every 25th request, stackexchange only allows 30 per second
-  return i === 24 || (i !== (0 || 25) && i % 25 === 0) ? 3000 : 0
+  return i === 24 || (i !== 0 && i !== 25 && i % 25 === 0) ? 3000 : 0
 }
 
 function handleResponse(

@@ -15,27 +15,25 @@ export default (): void => {
  */
 function axiosGetRequests(seEndpoints: ISEEndpoint[], i: number) {
   const timeout = getTimeOut(i)
-  console.log('timeout', timeout)
+  console.log('stack exchange', i)
 
   const fullUri = `https://api.stackexchange.com/2.2/${seEndpoints[i].url}`
 
   setTimeout(() => {
-    // axios
-    //   .get(fullUri)
-    //   .then((res) => {
-    //     handleResponse(fullUri, seEndpoints[i], res)
+    axios
+      .get(fullUri)
+      .then((res) => {
+        handleResponse(fullUri, seEndpoints[i], res)
 
-    console.log(i, fullUri)
+        i++
 
-    i++
-
-    if (i < seEndpoints.length) {
-      axiosGetRequests(seEndpoints, i)
-    }
-    // })
-    // .catch((error) => {
-    //   console.log('Req failed for', fullUri)
-    // })
+        if (i < seEndpoints.length) {
+          axiosGetRequests(seEndpoints, i)
+        }
+      })
+      .catch((error) => {
+        console.log('Req failed for', fullUri)
+      })
   }, timeout)
 }
 

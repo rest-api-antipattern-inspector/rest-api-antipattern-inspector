@@ -1,0 +1,7 @@
+export const track_id = '2TpxZ7JUBn3uw46aR7qd6V'
+export const album_id = '6JWc4iAiJ9FjyK0B59ABb4'
+export const artist_id = '0OdUWJ0sBjDrqHygGUXeCF'
+export const category_id = 'party'
+export const episode_id = '512ojhOuo1ktJprKbVcKyQ'
+export const playlist_id = '2v3iNvBX8Ay1Gt2uXtUKUT'
+export const show_id = '38bS44xjbVVZ3No3ByF1dJ'

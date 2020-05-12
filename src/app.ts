@@ -10,6 +10,7 @@ import imgurRequests from './requests/imgur'
 import vimeoRequests from './requests/vimeo'
 import nasaRequests from './requests/nasa'
 import githubRequests from './requests/github'
+import spotifyRequests from './requests/spotify'
 import writeURIToFile from './utils/writeURIToFile'
 
 const APIs: any = {
@@ -21,6 +22,7 @@ const APIs: any = {
   vimeo: vimeoRequests,
   nasa: nasaRequests,
   github: githubRequests,
+  spotify: spotifyRequests,
 }
 
 // TODO add responses.json as appendix, extra important since it can't be replicated without needed keys

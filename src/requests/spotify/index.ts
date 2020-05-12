@@ -3,14 +3,15 @@ import axios from 'axios'
 import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import { APIs } from '../../enums/APIs'
 import extractRequestHeaders from '../../utils/extractRequestHeaders'
-const ACCESS_TOKEN = process.env.IMGUR_ACCESS_TOKEN
-const BASE_URL = 'https://api.imgur.com/3/'
+const ACCESS_TOKEN = process.env.SPOTIFY_ACCESS_TOKEN
+const BASE_URL = 'https://api.spotify.com/v1/'
 
 interface Endpoint {
   readonly method: string
   readonly url: string
   readonly data?: object
   readonly endpoint?: string
+  readonly params?: string
 }
 
 export default async () => {
@@ -18,26 +19,27 @@ export default async () => {
     endpoints.map(async (endpoint: Endpoint) => {
       try {
         const res = ['get', 'delete'].includes(endpoint.method)
-          ? await axios[endpoint.method](`${BASE_URL}${endpoint.url}`, {
-              headers: {
-                Accept: 'application/json',
-                'Content-Type':
-                  endpoint.method === 'put'
-                    ? 'multipart/form-data'
-                    : 'application/json',
-                Authorization: `Bearer ${ACCESS_TOKEN}`,
-              },
-            })
+          ? await axios[endpoint.method](
+              `${BASE_URL}${endpoint.url}${
+                endpoint.params ? endpoint.params : ''
+              }`,
+              {
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${ACCESS_TOKEN}`,
+                },
+              }
+            )
           : await axios[endpoint.method](
-              `${BASE_URL}${endpoint.url}`,
+              `${BASE_URL}${endpoint.url}${
+                endpoint.params ? endpoint.params : ''
+              }`,
               endpoint.data ? JSON.stringify(endpoint.data) : {},
               {
                 headers: {
                   Accept: 'application/json',
-                  'Content-Type':
-                    endpoint.method === 'put'
-                      ? 'multipart/form-data'
-                      : 'application/json',
+                  'Content-Type': 'application/json',
                   Authorization: `Bearer ${ACCESS_TOKEN}`,
                 },
               }
@@ -60,6 +62,7 @@ export default async () => {
         })
       } catch (err) {
         console.log(err)
+        console.log(err.response.data.error)
       }
     })
   )

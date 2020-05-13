@@ -7,6 +7,7 @@ import imgur from '../requests/imgur/endpoints'
 import vimeo from '../requests/vimeo/endpoints'
 import nasa from '../requests/nasa/endpoints'
 import github from '../requests/github/endpoints'
+import spotify from '../requests/spotify/endpoints'
 import stackexchange from '../requests/stackExchange/endpoints'
 import { APIs } from '../enums/APIs'
 
@@ -50,6 +51,11 @@ const apis = [
   {
     name: 'Github',
     endpoints: github,
+  },
+  {
+    name: 'Spotify',
+    endpoints: spotify,
+    version: 1,
   },
   {
     name: Capitalize(APIs.stackExchange),

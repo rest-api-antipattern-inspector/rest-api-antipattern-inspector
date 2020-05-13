@@ -25,6 +25,10 @@ const APIs: any = {
   spotify: spotifyRequests,
 }
 
+// TODO uml package diagram of folders
+
+// TODO in readme, instructions for adding/changing apis/endpoints
+
 // TODO add responses.json as appendix, extra important since it can't be replicated without needed keys
 
 const appArguments = process.argv.slice(2)

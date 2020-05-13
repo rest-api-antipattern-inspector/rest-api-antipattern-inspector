@@ -1,44 +1,78 @@
 import axios, { AxiosResponse } from 'axios'
 import { storeResponseMeta } from '../../data-access-layer/storeMeta'
 import { APIs } from '../../enums/APIs'
-import { HTTPMethods } from '../../enums/HTTPMethods'
 import extractRequestHeaders from '../../utils/extractRequestHeaders'
 import endpoints from './endpoints'
+import ISEEndpoint from './ISEEndpoint'
 
 export default (): void => {
-  endpoints.forEach(async (ep) => {
-    const fullUri = `https://api.stackexchange.com/2.2/${ep.url}`
+  getRequest(endpoints, 0)
+}
 
-    if (ep.method === HTTPMethods.GET) {
-      const res = await axiosGETRequest(fullUri)
+function getRequest(seEndpoints: ISEEndpoint[], i: number) {
+  shouldPause(i)
+    ? pauseThenKeepGoing(seEndpoints, i)
+    : axiosGETRequest(seEndpoints, i)
+}
 
-      const reqHeaderString = res.request._header
-      const reqHeaders = extractRequestHeaders(reqHeaderString)
+function shouldPause(i): boolean {
+  // pause every 25th request, stackexchange only allows 30 per second
+  return i === 24 || (i !== 0 && i !== 25 && i % 25 === 0)
+}
 
-      storeResponseMeta({
-        api: APIs.stackExchange,
-        wholeURI: fullUri,
-        endpoint: ep.endpoint ? ep.endpoint : ep.url,
+function pauseThenKeepGoing(seEndpoints: ISEEndpoint[], i: number) {
+  console.log(
+    'Pause 3 seconds after next request, stackexchange only allows 30 requests per second'
+  )
 
-        status: {
-          statusCode: res.status,
-          statusText: res.statusText,
-        },
+  setTimeout(() => {
+    axiosGETRequest(seEndpoints, i)
+  }, 3000)
+}
 
-        requestHeaders: reqHeaders,
-        responseHeaders: res.headers,
+function axiosGETRequest(seEndpoints: ISEEndpoint[], i: number) {
+  const fullUri = `https://api.stackexchange.com/2.2/${seEndpoints[i].url}`
 
-        body: res.data,
-        httpMethod: ep.method,
-      })
-    }
+  axios
+    .get(fullUri)
+    .then((res) => {
+      handleResponse(fullUri, seEndpoints[i], res)
+      recurse(seEndpoints, i)
+    })
+    .catch((error) => {
+      console.log('Req failed for', fullUri)
+    })
+}
+
+function handleResponse(
+  fullUri: string,
+  endpoint: ISEEndpoint,
+  res: AxiosResponse
+) {
+  const reqHeaderString = res.request._header
+  const reqHeaders = extractRequestHeaders(reqHeaderString)
+
+  storeResponseMeta({
+    api: APIs.stackExchange,
+    wholeURI: fullUri,
+    endpoint: endpoint.endpoint ? endpoint.endpoint : endpoint.url,
+
+    status: {
+      statusCode: res.status,
+      statusText: res.statusText,
+    },
+
+    requestHeaders: reqHeaders,
+    responseHeaders: res.headers,
+    body: res.data,
+    httpMethod: endpoint.method,
   })
 }
 
-function axiosGETRequest(url: string): Promise<AxiosResponse<any>> {
-  return new Promise((resolve) => {
-    axios.get(url).then((res) => {
-      resolve(res)
-    })
-  })
+function recurse(seEndpoints: ISEEndpoint[], i: number) {
+  i++
+
+  if (i < seEndpoints.length) {
+    getRequest(seEndpoints, i)
+  }
 }

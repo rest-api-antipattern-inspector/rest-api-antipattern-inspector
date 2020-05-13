@@ -6,40 +6,44 @@ import endpoints from './endpoints'
 import ISEEndpoint from './ISEEndpoint'
 
 export default (): void => {
-  // 44 endpoints
-  axiosGetRequests(endpoints, 0)
+  console.log('Amount of endpoints', endpoints.length)
+  getRequest(endpoints, 0)
 }
 
-/**
- * Recursive function, exits after all se endpoints have been called
- */
-function axiosGetRequests(seEndpoints: ISEEndpoint[], i: number) {
-  const timeout = getTimeOut(i)
-  console.log('stack exchange', i)
+function getRequest(seEndpoints: ISEEndpoint[], i: number) {
+  shouldPause(i)
+    ? pauseThenKeepGoing(seEndpoints, i)
+    : axiosGETRequest(seEndpoints, i)
+}
 
-  const fullUri = `https://api.stackexchange.com/2.2/${seEndpoints[i].url}`
+function shouldPause(i): boolean {
+  // pause every 25th request, stackexchange only allows 30 per second
+  return i === 24 || (i !== 0 && i !== 25 && i % 25 === 0)
+}
+
+function pauseThenKeepGoing(seEndpoints: ISEEndpoint[], i: number) {
+  console.log(
+    'Pause 3 seconds, stackexchange only allows 30 requests per second'
+  )
 
   setTimeout(() => {
-    axios
-      .get(fullUri)
-      .then((res) => {
-        handleResponse(fullUri, seEndpoints[i], res)
-
-        i++
-
-        if (i < seEndpoints.length) {
-          axiosGetRequests(seEndpoints, i)
-        }
-      })
-      .catch((error) => {
-        console.log('Req failed for', fullUri)
-      })
-  }, timeout)
+    axiosGETRequest(seEndpoints, i)
+  }, 3000)
 }
 
-function getTimeOut(i): number {
-  // pause every 25th request, stackexchange only allows 30 per second
-  return i === 24 || (i !== 0 && i !== 25 && i % 25 === 0) ? 3000 : 0
+function axiosGETRequest(seEndpoints: ISEEndpoint[], i: number) {
+  const fullUri = `https://api.stackexchange.com/2.2/${seEndpoints[i].url}`
+
+  axios
+    .get(fullUri)
+    .then((res) => {
+      console.log('stack exchange', i)
+      handleResponse(fullUri, seEndpoints[i], res)
+      recurse(seEndpoints, i)
+    })
+    .catch((error) => {
+      console.log('Req failed for', fullUri)
+    })
 }
 
 function handleResponse(
@@ -65,4 +69,12 @@ function handleResponse(
     body: res.data,
     httpMethod: endpoint.method,
   })
+}
+
+function recurse(seEndpoints: ISEEndpoint[], i: number) {
+  i++
+
+  if (i < seEndpoints.length) {
+    getRequest(seEndpoints, i)
+  }
 }

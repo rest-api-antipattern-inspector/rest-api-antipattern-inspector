@@ -6,7 +6,6 @@ import endpoints from './endpoints'
 import ISEEndpoint from './ISEEndpoint'
 
 export default (): void => {
-  console.log('Amount of endpoints', endpoints.length)
   getRequest(endpoints, 0)
 }
 
@@ -23,7 +22,7 @@ function shouldPause(i): boolean {
 
 function pauseThenKeepGoing(seEndpoints: ISEEndpoint[], i: number) {
   console.log(
-    'Pause 3 seconds, stackexchange only allows 30 requests per second'
+    'Pause 3 seconds after next request, stackexchange only allows 30 requests per second'
   )
 
   setTimeout(() => {
@@ -37,7 +36,6 @@ function axiosGETRequest(seEndpoints: ISEEndpoint[], i: number) {
   axios
     .get(fullUri)
     .then((res) => {
-      console.log('stack exchange', i)
       handleResponse(fullUri, seEndpoints[i], res)
       recurse(seEndpoints, i)
     })

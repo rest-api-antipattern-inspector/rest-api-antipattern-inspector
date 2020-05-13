@@ -13,107 +13,106 @@ const usersQuestionsTag = process.env.STACKEXCHANGE_USER_TAG
 // TODO can add more stack exchange endpoints
 
 const endpoints: ISEEndpoint[] = [
-  // TODO uncomment, these works
-  // {
-  //   endpoint: 'answers?order=desc&sort=activity&site={site}',
-  //   url: 'answers?order=desc&sort=activity&site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'answers/{ids}?order=desc&sort=activity&site={site}',
-  //   url: `answers/${answerIDs}?order=desc&sort=activity&site=stackoverflow`,
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'answers/{ids}/comments?order=desc&sort=creation&site={site}',
-  //   url: `answers/${oneAnswerID}/comments?order=desc&sort=creation&site=stackoverflow`,
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'badges',
-  //   url: 'badges?order=desc&sort=rank&site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'badges/name',
-  //   url: 'badges/name?order=desc&sort=rank&site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'badges/recipients',
-  //   url: 'badges/recipients?site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'badges/tags',
-  //   url: 'badges/tags?order=desc&sort=rank&site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'info',
-  //   url: 'info?site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'privileges',
-  //   url: 'privileges?site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'questions/{ids}/related?order=desc&sort=activity&site={site}',
-  //   url: `questions/${oneQuestionID}/related?order=desc&sort=activity&site=stackoverflow`,
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'questions/featured?order=desc&sort=activity&site={site}',
-  //   url: `questions/featured?order=desc&sort=activity&site=stackoverflow`,
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'questions/no-answers',
-  //   url: `questions/no-answers?order=desc&sort=activity&site=stackoverflow`,
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'suggested-edits',
-  //   url: `suggested-edits?order=desc&sort=creation&site=stackoverflow`,
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'tags',
-  //   url: `tags?order=desc&sort=popular&site=stackoverflow`,
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'tags/moderator-only',
-  //   url: 'tags/moderator-only?order=desc&sort=popular&site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'tags/required',
-  //   url: 'tags/required?order=desc&sort=popular&site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'tags/synonyms',
-  //   url: 'tags/synonyms?order=desc&sort=creation&site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'tags/{tag}/top-answerers/{period}',
-  //   url: 'tags/javascript/top-answerers/all_time?site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'tags/{tag}/top-askers/{period}',
-  //   url: 'tags/javascript/top-askers/all_time?site=stackoverflow',
-  //   method: HTTPMethods.GET,
-  // },
-  // {
-  //   endpoint: 'users/{ids}',
-  //   url: `users/${userID}?order=desc&sort=reputation&site=stackoverflow`,
-  //   method: HTTPMethods.GET,
-  // },
+  {
+    endpoint: 'answers?order=desc&sort=activity&site={site}',
+    url: 'answers?order=desc&sort=activity&site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'answers/{ids}?order=desc&sort=activity&site={site}',
+    url: `answers/${answerIDs}?order=desc&sort=activity&site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'answers/{ids}/comments?order=desc&sort=creation&site={site}',
+    url: `answers/${oneAnswerID}/comments?order=desc&sort=creation&site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'badges',
+    url: 'badges?order=desc&sort=rank&site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'badges/name',
+    url: 'badges/name?order=desc&sort=rank&site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'badges/recipients',
+    url: 'badges/recipients?site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'badges/tags',
+    url: 'badges/tags?order=desc&sort=rank&site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'info',
+    url: 'info?site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'privileges',
+    url: 'privileges?site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'questions/{ids}/related?order=desc&sort=activity&site={site}',
+    url: `questions/${oneQuestionID}/related?order=desc&sort=activity&site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'questions/featured?order=desc&sort=activity&site={site}',
+    url: `questions/featured?order=desc&sort=activity&site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'questions/no-answers',
+    url: `questions/no-answers?order=desc&sort=activity&site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'suggested-edits',
+    url: `suggested-edits?order=desc&sort=creation&site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'tags',
+    url: `tags?order=desc&sort=popular&site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'tags/moderator-only',
+    url: 'tags/moderator-only?order=desc&sort=popular&site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'tags/required',
+    url: 'tags/required?order=desc&sort=popular&site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'tags/synonyms',
+    url: 'tags/synonyms?order=desc&sort=creation&site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'tags/{tag}/top-answerers/{period}',
+    url: 'tags/javascript/top-answerers/all_time?site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'tags/{tag}/top-askers/{period}',
+    url: 'tags/javascript/top-askers/all_time?site=stackoverflow',
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: 'users/{ids}',
+    url: `users/${userID}?order=desc&sort=reputation&site=stackoverflow`,
+    method: HTTPMethods.GET,
+  },
   {
     endpoint: 'users/{ids}/badges',
     url: `users/${userID}/badges?order=desc&sort=rank&site=stackoverflow`,

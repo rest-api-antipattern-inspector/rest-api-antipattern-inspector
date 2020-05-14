@@ -17,18 +17,20 @@ export default (): void => {
   const baseURL = 'https://graph.facebook.com'
   const versionString = 'v7.0'
 
-  endpoints.forEach((ep) => {
-    const fullURI = `${baseURL}/${versionString}/${ep.url}`
+  console.log('For now just how many fb endpoints?', endpoints.length)
 
-    axios
-      .get(fullURI, config)
-      .then((res) => {
-        handleResponse(fullURI, ep, res)
-      })
-      .catch((error) => {
-        console.log('Req failed for', fullURI)
-      })
-  })
+  // endpoints.forEach((ep) => {
+  //   const fullURI = `${baseURL}/${versionString}/${ep.url}`
+
+  //   axios
+  //     .get(fullURI, config)
+  //     .then((res) => {
+  //       handleResponse(fullURI, ep, res)
+  //     })
+  //     .catch((error) => {
+  //       console.log('Req failed for', fullURI)
+  //     })
+  // })
 }
 
 function handleResponse(

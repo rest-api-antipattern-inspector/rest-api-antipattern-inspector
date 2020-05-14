@@ -6,4 +6,5 @@ export enum APIs {
   imgur = 'imgur',
   vimeo = 'vimeo',
   github = 'github',
+  facebook = 'facebook',
 }

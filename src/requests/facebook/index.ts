@@ -10,21 +10,15 @@ export default (): void => {
   // generate a new one then to be able keep running this program
   // https://www.sociablekit.com/get-facebook-long-lived-user-access-token/
 
-  // TODO perhaps pass this into axios req
-  const config = {
-    params: { access_token: process.env.FACEBOOK_ACCESS_TOKEN },
-  }
-
-  // CURL
-  // curl -X GET -G \
-  // -d 'access_token=<ACCESS_TOKEN>' \
-  // https://graph.facebook.com/v7.0/{person-id}/
+  const baseURL = 'https://graph.facebook.com'
+  const versionString = 'v7.0'
+  const tokenParam = `access_token=${process.env.FACEBOOK_ACCESS_TOKEN}`
 
   endpoints.forEach((ep) => {
-    const fullURI = `https://graph.facebook.com/v7.0/${ep.url}?access_token=${process.env.FACEBOOK_ACCESS_TOKEN}`
+    const fullURI = `${baseURL}/${versionString}/${ep.url}?${tokenParam}`
 
     axios
-      .get(fullURI) // trying w.o config token
+      .get(fullURI)
       .then((res) => {
         handleResponse(fullURI, ep, res)
       })
@@ -44,7 +38,7 @@ function handleResponse(
   const reqHeaders = extractRequestHeaders(reqHeaderString)
 
   storeResponseMeta({
-    api: APIs.stackExchange,
+    api: APIs.facebook,
     wholeURI: fullUri,
     endpoint: endpoint.endpoint ? endpoint.endpoint : endpoint.url,
 

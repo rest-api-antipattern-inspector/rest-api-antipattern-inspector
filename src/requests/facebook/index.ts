@@ -10,15 +10,18 @@ export default (): void => {
   // generate a new one then to be able keep running this program
   // https://www.sociablekit.com/get-facebook-long-lived-user-access-token/
 
+  const config = {
+    params: { access_token: process.env.FACEBOOK_ACCESS_TOKEN },
+  }
+
   const baseURL = 'https://graph.facebook.com'
   const versionString = 'v7.0'
-  const tokenParam = `access_token=${process.env.FACEBOOK_ACCESS_TOKEN}`
 
   endpoints.forEach((ep) => {
-    const fullURI = `${baseURL}/${versionString}/${ep.url}?${tokenParam}`
+    const fullURI = `${baseURL}/${versionString}/${ep.url}`
 
     axios
-      .get(fullURI)
+      .get(fullURI, config)
       .then((res) => {
         handleResponse(fullURI, ep, res)
       })

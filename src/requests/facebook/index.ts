@@ -27,7 +27,6 @@ export default (): void => {
       })
       .catch((error) => {
         console.log('Req failed for', fullURI)
-        console.error(error)
       })
   })
 }

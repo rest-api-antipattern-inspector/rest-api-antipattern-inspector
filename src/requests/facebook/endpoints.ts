@@ -19,6 +19,17 @@ const endpoints: IFBEndpoint[] = [
     url: `${userID}/albums`,
     method: HTTPMethods.GET,
   },
+  {
+    endpoint: '{user-id}/ad_studies',
+    url: `${userID}/ad_studies`,
+    method: HTTPMethods.GET,
+  },
+  {
+    endpoint: '{USER_ID}/adaccounts',
+    url: `${userID}/adaccounts`,
+    method: HTTPMethods.GET,
+  },
+  {},
 ]
 
 export default endpoints

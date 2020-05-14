@@ -67,11 +67,6 @@ export const level2 = [
   },
   {
     method: GET,
-    url: 'forums/listThreads.json',
-    params: `&forum=${forum}`,
-  },
-  {
-    method: GET,
     url: 'forums/listUserModerationHistory.json',
     params: `&user=username:${username}&forum=${forum}`,
   },

@@ -153,15 +153,6 @@ export const getLevel = [
     },
   },
   {
-    url: 'lists/members/show',
-    method: GET,
-    params: {
-      slug: LIST_SLUG,
-      owner_screen_name: SCREEN_NAME,
-      screen_name: SCREEN_NAME,
-    },
-  },
-  {
     url: 'lists/memberships',
     method: GET,
     params: { screen_name: SCREEN_NAME },
@@ -415,11 +406,6 @@ export const deleteLevel2 = [
   // Mute, block, and report users
   {
     url: 'blocks/destroy',
-    method: POST,
-    params: { screen_name: SCREEN_NAME_2 },
-  },
-  {
-    url: 'mutes/users/destroy',
     method: POST,
     params: { screen_name: SCREEN_NAME_2 },
   },

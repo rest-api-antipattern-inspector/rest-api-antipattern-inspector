@@ -29,12 +29,6 @@ export const endpoints = [
     noAuth: true,
   },
   {
-    url: 'scout.api',
-    method: GET,
-    params: 'tdes=P10vY9r',
-    noAuth: true,
-  },
-  {
     url: 'sentry.api',
     method: GET,
     params: 'des=99942',

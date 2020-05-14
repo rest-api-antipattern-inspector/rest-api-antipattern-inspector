@@ -48,12 +48,6 @@ export const endpoints = [
     acceptHeader: 'application/vnd.github.dorian-preview+json',
   },
   {
-    url: `repos/${username}/${repo}/vulnerability-alerts`,
-    method: DELETE,
-    endpoint: 'repos/{owner}/{repo}/vulnerability-alerts',
-    acceptHeader: 'application/vnd.github.dorian-preview+json',
-  },
-  {
     url: `repos/${username}/${repo}/contributors`,
     method: GET,
     endpoint: 'repos/{owner}/{repo}/contributors',

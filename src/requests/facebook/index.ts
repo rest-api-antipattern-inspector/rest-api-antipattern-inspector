@@ -17,8 +17,6 @@ export default (): void => {
   const baseURL = 'https://graph.facebook.com'
   const versionString = 'v7.0'
 
-  console.log('How many fb endpoints?', endpoints.length)
-
   endpoints.forEach((ep) => {
     const fullURI = `${baseURL}/${versionString}/${ep.url}`
 

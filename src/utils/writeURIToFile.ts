@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { APIs } from '../enums/APIs'
 
 import disqus from '../requests/disqus/endpoints'
 import bitly from '../requests/bitly/endpoints'
@@ -9,7 +10,7 @@ import nasa from '../requests/nasa/endpoints'
 import github from '../requests/github/endpoints'
 import spotify from '../requests/spotify/endpoints'
 import stackexchange from '../requests/stackExchange/endpoints'
-import { APIs } from '../enums/APIs'
+import facebook from '../requests/facebook/endpoints'
 
 interface Endpoint {
   readonly method: string
@@ -62,6 +63,11 @@ const apis = [
     version: '2.2',
     endpoints: stackexchange,
     acronyms: ['desc ->descending'],
+  },
+  {
+    name: Capitalize(APIs.facebook),
+    version: '7.0',
+    endpoints: facebook,
   },
 ]
 

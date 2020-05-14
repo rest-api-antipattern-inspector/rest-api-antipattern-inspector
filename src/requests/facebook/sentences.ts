@@ -1,0 +1,25 @@
+const sentences = [
+  'Fint väder idag',
+  'måndagar...',
+  'solen skiner',
+  'oj vad det regnar!',
+  'oj vad det snöar!',
+  'oj vad det blåser!',
+  'oj vad det är vindstilla!',
+  'Tjoho, fredag!',
+  'dags att klippa gräset',
+  'dags att byta till vinterdäck',
+  'dags att byta till sommardäck',
+  'går det något bra på tv idag?',
+  'man ska ha husvagn',
+  'joråsåatte',
+  'synd att klaga',
+  'det knallar och småspringer',
+  'man måste sätta lite guldkant på tillvaron',
+  'lite ketchup på pannkakan skadar aldrig',
+  'det var som grädden på moset',
+  'många bäckar små',
+  'det finns inget dåligt väder, bara dåliga kläder',
+]
+
+export default sentences

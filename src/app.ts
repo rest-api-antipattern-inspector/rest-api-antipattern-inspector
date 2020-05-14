@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import fs from 'fs'
+import writeURIToFile from './utils/writeURIToFile'
 import stackExchangeRequests from './requests/stackExchange'
 import doTwitterRequests from './requests/twitter'
 import bitlyRequests from './requests/bitly'
@@ -11,7 +12,7 @@ import vimeoRequests from './requests/vimeo'
 import nasaRequests from './requests/nasa'
 import githubRequests from './requests/github'
 import spotifyRequests from './requests/spotify'
-import writeURIToFile from './utils/writeURIToFile'
+import facebookRequests from './requests/facebook'
 
 const APIs: any = {
   stackexchange: stackExchangeRequests,
@@ -23,6 +24,7 @@ const APIs: any = {
   nasa: nasaRequests,
   github: githubRequests,
   spotify: spotifyRequests,
+  facebook: facebookRequests,
 }
 
 // TODO uml package diagram of folders

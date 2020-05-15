@@ -7,4 +7,6 @@ export enum APIs {
   vimeo = 'vimeo',
   github = 'github',
   facebook = 'facebook',
+  nasa = "nasa",
+  spotify = "spotify"
 }

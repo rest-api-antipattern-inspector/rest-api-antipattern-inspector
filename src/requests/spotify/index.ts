@@ -20,35 +20,35 @@ export default async () => {
       try {
         const res = ['get', 'delete'].includes(endpoint.method)
           ? await axios[endpoint.method](
-              `${BASE_URL}${endpoint.url}${
-                endpoint.params ? endpoint.params : ''
-              }`,
-              {
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${ACCESS_TOKEN}`,
-                },
-              }
-            )
+            `${BASE_URL}${endpoint.url}${
+            endpoint.params ? endpoint.params : ''
+            }`,
+            {
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${ACCESS_TOKEN}`,
+              },
+            }
+          )
           : await axios[endpoint.method](
-              `${BASE_URL}${endpoint.url}${
-                endpoint.params ? endpoint.params : ''
-              }`,
-              endpoint.data ? JSON.stringify(endpoint.data) : {},
-              {
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${ACCESS_TOKEN}`,
-                },
-              }
-            )
+            `${BASE_URL}${endpoint.url}${
+            endpoint.params ? endpoint.params : ''
+            }`,
+            endpoint.data ? JSON.stringify(endpoint.data) : {},
+            {
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${ACCESS_TOKEN}`,
+              },
+            }
+          )
         const reqHeaderString = res.request._header
         const reqHeaders = extractRequestHeaders(reqHeaderString)
 
         storeResponseMeta({
-          api: APIs.imgur,
+          api: APIs.spotify,
           wholeURI: `${BASE_URL}${endpoint.url}`,
           endpoint: endpoint.endpoint ? endpoint.endpoint : endpoint.url,
           status: {

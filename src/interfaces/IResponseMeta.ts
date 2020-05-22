@@ -22,7 +22,7 @@ export default interface IResponseMeta {
 
     isIgnoringCaching: boolean
 
-    isIgnoringMIMETypes: boolean
+    isIgnoringMIMEType: boolean
 
     isIgnoringStatusCode: boolean
 

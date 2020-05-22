@@ -131,19 +131,28 @@ export const isValidStatusCombo = (
   statusText: string,
   standardStatusCombos: IStatusCombo[]
 ): boolean =>
-  // standard status combos only includes checks for
-  // http methods get, post, put & delete
-  httpMethod !==
-    (HTTPMethods.GET ||
-      HTTPMethods.POST ||
-      HTTPMethods.PUT ||
-      HTTPMethods.DELETE) ||
+  isMethodInXml(httpMethod) &&
   standardStatusCombos.filter(
     (combo) =>
       combo.method.includes(httpMethod) &&
       combo.code[0] === statusCode.toString() &&
       combo.description[0] === statusText.toUpperCase()
   )[0] !== undefined
+
+const isMethodInXml = (httpMethod: string) => {
+  // standard status combos only includes checks for
+  // http methods get, post, put & delete
+  switch (httpMethod) {
+    case HTTPMethods.GET:
+    case HTTPMethods.POST:
+    case HTTPMethods.PUT:
+    case HTTPMethods.DELETE:
+      return true
+
+    default:
+      return false
+  }
+}
 
 export const isNoCacheOrNoStore = (lowerCaseCachingValue: string): boolean =>
   lowerCaseCachingValue === 'no-cache' || lowerCaseCachingValue === 'no-store'

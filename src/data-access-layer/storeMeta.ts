@@ -6,7 +6,7 @@ import {
   isBreakingSelfDescriptiveness,
   isForgettingHypermedia,
   isIgnoringCaching,
-  isIgnoringMIMEType,
+  isIgnoringMIMETypes,
   isIgnoringStatusCode,
   isMisusingCookies,
 } from '../lib/designAntipatternDetectors'
@@ -65,7 +65,7 @@ export const storeResponseMeta = async (resParamsObj: IResonseParams) => {
         resParamsObj.responseHeaders
       ),
 
-      isIgnoringMIMEType: isIgnoringMIMEType(
+      isIgnoringMIMETypes: isIgnoringMIMETypes(
         resParamsObj.requestHeaders,
         resParamsObj.responseHeaders
       ),

@@ -96,7 +96,7 @@ export const isIgnoringCaching = (
  * @param responseHeaders response headers
  * @returns true if detects Ignoring MIME Type antipattern
  */
-export const isIgnoringMIMEType = (
+export const isIgnoringMIMETypes = (
   requestHeaders: IHeadersObject,
   responseHeaders: IHeadersObject
 ): boolean => {

@@ -56,3 +56,10 @@ test('Ignoring Status Code: false, DELETE 200', async () => {
     isIgnoringStatusCode(HTTPMethods.DELETE, 200, 'ok', statusCombos)
   ).toBeFalsy()
 })
+
+test('Ignoring Status Code: false, PATCH 200', async () => {
+  const statusCombos: IStatusCombo[] = await getStandardCombos()
+  expect(
+    isIgnoringStatusCode(HTTPMethods.PATCH, 200, 'ok', statusCombos)
+  ).toBeFalsy()
+})

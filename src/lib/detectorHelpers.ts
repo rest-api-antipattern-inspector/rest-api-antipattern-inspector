@@ -130,18 +130,24 @@ export const isValidStatusCombo = (
   statusCode: number,
   statusText: string,
   standardStatusCombos: IStatusCombo[]
-): boolean =>
-  isMethodInXml(httpMethod) &&
-  standardStatusCombos.filter(
-    (combo) =>
-      combo.method.includes(httpMethod) &&
-      combo.code[0] === statusCode.toString() &&
-      combo.description[0] === statusText.toUpperCase()
-  )[0] !== undefined
-
-const isMethodInXml = (httpMethod: string) => {
+): boolean => {
   // standard status combos only includes checks for
   // http methods get, post, put & delete
+  if (!isMethodInXml(httpMethod)) {
+    return true
+  }
+
+  return (
+    standardStatusCombos.filter(
+      (combo) =>
+        combo.method.includes(httpMethod) &&
+        combo.code[0] === statusCode.toString() &&
+        combo.description[0] === statusText.toUpperCase()
+    )[0] !== undefined
+  )
+}
+
+const isMethodInXml = (httpMethod: string) => {
   switch (httpMethod) {
     case HTTPMethods.GET:
     case HTTPMethods.POST:

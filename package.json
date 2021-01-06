@@ -16,7 +16,7 @@
     "program": "node dist/app.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.1",
     "random-words": "^1.1.1",
